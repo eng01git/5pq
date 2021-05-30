@@ -33,7 +33,7 @@ from google.oauth2 import service_account
 
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
-db = firestore.Client(credentials=creds, project="streamlit-cb45e")
+db = firestore.Client(credentials=creds, project="st-5why")
 doc_ref = db.collection(u'5porques')
 
 # Link do arquivo com os dados
