@@ -22,7 +22,6 @@ import json
 import smtplib
 import time
 import base64
-#import openpyxl
 from io import BytesIO
 
 from google.cloud import firestore
@@ -45,13 +44,7 @@ DATA_URL = "data.csv"
 ######################################################################################################
 
 st.sidebar.title("Menu 5-Porques")
-#pendencia = st.sidebar.checkbox("Pendências", value=True)
-#inserir = st.sidebar.checkbox("Inserir 5-Porques")
-#analisar = st.sidebar.checkbox("Avaliar 5-Porques")
-#estatistica = st.sidebar.checkbox("Estatísticas de 5-Porques")
-
 func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Pendências', 'Inserir', 'Analisar', 'Estatísticas'), index=0)
-#st.sidebar.write(teste)
 
 ######################################################################################################
                                            #Função para enviar email
@@ -96,7 +89,7 @@ def send_email(to, atividade, documento, comentario):
 ######################################################################################################
                                            #Função para download
 ######################################################################################################
-		
+#download csv		
 def download(df):
 	"""Generates a link allowing the data in a given panda dataframe to be downloaded
 	in:  dataframe
@@ -106,6 +99,23 @@ def download(df):
 	b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
 	href = f'<a href="data:file/csv;base64,{b64}">Download dos dados como csv</a>'
 	return href
+#excel
+def to_excel(df):
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='Sheet1')
+    writer.save()
+    processed_data = output.getvalue()
+    return processed_data
+
+def get_table_download_link(df):
+    """Generates a link allowing the data in a given panda dataframe to be downloaded
+    in:  dataframe
+    out: href string
+    """
+    val = to_excel(df)
+    b64 = base64.b64encode(val)  # val looks like b'...'
+    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="dados.xlsx">Download Excel</a>' # decode b'abc' => abc
 
 ######################################################################################################
                                            #Função para leitura do banco (Firebase)
@@ -174,7 +184,7 @@ def func_validar(index, row, indice):
 			st.subheader('Exportar 5-Porques')			
 			export = filtrado[filtrado['document'] == row['document']]
 			st.markdown(download(export), unsafe_allow_html=True)
-
+			st.markdown(get_table_download_link(export), unsafe_allow_html=True)
 			if aprovar:
 				caching.clear_cache()
 				att_verificado = {}
@@ -306,37 +316,7 @@ def formulario(linhas):
 			send_email(usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email'], 0, val_documento, '')
 		else:
 			st.error('Por favor inserir e-mail Ambev válido')
-			
-			
-			
-			
-			
-###############################teste#########################			
-			
-def to_excel(df):
-    output = BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    df.to_excel(writer, sheet_name='Sheet1')
-    writer.save()
-    processed_data = output.getvalue()
-    return processed_data
-
-def get_table_download_link(df):
-    """Generates a link allowing the data in a given panda dataframe to be downloaded
-    in:  dataframe
-    out: href string
-    """
-    val = to_excel(df)
-    b64 = base64.b64encode(val)  # val looks like b'...'
-    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="extract.xlsx">Download csv file</a>' # decode b'abc' => abc
-
-
-		
-		
-		
-		
-		
-		
+				
 ######################################################################################################
                                            #Main
 ######################################################################################################
@@ -442,7 +422,7 @@ if func_escolhida == 'Analisar':
 		filtrado = filtrado[filtrado['status'] == status]	
 	
 	st.write(filtrado[['data', 'document', 'gestor', 'status','responsável identificação', 'turno', 'linha', 'equipamento']])
-	st.markdown(download(filtrado), unsafe_allow_html=True)
+	#st.markdown(download(filtrado), unsafe_allow_html=True)
 	st.markdown(get_table_download_link(filtrado), unsafe_allow_html=True)
 	indice_doc = st.multiselect('Selecione a ocorrência', filtrado['document'].tolist())
 	for index, row in filtrado.iterrows():
