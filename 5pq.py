@@ -65,16 +65,16 @@ def send_email(to, atividade, documento, comentario):
 	atividade = int(atividade)
 	
 	if atividade == 0:
-		body = "Ola, foi gerada um novo 5-Porques, acesse a plataforma para avaliar.\nhttps://share.streamlit.io/mariusss21/test_st_share/main/demoapp.py\n\nAtenciosamente, \nAmbev 5-Porques"
+		body = "Ola, foi gerada um novo 5-Porques, acesse a plataforma para avaliar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py\n\nAtenciosamente, \nAmbev 5-Porques"
 		subject = """Gerado 5-Porques %s""" % (documento)
 	elif atividade == 1:
-		body = "Ola, o responsavel retificou 5-Porques, acesse a plataforma para reavaliar.\nhttps://share.streamlit.io/mariusss21/test_st_share/main/demoapp.py\n\nAtenciosamente, \nAmbev 5-Porques"
+		body = "Ola, o responsavel retificou 5-Porques, acesse a plataforma para reavaliar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py\n\nAtenciosamente, \nAmbev 5-Porques"
 		subject = """Retificado 5-Porques %s""" % (documento)
 	elif atividade == 2:
 		body = """Ola, o gestor aprovou 5-Porques.\n\n%s \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = """Aprovado 5-Porques %s""" % (documento)	
 	elif atividade == 3:
-		body = """Ola, o gestor reprovou 5-Porques, acesse a plataforma para retificar.\nhttps://share.streamlit.io/mariusss21/test_st_share/main/demoapp.py \n\n Comentario do gestor: \n\n%s  \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
+		body = """Ola, o gestor reprovou 5-Porques, acesse a plataforma para retificar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py \n\n Comentario do gestor: \n\n%s  \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = """Reprovado 5-Porques %s""" % (documento)		
 	
 	email_text = """From: %s\nTo: %s\nSubject: %s\n\n%s
