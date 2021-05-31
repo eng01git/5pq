@@ -173,8 +173,7 @@ def func_validar(index, row, indice):
 			reprovar = bt2.button('Reprovar 5-Porques ' + '(' + str(index) + ')')
 			st.subheader('Exportar 5-Porques')			
 			export = filtrado[filtrado['document'] == row['document']]
-			#st.markdown(download(export), unsafe_allow_html=True)
-			st.markdown(get_table_download_link(filtrado), unsafe_allow_html=True)
+			st.markdown(download(export), unsafe_allow_html=True)
 
 			if aprovar:
 				caching.clear_cache()
@@ -444,6 +443,7 @@ if func_escolhida == 'Analisar':
 	
 	st.write(filtrado[['data', 'document', 'gestor', 'status','responsável identificação', 'turno', 'linha', 'equipamento']])
 	st.markdown(download(filtrado), unsafe_allow_html=True)
+	st.markdown(get_table_download_link(filtrado), unsafe_allow_html=True)
 	indice_doc = st.multiselect('Selecione a ocorrência', filtrado['document'].tolist())
 	for index, row in filtrado.iterrows():
 		if row['document'] in indice_doc:
