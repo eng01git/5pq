@@ -333,6 +333,44 @@ st.write('Selecione no menu lateral a opção desejada')
 # Lista vazia para input dos dados do formulário
 dic = {} #dicionario
 
+if pendencia:
+	st.subheader('Últimas pendências')
+	qtd_pendencias = st.slider('Selecione quantas pendencias deseja visualiar', 10)
+	st.write(df_pendencia.tail(qtd_pendencias)[['data', 'turno', 'linha', 'equipamento', 'departamento', 'usuario', 'descrição']])
+		 
+	st.subheader('Inserir pendências')
+	st.write('Inserir possíveis 5-Porques para verificação')
+	sp2, sp3= st.beta_columns(2)
+	list_linhas = list(linhas)
+	sap_nv2 = sp2.selectbox('Selecione a linha', list_linhas)	
+	equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
+
+	with st.form('Form_ins'):
+		st1, st2, st3 = st.beta_columns(3)
+		dic['data'] = st1.date_input('Data da pendência')
+		dic['turno'] = st2.selectbox('Selecione turno', turnos )
+		dic['departamento'] = st3.selectbox('Selecione departamento', departamentos)
+		dic['linha'] = sap_nv2
+		dic['equipamento'] = sp3.selectbox('Selecione equipamento', equipamentos)	
+		dic['descrição'] = st.text_input('Descreva o ocorrido', "")
+		dic['usuario'] = st.text_input('Nome do colaborador que identificou a pendência')
+		dic['status'] = 'Pendente'
+		submitted_pend = st.form_submit_button('Criar pendência')
+
+	if submitted_pend:
+		caching.clear_cache()
+		keys_values = dic.items()
+		new_d = {str(key): str(value) for key, value in keys_values}
+		for key, value in new_d.items():
+			if (value == '') or value == '[]':
+				new_d[key] = 'Não informado'
+				
+		ts = time.time()
+		val_documento = new_d['linha'] + '-' + new_d['equipamento'].replace(" ", "") + '-' + str(int(ts))
+		doc_ref = db.collection("pendencias").document(val_documento)
+		doc_ref.set(new_d)
+		st.write('Pendência criada com sucesso')
+
 if inserir:
 	st.subheader('Formulário 5-porques')
 	formulario(linhas)
@@ -384,43 +422,7 @@ if estatistica:
 	st.write(fig)
 		
 
-if pendencia:
-	st.subheader('Últimas pendências')
-	qtd_pendencias = st.slider('Selecione quantas pendencias deseja visualiar', 10)
-	st.write(df_pendencia.tail(qtd_pendencias)[['data', 'turno', 'linha', 'equipamento', 'departamento', 'usuario', 'descrição']])
-		 
-	st.subheader('Inserir pendências')
-	st.write('Inserir possíveis 5-Porques para verificação')
-	sp2, sp3= st.beta_columns(2)
-	list_linhas = list(linhas)
-	sap_nv2 = sp2.selectbox('Selecione a linha', list_linhas)	
-	equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
 
-	with st.form('Form_ins'):
-		st1, st2, st3 = st.beta_columns(3)
-		dic['data'] = st1.date_input('Data da ocorrência')
-		dic['turno'] = st2.selectbox('Selecione o turno', turnos )
-		dic['departamento'] = st3.selectbox('Selecione o departamento', departamentos)
-		dic['linha'] = sap_nv2
-		dic['equipamento'] = sp3.selectbox('Selecione o equipamento', equipamentos)	
-		dic['descrição'] = st.text_input('Descreva a anomalia', "")
-		dic['usuario'] = st.text_input('Nome do colaborador que identificou a pendência')
-		dic['status'] = 'Pendente'
-		submitted_pend = st.form_submit_button('Criar pendência')
-
-	if submitted_pend:
-		caching.clear_cache()
-		keys_values = dic.items()
-		new_d = {str(key): str(value) for key, value in keys_values}
-		for key, value in new_d.items():
-			if (value == '') or value == '[]':
-				new_d[key] = 'Não informado'
-				
-		ts = time.time()
-		val_documento = new_d['linha'] + '-' + new_d['equipamento'].replace(" ", "") + '-' + str(int(ts))
-		doc_ref = db.collection("pendencias").document(val_documento)
-		doc_ref.set(new_d)
-		st.write('Pendência criada com sucesso')
 
 
 
