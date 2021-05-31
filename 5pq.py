@@ -23,7 +23,6 @@ import smtplib
 import time
 import base64
 from io import BytesIO
-import datetime
 
 from google.cloud import firestore
 from google.oauth2 import service_account
@@ -32,12 +31,12 @@ from google.oauth2 import service_account
 				#Configurações da página
 ######################################################################################################
 
-#st.set_page_config(
-#     page_title="Ambev 5-Porques",
+st.set_page_config(
+     page_title="Ambev 5-Porques",
      #page_icon="🧊",
-#     layout="wide",
+     layout="wide",
 #     initial_sidebar_state="expanded",
-#)
+)
 
 ######################################################################################################
 				#Configurando acesso ao firebase
