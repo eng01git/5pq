@@ -22,7 +22,8 @@ import json
 import smtplib
 import time
 import base64
-import openpyxl
+#import openpyxl
+from io import BytesIO
 
 from google.cloud import firestore
 from google.oauth2 import service_account
@@ -173,6 +174,7 @@ def func_validar(index, row, indice):
 			st.subheader('Exportar 5-Porques')			
 			export = filtrado[filtrado['document'] == row['document']]
 			st.markdown(download(export), unsafe_allow_html=True)
+			st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
 			if aprovar:
 				caching.clear_cache()
@@ -305,6 +307,36 @@ def formulario(linhas):
 			send_email(usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email'], 0, val_documento, '')
 		else:
 			st.error('Por favor inserir e-mail Ambev válido')
+			
+			
+			
+			
+			
+###############################teste#########################			
+			
+def to_excel(df):
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='Sheet1')
+    writer.save()
+    processed_data = output.getvalue()
+    return processed_data
+
+def get_table_download_link(df):
+    """Generates a link allowing the data in a given panda dataframe to be downloaded
+    in:  dataframe
+    out: href string
+    """
+    val = to_excel(df)
+    b64 = base64.b64encode(val)  # val looks like b'...'
+    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="extract.xlsx">Download csv file</a>' # decode b'abc' => abc
+
+
+		
+		
+		
+		
+		
 		
 ######################################################################################################
                                            #Main
