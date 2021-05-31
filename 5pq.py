@@ -342,7 +342,7 @@ if pendencia:
 	st.write('Inserir possíveis 5-Porques para verificação')
 	sp2, sp3= st.beta_columns(2)
 	list_linhas = list(linhas)
-	sap_nv2 = sp2.selectbox('Selecione a linha', list_linhas)	
+	sap_nv2 = sp2.selectbox('Selecione a linha ', list_linhas)	
 	equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
 
 	with st.form('Form_ins'):
