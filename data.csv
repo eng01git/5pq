@@ -1,1 +1,1 @@
-data,turno,departamento,linha,equipamento,gatilho,descrição anomalia,ordem manutenção,correção,pq1,pq2,pq3,pq4,pq5,tipo de falha,falha deterioização,tipo de correção,correção deterioização,ações,notas de manutenção,responsável identificação,responsável reparo
+data,turno,hora,departamento,linha,equipamento,gatilho,descrição anomalia,ordem manutenção,correção,pq1,pq2,pq3,pq4,pq5,tipo de falha,falha deterioização,tipo de correção,correção deterioização,ações,notas de manutenção,responsável identificação,responsável reparo
