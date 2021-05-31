@@ -345,7 +345,7 @@ if pendencia:
 	sap_nv2 = sp2.selectbox('Selecione a linha ', list_linhas)	
 	equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
 
-	with st.form('Form_ins'):
+	with st.form('Form_pend'):
 		st1, st2, st3 = st.beta_columns(3)
 		dic['data'] = st1.date_input('Data da pendência')
 		dic['turno'] = st2.selectbox('Selecione turno', turnos )
