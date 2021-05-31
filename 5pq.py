@@ -43,14 +43,14 @@ DATA_URL = "data.csv"
 				     #Definição da sidebar
 ######################################################################################################
 
-st.sidebar.title("Escolha a ação desejada")
-pendencia = st.sidebar.checkbox("Pendências", value=True)
-inserir = st.sidebar.checkbox("Inserir 5-Porques")
-analisar = st.sidebar.checkbox("Avaliar 5-Porques")
-estatistica = st.sidebar.checkbox("Estatísticas de 5-Porques")
+st.sidebar.title("Menu 5-Porques")
+#pendencia = st.sidebar.checkbox("Pendências", value=True)
+#inserir = st.sidebar.checkbox("Inserir 5-Porques")
+#analisar = st.sidebar.checkbox("Avaliar 5-Porques")
+#estatistica = st.sidebar.checkbox("Estatísticas de 5-Porques")
 
-teste = st.sidebar.radio('Selecione a opção desejada',('Pendência', 'Inserir', 'Analisar', 'Estatísticas'))
-st.sidebar.write(teste)
+func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Pendências', 'Inserir', 'Analisar', 'Estatísticas'), index=0)
+#st.sidebar.write(teste)
 
 ######################################################################################################
                                            #Função para enviar email
@@ -336,7 +336,7 @@ st.write('Selecione no menu lateral a opção desejada')
 # Lista vazia para input dos dados do formulário
 dic = {} #dicionario
 
-if pendencia:
+if func_escolhida == 'Pendências':
 	st.subheader('Últimas pendências')
 	qtd_pendencias = st.slider('Selecione quantas pendencias deseja visualiar', 10)
 	st.write(df_pendencia.tail(qtd_pendencias)[['data', 'turno', 'linha', 'equipamento', 'departamento', 'usuario', 'descrição']])
@@ -374,11 +374,11 @@ if pendencia:
 		doc_ref.set(new_d)
 		st.write('Pendência criada com sucesso')
 
-if inserir:
+if func_escolhida == 'Inserir':
 	st.subheader('Formulário 5-porques')
 	formulario(linhas)
 
-if analisar:
+if func_escolhida == 'Analisar':
 	st.subheader('Configure as opções de filtro')
 	st.text('Selecione a data')
 	col1, col2 = st.beta_columns(2)
@@ -418,7 +418,7 @@ if analisar:
 			st.subheader('Ocorrência ' + str(row['document']))
 			func_validar(index, row, indice_doc)
 			        
-if estatistica:
+if func_escolhida == 'Estatísticas':
 	st.subheader("Estatísticas 5-Porques")
 	variavel =  st.selectbox('Selecione o item para análise', colunas)
 	fig = px.histogram(dados, x=variavel)
