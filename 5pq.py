@@ -43,12 +43,11 @@ DATA_URL = "data.csv"
 				     #Definição da sidebar
 ######################################################################################################
 
-
 st.sidebar.title("Escolha a ação desejada")
+pendencia = st.sidebar.checkbox("Pendências", value=True)
 inserir = st.sidebar.checkbox("Inserir 5-Porques")
 analisar = st.sidebar.checkbox("Avaliar 5-Porques")
 estatistica = st.sidebar.checkbox("Estatísticas de 5-Porques")
-pendencia = st.sidebar.checkbox("Registrar pendência", value=True)
 
 ######################################################################################################
                                            #Função para enviar email
