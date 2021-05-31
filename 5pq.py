@@ -230,8 +230,8 @@ def func_validar(index, row, indice):
 			with st.form('Form_edit' + str(index)):
 				st1, st2, st3, st4 = st.beta_columns(4)
 				dic['data'] = st1.date_input('Data da ocorrência' + ' (' + str(index) + '):', doc['data'])
-				dic['turno'] = st2.selectbox('Selecione o turno' + ' (' + str(index) + '):', turnos, turnos.index(doc['turno']) )
-				dic['hora'] = st3.time_input('Selecione o horário' + ' (' + str(index) + '):', value=doc['hora'])
+				dic['turno'] = st2.selectbox('Selecione o turno' + ' (' + str(index) + '):', turnos, turnos.index(doc['turno']))
+				dic['hora'] = st3.time_input('Selecione o horário' + ' (' + str(index) + '):')
 				dic['departamento'] = st4.selectbox('Selecione o departamento' + ' (' + str(index) + '):', departamentos, departamentos.index(doc['departamento']))
 				dic['linha'] = sap_nv2
 				dic['equipamento'] = sp3.selectbox('Selecione o equipamento' + ' (' + str(index) + '):', equipamentos, equipamento_ant)
