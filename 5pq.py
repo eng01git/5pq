@@ -273,10 +273,11 @@ def formulario(linhas):
 	equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
 
 	with st.form('Form_ins'):
-		st1, st2, st3 = st.beta_columns(3)
+		st1, st2, st3, st4 = st.beta_columns(3)
 		dic['data'] = st1.date_input('Data da ocorrência')
 		dic['turno'] = st2.selectbox('Selecione o turno', turnos )
-		dic['departamento'] = st3.selectbox('Selecione o departamento', departamentos)
+		dic['hora'] = st3.time_input('Selecione o horário')
+		dic['departamento'] = st4.selectbox('Selecione o departamento', departamentos)
 		dic['linha'] = sap_nv2
 		dic['equipamento'] = sp3.selectbox('Selecione o equipamento', equipamentos)
 		dic['gatilho'] = st0.selectbox('Selecione o gatilho', gatilhos)		
