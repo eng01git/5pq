@@ -36,7 +36,7 @@ from google.oauth2 import service_account
      #page_icon="🧊",
 #     layout="wide",
 #     initial_sidebar_state="expanded",
- )
+#)
 
 ######################################################################################################
 				#Configurando acesso ao firebase
