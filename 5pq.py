@@ -23,6 +23,7 @@ import smtplib
 import time
 import base64
 from io import BytesIO
+import datetime
 
 from google.cloud import firestore
 from google.oauth2 import service_account
@@ -143,6 +144,7 @@ def load_data():
 		data = data.append(dicionario, ignore_index=True)
 
 	data['data'] = pd.to_datetime(data['data']).dt.date
+	data['hora'] = pd.to_datetime(data['hora']).dt.time
 	return data
 
 # Efetua a leitura dos dados dos usuários no banco
@@ -231,7 +233,7 @@ def func_validar(index, row, indice):
 				st1, st2, st3, st4 = st.beta_columns(4)
 				dic['data'] = st1.date_input('Data da ocorrência' + ' (' + str(index) + '):', doc['data'])
 				dic['turno'] = st2.selectbox('Selecione o turno' + ' (' + str(index) + '):', turnos, turnos.index(doc['turno']))
-				dic['hora'] = st3.time_input('Selecione o horário' + ' (' + str(index) + '):')
+				dic['hora'] = st3.time_input('Selecione o horário' + ' (' + str(index) + '):', value=doc['hora'])
 				dic['departamento'] = st4.selectbox('Selecione o departamento' + ' (' + str(index) + '):', departamentos, departamentos.index(doc['departamento']))
 				dic['linha'] = sap_nv2
 				dic['equipamento'] = sp3.selectbox('Selecione o equipamento' + ' (' + str(index) + '):', equipamentos, equipamento_ant)
