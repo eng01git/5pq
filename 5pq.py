@@ -27,6 +27,19 @@ from io import BytesIO
 from google.cloud import firestore
 from google.oauth2 import service_account
 
+
+
+######################################################################################################
+				#Configurações da página
+######################################################################################################
+
+st.set_page_config(
+     page_title="Ambev 5-Porques",
+     #page_icon="🧊",
+     layout="wide",
+     initial_sidebar_state="expanded",
+ )
+
 ######################################################################################################
 				#Configurando acesso ao firebase
 ######################################################################################################
