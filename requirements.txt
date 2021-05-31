@@ -4,3 +4,4 @@ google-cloud-firestore
 matplotlib
 streamlit-tags==1.1.9
 openpyxl
+xlsxwriter
