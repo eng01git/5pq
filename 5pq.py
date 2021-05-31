@@ -169,6 +169,7 @@ def func_validar(index, row, indice):
 			aprovar = bt1.button('Aprovar 5-Porques ' + '(' + str(index) + ')')
 			reprovar = bt2.button('Reprovar 5-Porques ' + '(' + str(index) + ')')
 			st.subheader('Exportar 5-Porques')
+			st.markdown(download(dados[index]), unsafe_allow_html=True)
 			
 			#export = filtrado[filtrado['document'] == row['document']]
 			#st.markdown(download(export), unsafe_allow_html=True)
