@@ -49,6 +49,9 @@ inserir = st.sidebar.checkbox("Inserir 5-Porques")
 analisar = st.sidebar.checkbox("Avaliar 5-Porques")
 estatistica = st.sidebar.checkbox("Estatísticas de 5-Porques")
 
+teste = st.sidebar.selectbox('Selecione a opção desejada',('Pendência', 'Inserir', 'Analisar', 'Estatísticas'))
+st.sidebar.write(teste)
+
 ######################################################################################################
                                            #Função para enviar email
 ######################################################################################################
