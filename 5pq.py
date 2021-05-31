@@ -262,7 +262,7 @@ def formulario(linhas):
 		dic['linha'] = sap_nv2
 		dic['equipamento'] = sp3.selectbox('Selecione o equipamento', equipamentos)
 		dic['gatilho'] = st0.selectbox('Selecione o gatilho', gatilhos)		
-		dic['descrição anomalia'] = st.text_input('Descreva a anomalia', "")
+		dic['descrição anomalia'] = st.text_area('Descreva a anomalia', "")
 		st4, st5 = st.beta_columns(2)
 		dic['correção'] = st.text_input('Descreva a correção', "")
 		st6, st7 = st.beta_columns(2)
