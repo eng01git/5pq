@@ -209,7 +209,7 @@ def func_validar(index, row, indice):
 					att_verificado = {}
 					att_verificado['status'] = 'Aprovado'
 					db.collection("5porques_2").document(row['document']).update(att_verificado)
-					send_email(row['email responsável'], 2, str(row['document']), comentario)
+					send_email(row['email responsável'], 2, str(row['document']), comentario, 0)
 				else:
 					st.error('Código do gestor incorreto')
 
@@ -221,7 +221,7 @@ def func_validar(index, row, indice):
 					att_verificado = {}
 					att_verificado['status'] = 'Reprovado'
 					db.collection("5porques_2").document(row['document']).update(att_verificado)
-					send_email(row['email responsável'], 3, str(row['document']), comentario)
+					send_email(row['email responsável'], 3, str(row['document']), comentario, 0)
 				else: 
 					st.error('Obrigatório o preenchimento do comentário!')
 
@@ -280,7 +280,7 @@ def func_validar(index, row, indice):
 				if '@ambev.com.br' in new_d['email responsável']:
 					db.collection("5porques_2").document(documento).set(new_d,merge=True)
 					editar = False
-					send_email(usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email'], 1, documento, '')
+					send_email(usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email'], 1, documento, '', new_d['gatilho'])
 					caching.clear_cache()
 				else:
 					st.error('Por favor inserir e-mail Ambev válido')
@@ -341,7 +341,7 @@ def formulario(linhas):
 			val_documento = new_d['linha'] + '-' + new_d['equipamento'].replace(" ", "") + '-' + str(int(ts))
 			doc_ref = db.collection("5porques_2").document(val_documento)
 			doc_ref.set(new_d)
-			send_email(usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email'], 0, val_documento, '')
+			send_email(usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email'], 0, val_documento, '', new_d['gatilho'])
 		else:
 			st.error('Digite e-mail Ambev válido')
 				
