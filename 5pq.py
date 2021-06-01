@@ -153,7 +153,7 @@ def load_data():
 def load_mes(uploaded_file):
 	data = pd.read_excel(uploaded_file, sheet_name='Parada')
 	data['Data'] = data['Data'].dt.date
-	data['documento'] = data['Linha'].str + data['Equipamento'].str + data['Data'].str + data['Hora'].str
+	data['documento'] = data['Linha'].astype(str) + data['Equipamento'].astype(str) + data['Data'].astype(str) + data['Hora'].astype(str)
 	return data
 
 # Efetua a leitura dos dados dos usuários no banco
