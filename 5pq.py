@@ -96,7 +96,7 @@ def send_email(to, atividade, documento, comentario):
 		server.close()
 		st.write('E-mail enviado!')
 	except:
-		st.error('Falha ao enviar e-mail, tente novamente')
+		st.error(list_to)
 
 ######################################################################################################
                                            #Função para download
@@ -339,7 +339,7 @@ def formulario(linhas):
 			doc_ref.set(new_d)
 			send_email(usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email'], 0, val_documento, '')
 		else:
-			st.error(usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email'])
+			st.error('Digite e-mail Ambev válido')
 				
 ######################################################################################################
                                            #Main
