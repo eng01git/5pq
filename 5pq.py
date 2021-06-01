@@ -354,6 +354,7 @@ gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() == 'sim']['Nome'])
 nao_gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() != 'sim']['Nome'])
 colunas = dados.columns
 
+st.write(usuarios_fb)
 gestor_email = usuarios_fb[usuarios_fb['Nome'] == 'Teste gestor']
 st.write(gestor_email)
 
