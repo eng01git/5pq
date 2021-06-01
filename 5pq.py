@@ -291,9 +291,6 @@ def formulario(linhas):
 	sap_nv2 = sp2.selectbox('Selecione a linha', list_linhas)	
 	equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
 	
-	gestor_email = usuarios_fb[usuarios_fb['Nome'] == 'Teste gestor']
-	st.write(gestor_email)
-
 	with st.form('Form_ins'):
 		st1, st2, st3, st4 = st.beta_columns(4)
 		dic['data'] = st1.date_input('Data da ocorrência')
@@ -356,6 +353,10 @@ df_pendencia = load_pendencias()
 gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() == 'sim']['Nome'])
 nao_gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() != 'sim']['Nome'])
 colunas = dados.columns
+
+gestor_email = usuarios_fb[usuarios_fb['Nome'] == 'Teste gestor']
+st.write(gestor_email)
+
 
 # Constantes
 equipamentos = []
