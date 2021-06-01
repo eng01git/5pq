@@ -206,7 +206,9 @@ def func_validar(index, row, indice):
 			bt1, bt2 = st.beta_columns(2)
 			aprovar = bt1.button('Aprovar 5-Porques ' + '(' + str(index) + ')')
 			reprovar = bt2.button('Reprovar 5-Porques ' + '(' + str(index) + ')')
-			st.subheader('Exportar 5-Porques')			
+			st.subheader('Exportar 5-Porques')	
+			
+			#Download do documento selecionado
 			export = filtrado[filtrado['document'] == row['document']]
 			st.markdown(get_table_download_link(export), unsafe_allow_html=True)
 					
@@ -250,7 +252,7 @@ def func_validar(index, row, indice):
 				dic['data'] = st1.date_input('Data da ocorrência' + ' (' + str(index) + '):', doc['data'])
 				dic['turno'] = st2.selectbox('Selecione o turno' + ' (' + str(index) + '):', turnos, turnos.index(doc['turno']))
 				dic['hora'] = st3.time_input('Selecione o horário' + ' (' + str(index) + '):', value=doc['hora'])
-				dic['definição do evento'] = st4.selectbox('Definição do Evento' + ' (' + str(index) + '):', tipos, tipos.index(doc['Definição do Evento']))
+				dic['definição do evento'] = st4.selectbox('Definição do Evento' + ' (' + str(index) + '):', tipos, tipos.index(doc['definição do evento']))
 				dic['linha'] = sap_nv2
 				dic['equipamento'] = sp3.selectbox('Selecione o equipamento' + ' (' + str(index) + '):', equipamentos, equipamento_ant)
 				dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)' + ' (' + str(index) + '):', value=int(doc['gatilho']), min_value=30)
