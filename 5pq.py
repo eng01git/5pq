@@ -322,6 +322,8 @@ def formulario(linhas):
 		dic['notas de manutenção'] = st_tags(label='Notas de manutenção', text='Pressione enter')
 		dic['ordem manutenção'] = st_tags(label='Ordens de manutenção', text='Pressione enter')
 		dic['status'] = 'Pendente'
+		gestor_email = usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email']
+		st.write(gestor_email)
 		submitted_ins = st.form_submit_button('Enviar 5 Porquês')
 
 	if submitted_ins:
