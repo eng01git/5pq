@@ -278,7 +278,8 @@ def func_validar(index, row, indice):
 				if '@ambev.com.br' in new_d['email responsável']:
 					db.collection("5porques_2").document(documento).set(new_d,merge=True)
 					editar = False
-					send_email(usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email'], 1, documento, '', new_d['gatilho'])
+					email_gestor = usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email']
+					send_email(str(email_gestor.iloc[0]), 1, documento, '', new_d['gatilho'])
 					caching.clear_cache()
 				else:
 					st.error('Por favor inserir e-mail Ambev válido')
