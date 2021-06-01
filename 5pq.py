@@ -189,32 +189,40 @@ def func_validar(index, row, indice):
 		if not editar:
 			st.table(row)
 			st.subheader('Avaliação do 5-Porques')
+			codigo_gestor = st.text_input('Inserir código do gestor', type='password')
 			comentario = st.text_input('Envie um comentário sobre 5-Porques' + ' (' + str(index) + '):',"")			
 			bt1, bt2 = st.beta_columns(2)
 			aprovar = bt1.button('Aprovar 5-Porques ' + '(' + str(index) + ')')
 			reprovar = bt2.button('Reprovar 5-Porques ' + '(' + str(index) + ')')
 			st.subheader('Exportar 5-Porques')			
 			export = filtrado[filtrado['document'] == row['document']]
-			#st.markdown(download(export), unsafe_allow_html=True)
 			st.markdown(get_table_download_link(export), unsafe_allow_html=True)
+			
+			
+				
+			
 			if aprovar:
-				caching.clear_cache()
-				att_verificado = {}
-				att_verificado['status'] = 'Aprovado'
-				db.collection("5porques_2").document(row['document']).update(att_verificado)
-				send_email(row['email responsável'], 2, str(row['document']), comentario)
-				#caching.clear_cache()
+				if codigo_gestor == 'GestorAmbev':
+					caching.clear_cache()
+					att_verificado = {}
+					att_verificado['status'] = 'Aprovado'
+					db.collection("5porques_2").document(row['document']).update(att_verificado)
+					send_email(row['email responsável'], 2, str(row['document']), comentario)
+				else:
+					st.error('Código do gestor incorreto')
 
 			if reprovar:
 				if comentario == '':
 					st.error('Obrigatório o preenchimento do comentário!')
-				else:
+				elif codigo_gestor == 'GestorAmbev':
 					caching.clear_cache()
 					att_verificado = {}
 					att_verificado['status'] = 'Reprovado'
 					db.collection("5porques_2").document(row['document']).update(att_verificado)
 					send_email(row['email responsável'], 3, str(row['document']), comentario)
-					#caching.clear_cache()
+				else: 
+					st.error('Código do gestor incorreto')
+
 		else:
 			documento = str(row['document'])	
 			doc = row.to_dict()
@@ -440,9 +448,9 @@ if func_escolhida == 'Analisar':
 		filtrado = filtrado[filtrado['status'] == status]	
 	
 	st.write(filtrado[['data', 'document', 'gestor', 'status','responsável identificação', 'turno', 'linha', 'equipamento']])
-	#st.markdown(download(filtrado), unsafe_allow_html=True)
 	st.markdown(get_table_download_link(filtrado), unsafe_allow_html=True)
 	indice_doc = st.multiselect('Selecione a ocorrência', filtrado['document'].tolist())
+	
 	for index, row in filtrado.iterrows():
 		if row['document'] in indice_doc:
 			st.subheader('Ocorrência ' + str(row['document']))
