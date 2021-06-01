@@ -98,7 +98,7 @@ def send_email(to, atividade, documento, comentario, gatilho):
 		server.close()
 		st.write('E-mail enviado!')
 	except:
-		st.error('Falha ao enviar e-mail')
+		st.error(list_to)
 
 ######################################################################################################
                                            #Função para download
