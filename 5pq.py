@@ -425,7 +425,7 @@ if func_escolhida == 'Pendências':
 		doc_ref.set(new_d)
 		st.write('Pendência criada com sucesso')
 		
-	uploaded_file = st.file_uploader("Choose a file")
+	uploaded_file = st.file_uploader("Selecione o arquivo Excel para upload")
 	if uploaded_file is not None:
 		mes = load_mes(uploaded_file)
 		st.write(mes)
