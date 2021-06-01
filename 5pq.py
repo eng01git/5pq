@@ -241,7 +241,7 @@ def func_validar(index, row, indice):
 				dic['data'] = st1.date_input('Data da ocorrência' + ' (' + str(index) + '):', doc['data'])
 				dic['turno'] = st2.selectbox('Selecione o turno' + ' (' + str(index) + '):', turnos, turnos.index(doc['turno']))
 				dic['hora'] = st3.time_input('Selecione o horário' + ' (' + str(index) + '):', value=doc['hora'])
-				dic['departamento'] = st4.selectbox('Selecione o departamento' + ' (' + str(index) + '):', tipos, tipos.index(doc['departamento']))
+				dic['Definição do Evento'] = st4.selectbox('Definição do Evento' + ' (' + str(index) + '):', tipos, tipos.index(doc['Definição do Evento']))
 				dic['linha'] = sap_nv2
 				dic['equipamento'] = sp3.selectbox('Selecione o equipamento' + ' (' + str(index) + '):', equipamentos, equipamento_ant)
 				dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)' + ' (' + str(index) + '):', value=int(doc['gatilho']), min_value=30)
@@ -299,7 +299,7 @@ def formulario(linhas):
 		dic['data'] = st1.date_input('Data da ocorrência')
 		dic['turno'] = st2.selectbox('Selecione o turno', turnos )
 		dic['hora'] = st3.time_input('Selecione o horário')
-		dic['departamento'] = st4.selectbox('Selecione o departamento', tipos)
+		dic['Definição do Evento'] = st4.selectbox('Definição do Evento', tipos)
 		dic['linha'] = sap_nv2
 		dic['equipamento'] = sp3.selectbox('Selecione o equipamento', equipamentos)
 		dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)', min_value=30)		
@@ -360,10 +360,10 @@ colunas = dados.columns
 
 # Constantes
 equipamentos = []
-gatilhos = [ 'Segurança', '10 minutos', '30 minutos', '1 hora']
+#gatilhos = [ 'Segurança', '10 minutos', '30 minutos', '1 hora']
 linhas = sap_nv3['Linha'].drop_duplicates()
 turnos = ['Turno A', 'Turno B', 'Turno C']
-tipos= ['Produção', 'Manutenção', 'Qualidade', 'Engenharia', 'Utilidades', 'Meio ambiente']
+tipos = ['Automação', 'Eletricidade', 'Elétrico', 'Falha - Automação', 'Falha - Elétrica', 'Falha - Mecânica', 'Falha - Operacional', 'Mecânica', 'Operacional']
 falhas = ['Máquina', 'Mão-de-obra', 'Método', 'Materiais', 'Meio ambiente', 'Medição', 'Outra']
 deterioização = ['Forçada', 'Natural', 'Nenhuma']
 
@@ -391,7 +391,7 @@ if func_escolhida == 'Pendências':
 		st1, st2, st3 = st.beta_columns(3)
 		dic['data'] = st1.date_input('Data da pendência')
 		dic['turno'] = st2.selectbox('Selecione turno', turnos )
-		dic['departamento'] = st3.selectbox('Selecione o departamento ', tipos)
+		dic['Definição do Evento'] = st3.selectbox('Definição do Evento ', tipos)
 		dic['linha'] = sap_nv2
 		dic['equipamento'] = sp3.selectbox('Selecione equipamento', equipamentos)	
 		dic['descrição'] = st.text_input('Descreva o ocorrido', "")
