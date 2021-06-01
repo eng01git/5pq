@@ -384,17 +384,6 @@ dic = {} #dicionario
 
 if func_escolhida == 'Pendências':
 	
-	
-	
-	uploaded_file = st.file_uploader("Choose a file")
-	if uploaded_file is not None:
-		mes = load_mes(uploaded_file)
-		st.write(mes)
-
-	
-	
-	
-	
 	st.subheader('Últimas pendências')
 	qtd_pendencias = st.slider('Selecione quantas pendencias deseja visualiar', 10)
 	st.write(df_pendencia.tail(qtd_pendencias)[['data', 'turno', 'linha', 'equipamento', 'departamento', 'usuario', 'descrição']])
@@ -431,6 +420,11 @@ if func_escolhida == 'Pendências':
 		doc_ref = db.collection("pendencias").document(val_documento)
 		doc_ref.set(new_d)
 		st.write('Pendência criada com sucesso')
+		
+	uploaded_file = st.file_uploader("Choose a file")
+	if uploaded_file is not None:
+		mes = load_mes(uploaded_file)
+		st.write(mes)
 
 if func_escolhida == 'Inserir':
 	st.subheader('Formulário 5-porques')
