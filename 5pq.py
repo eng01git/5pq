@@ -290,6 +290,9 @@ def formulario(linhas):
 	list_linhas = list(linhas)
 	sap_nv2 = sp2.selectbox('Selecione a linha', list_linhas)	
 	equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
+	
+	gestor_email = usuarios_fb[usuarios_fb['Nome'] == 'Teste operador']['Email']
+	st.write(gestor_email)
 
 	with st.form('Form_ins'):
 		st1, st2, st3, st4 = st.beta_columns(4)
@@ -322,8 +325,6 @@ def formulario(linhas):
 		dic['notas de manutenção'] = st_tags(label='Notas de manutenção', text='Pressione enter')
 		dic['ordem manutenção'] = st_tags(label='Ordens de manutenção', text='Pressione enter')
 		dic['status'] = 'Pendente'
-		gestor_email = usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email']
-		st.write(gestor_email)
 		submitted_ins = st.form_submit_button('Enviar 5 Porquês')
 
 	if submitted_ins:
