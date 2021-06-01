@@ -55,7 +55,7 @@ DATA_URL = "data.csv"
 ######################################################################################################
 
 st.sidebar.title("Menu 5-Porques")
-func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Pendências', 'Inserir', 'Analisar', 'Estatísticas'), index=0)
+func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Pendências', 'Inserir', 'Consultar', 'Estatísticas'), index=0)
 
 ######################################################################################################
                                            #Função para enviar email
@@ -238,7 +238,7 @@ def func_validar(index, row, indice):
 				dic['data'] = st1.date_input('Data da ocorrência' + ' (' + str(index) + '):', doc['data'])
 				dic['turno'] = st2.selectbox('Selecione o turno' + ' (' + str(index) + '):', turnos, turnos.index(doc['turno']))
 				dic['hora'] = st3.time_input('Selecione o horário' + ' (' + str(index) + '):', value=doc['hora'])
-				dic['departamento'] = st4.selectbox('Selecione o departamento' + ' (' + str(index) + '):', departamentos, departamentos.index(doc['departamento']))
+				dic['tipo'] = st4.selectbox('Selecione o tipo' + ' (' + str(index) + '):', tipos, tipos.index(doc['tipo']))
 				dic['linha'] = sap_nv2
 				dic['equipamento'] = sp3.selectbox('Selecione o equipamento' + ' (' + str(index) + '):', equipamentos, equipamento_ant)
 				dic['gatilho'] = st0.selectbox('Selecione o gatilho' + ' (' + str(index) + '):', gatilhos, gatilhos.index(doc['gatilho']))
@@ -295,7 +295,7 @@ def formulario(linhas):
 		dic['data'] = st1.date_input('Data da ocorrência')
 		dic['turno'] = st2.selectbox('Selecione o turno', turnos )
 		dic['hora'] = st3.time_input('Selecione o horário')
-		dic['departamento'] = st4.selectbox('Selecione o departamento', departamentos)
+		dic['tipo'] = st4.selectbox('Selecione o tipo', tipos)
 		dic['linha'] = sap_nv2
 		dic['equipamento'] = sp3.selectbox('Selecione o equipamento', equipamentos)
 		dic['gatilho'] = st0.selectbox('Selecione o gatilho', gatilhos)		
@@ -358,7 +358,7 @@ equipamentos = []
 gatilhos = [ 'Segurança', '10 minutos', '30 minutos', '1 hora']
 linhas = sap_nv3['Linha'].drop_duplicates()
 turnos = ['Turno A', 'Turno B', 'Turno C']
-departamentos = ['Engenharia', 'Automação', 'Manutenção']
+tipos= ['Mecânica', 'Elétrica', 'Automação', 'Operacional']
 falhas = ['Máquina', 'Mão-de-obra', 'Método', 'Materiais', 'Meio ambiente', 'Medição', 'Outra']
 deterioização = ['Forçada', 'Natural', 'Nenhuma']
 
@@ -412,7 +412,7 @@ if func_escolhida == 'Inserir':
 	st.subheader('Formulário 5-porques')
 	formulario(linhas)
 
-if func_escolhida == 'Analisar':
+if func_escolhida == 'Consultar':
 	st.subheader('Configure as opções de filtro')
 	st.text('Selecione a data')
 	col1, col2 = st.beta_columns(2)
