@@ -339,7 +339,7 @@ def formulario(linhas):
 			doc_ref.set(new_d)
 			send_email(usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email'], 0, val_documento, '')
 		else:
-			st.error('usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email']')
+			st.error(usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email'])
 				
 ######################################################################################################
                                            #Main
