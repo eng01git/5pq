@@ -242,7 +242,7 @@ def func_validar(index, row, indice):
 				dic['departamento'] = st4.selectbox('Selecione o departamento' + ' (' + str(index) + '):', tipos, tipos.index(doc['departamento']))
 				dic['linha'] = sap_nv2
 				dic['equipamento'] = sp3.selectbox('Selecione o equipamento' + ' (' + str(index) + '):', equipamentos, equipamento_ant)
-				dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)' + ' (' + str(index) + '):', doc['gatilho'], min=30)
+				dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)' + ' (' + str(index) + '):', doc['gatilho'], min_value=30)
 				dic['descrição anomalia'] = st.text_input('Descreva a anomalia' + ' (' + str(index) + '):', value=doc['descrição anomalia'])
 				st4, st5 = st.beta_columns(2)
 				dic['correção'] = st.text_input('Descreva a correção' + ' (' + str(index) + '):', value=doc['correção'])
@@ -299,7 +299,7 @@ def formulario(linhas):
 		dic['departamento'] = st4.selectbox('Selecione o departamento', tipos)
 		dic['linha'] = sap_nv2
 		dic['equipamento'] = sp3.selectbox('Selecione o equipamento', equipamentos)
-		dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)', min=30)		
+		dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)', min_value=30)		
 		dic['descrição anomalia'] = st.text_input('Descreva a anomalia', "")
 		st4, st5 = st.beta_columns(2)
 		dic['correção'] = st.text_input('Descreva a correção', "")
