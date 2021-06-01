@@ -197,10 +197,7 @@ def func_validar(index, row, indice):
 			st.subheader('Exportar 5-Porques')			
 			export = filtrado[filtrado['document'] == row['document']]
 			st.markdown(get_table_download_link(export), unsafe_allow_html=True)
-			
-			
-				
-			
+					
 			if aprovar:
 				if codigo_gestor == 'GestorAmbev':
 					caching.clear_cache()
@@ -212,16 +209,16 @@ def func_validar(index, row, indice):
 					st.error('Código do gestor incorreto')
 
 			if reprovar:
-				if comentario == '':
-					st.error('Obrigatório o preenchimento do comentário!')
-				elif codigo_gestor == 'GestorAmbev':
+				if codigo_gestor != 'GestorAmbev':
+					st.error('Código do gestor incorreto')
+				elif comentario != '':
 					caching.clear_cache()
 					att_verificado = {}
 					att_verificado['status'] = 'Reprovado'
 					db.collection("5porques_2").document(row['document']).update(att_verificado)
 					send_email(row['email responsável'], 3, str(row['document']), comentario)
 				else: 
-					st.error('Código do gestor incorreto')
+					st.error('Obrigatório o preenchimento do comentário!')
 
 		else:
 			documento = str(row['document'])	
