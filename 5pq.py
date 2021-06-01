@@ -115,21 +115,21 @@ def download(df):
 	return href
 #excel
 def to_excel(df):
-    output = BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    df.to_excel(writer, sheet_name='Sheet1')
-    writer.save()
-    processed_data = output.getvalue()
-    return processed_data
+	output = BytesIO()
+	writer = pd.ExcelWriter(output, engine='xlsxwriter')
+	df.to_excel(writer, sheet_name='Sheet1')
+	writer.save()
+	processed_data = output.getvalue()
+	return processed_data
 
 def get_table_download_link(df):
-    """Generates a link allowing the data in a given panda dataframe to be downloaded
-    in:  dataframe
-    out: href string
-    """
-    val = to_excel(df)
-    b64 = base64.b64encode(val)  # val looks like b'...'
-    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="dados.xlsx">Download dos dados em Excel</a>' # decode b'abc' => abc
+	"""Generates a link allowing the data in a given panda dataframe to be downloaded
+	in:  dataframe
+	out: href string
+	"""
+	val = to_excel(df)
+	b64 = base64.b64encode(val)  # val looks like b'...'
+	return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="dados.xlsx">Download dos dados em Excel</a>' # decode b'abc' => abc
 
 ######################################################################################################
                                            #Função para leitura do banco (Firebase)
@@ -152,7 +152,7 @@ def load_data():
 @st.cache
 def load_mes(uploaded_file):
 	data = pd.read_excel(uploaded_file, sheet_name='Parada')
-	data['Data'] = data['Data'].dt.data
+	data['Data'] = data['Data'].dt.date
 	data['documento'] = data['Linha'].str + data['Equipamento'].str + data['Data'].str + data['Hora'].str
 	return data
 
