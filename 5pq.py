@@ -8,7 +8,7 @@
 # Streamlit para web, streamlit share para deploy, banco de dados Firebase (Google)
 
 # Link:
-# https://share.streamlit.io/mariusss21/test_st_share/main/demoapp.py
+# https://share.streamlit.io/eng01git/5pq/main/5pq.py
 ######################################################################################################
                                  # importar bibliotecas
 ######################################################################################################
@@ -33,9 +33,7 @@ from google.oauth2 import service_account
 
 st.set_page_config(
      page_title="Ambev 5-Porques",
-     #page_icon="🧊",
      layout="wide",
-#     initial_sidebar_state="expanded",
 )
 
 ######################################################################################################
@@ -84,8 +82,11 @@ def send_email(to, atividade, documento, comentario):
 		body = """Ola, o gestor reprovou 5-Porques, acesse a plataforma para retificar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py \n\n Comentario do gestor: \n\n%s  \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = """Reprovado 5-Porques %s""" % (documento)		
 	
+	list_to = [to]
+	list_to.append('marius.lisboa@gmail.com')
+	
 	email_text = """From: %s\nTo: %s\nSubject: %s\n\n%s
-	""" % (from_, to, subject, body)
+	""" % (from_, list_to, subject, body)
 	#email_text.set_charset('utf8')
 	try:
 		server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
