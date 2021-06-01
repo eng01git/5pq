@@ -152,8 +152,8 @@ def load_data():
 @st.cache
 def load_mes(uploaded_file):
 	data = pd.read_excel(uploaded_file)
-	data['Data'] = pd.to_datetime(data['Data']).dt.date
-	data['Hora'] = pd.to_datetime(data['Hora']).dt.time
+	#data['Data'] = pd.to_datetime(data['Data']).dt.date
+	#data['Hora'] = pd.to_datetime(data['Hora']).dt.time
 	return data
 
 # Efetua a leitura dos dados dos usuários no banco
