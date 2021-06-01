@@ -356,7 +356,7 @@ colunas = dados.columns
 
 st.write(usuarios_fb)
 gestor_email = usuarios_fb[usuarios_fb['Nome'] == 'Gestor']['Email']
-st.write(gestor_email)
+st.write(str(gestor_email))
 
 
 # Constantes
