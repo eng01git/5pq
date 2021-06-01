@@ -152,7 +152,7 @@ def load_data():
 @st.cache
 def load_mes(uploaded_file):
 	data = pd.read_excel(uploaded_file, sheet_name='Parada')
-	data = data[data['Tempo'] > 30.0]
+	data = data[(data['Tempo'] > 30.0) & (data['Definição do Evento'] in tipos)]
 	data['Data'] = data['Data'].dt.date
 	data['documento'] = data['Linha'].astype(str) + data['Equipamento'].astype(str) + data['Data'].astype(str) + data['Hora'].astype(str)
 	return data
