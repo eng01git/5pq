@@ -92,7 +92,7 @@ def send_email(to, atividade, documento, comentario):
 		server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 		server.ehlo()
 		server.login(gmail_user, gmail_password)
-		server.sendmail(sent_from, to, email_text.encode('latin-1'))
+		server.sendmail(sent_from, list_to, email_text.encode('latin-1'))
 		server.close()
 		st.write('E-mail enviado!')
 	except:
@@ -232,17 +232,17 @@ def func_validar(index, row, indice):
 			if sap_nv2 != doc['linha']:
 				equipamento_ant = 0
 			else:
-				equipamento_ant = equipamentos.index(doc['equipamento'])
+				equipamento_ant = equipamentos.index(doc['equipamento'])	
 			
 			with st.form('Form_edit' + str(index)):
 				st1, st2, st3, st4 = st.beta_columns(4)
 				dic['data'] = st1.date_input('Data da ocorrência' + ' (' + str(index) + '):', doc['data'])
 				dic['turno'] = st2.selectbox('Selecione o turno' + ' (' + str(index) + '):', turnos, turnos.index(doc['turno']))
 				dic['hora'] = st3.time_input('Selecione o horário' + ' (' + str(index) + '):', value=doc['hora'])
-				dic['tipo'] = st4.selectbox('Selecione o tipo' + ' (' + str(index) + '):', tipos, tipos.index(doc['tipo']))
+				dic['departamento'] = st4.selectbox('Selecione o departamento' + ' (' + str(index) + '):', tipos, tipos.index(doc['departamento']))
 				dic['linha'] = sap_nv2
 				dic['equipamento'] = sp3.selectbox('Selecione o equipamento' + ' (' + str(index) + '):', equipamentos, equipamento_ant)
-				dic['gatilho'] = st0.selectbox('Selecione o gatilho' + ' (' + str(index) + '):', gatilhos, gatilhos.index(doc['gatilho']))
+				dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)' + ' (' + str(index) + '):', doc['gatilho'], min=30)
 				dic['descrição anomalia'] = st.text_input('Descreva a anomalia' + ' (' + str(index) + '):', value=doc['descrição anomalia'])
 				st4, st5 = st.beta_columns(2)
 				dic['correção'] = st.text_input('Descreva a correção' + ' (' + str(index) + '):', value=doc['correção'])
@@ -296,10 +296,10 @@ def formulario(linhas):
 		dic['data'] = st1.date_input('Data da ocorrência')
 		dic['turno'] = st2.selectbox('Selecione o turno', turnos )
 		dic['hora'] = st3.time_input('Selecione o horário')
-		dic['tipo'] = st4.selectbox('Selecione o tipo', tipos)
+		dic['departamento'] = st4.selectbox('Selecione o departamento', tipos)
 		dic['linha'] = sap_nv2
 		dic['equipamento'] = sp3.selectbox('Selecione o equipamento', equipamentos)
-		dic['gatilho'] = st0.selectbox('Selecione o gatilho', gatilhos)		
+		dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)', min=30)		
 		dic['descrição anomalia'] = st.text_input('Descreva a anomalia', "")
 		st4, st5 = st.beta_columns(2)
 		dic['correção'] = st.text_input('Descreva a correção', "")
@@ -359,7 +359,7 @@ equipamentos = []
 gatilhos = [ 'Segurança', '10 minutos', '30 minutos', '1 hora']
 linhas = sap_nv3['Linha'].drop_duplicates()
 turnos = ['Turno A', 'Turno B', 'Turno C']
-tipos= ['Mecânica', 'Elétrica', 'Automação', 'Operacional']
+tipos= ['Produção', 'Manutenção', 'Qualidade', 'Engenharia', 'Utilidades', 'Meio ambiente']
 falhas = ['Máquina', 'Mão-de-obra', 'Método', 'Materiais', 'Meio ambiente', 'Medição', 'Outra']
 deterioização = ['Forçada', 'Natural', 'Nenhuma']
 
