@@ -82,7 +82,7 @@ def send_email(to, atividade, documento, comentario, gatilho):
 		body = """Ola, o gestor reprovou 5-Porques, acesse a plataforma para retificar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py \n\n Comentario do gestor: \n\n%s  \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = """Reprovado 5-Porques %s""" % (documento)	
 		
-	if gatilho > 60:
+	if int(gatilho) > 60:
 		list_to = [to]
 		list_to.append('marius.lisboa@gmail.com')
 		list_to.append('BRMAI0514@ambev.com.br')
