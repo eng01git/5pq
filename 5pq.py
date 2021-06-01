@@ -60,7 +60,7 @@ func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Pendências',
 ######################################################################################################
 # Recebe como parâmetros destinatário e um código de atividade para o envio
 # O email está configurado por parâmetros presentes no streamlit share (secrets)
-def send_email(to, atividade, documento, comentario):
+def send_email(to, atividade, documento, comentario, gatilho):
 	gmail_user = st.secrets["email"]
 	gmail_password = st.secrets["senha"]
 	sent_from = gmail_user
@@ -80,14 +80,18 @@ def send_email(to, atividade, documento, comentario):
 		subject = """Aprovado 5-Porques %s""" % (documento)	
 	elif atividade == 3:
 		body = """Ola, o gestor reprovou 5-Porques, acesse a plataforma para retificar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py \n\n Comentario do gestor: \n\n%s  \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
-		subject = """Reprovado 5-Porques %s""" % (documento)		
-	
-	list_to = [to]
-	list_to.append('marius.lisboa@gmail.com')
+		subject = """Reprovado 5-Porques %s""" % (documento)	
+		
+	if gatilho > 60:
+		list_to = [to]
+		list_to.append('marius.lisboa@gmail.com')
+		list_to.append('BRMAI0514@ambev.com.br')
+	else:
+		list_to = [to]
 	
 	email_text = """From: %s\nTo: %s\nSubject: %s\n\n%s
 	""" % (from_, list_to, subject, body)
-	#email_text.set_charset('utf8')
+	
 	try:
 		server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 		server.ehlo()
@@ -96,7 +100,7 @@ def send_email(to, atividade, documento, comentario):
 		server.close()
 		st.write('E-mail enviado!')
 	except:
-		st.error(list_to)
+		st.error('Falha ao enviar e-mail')
 
 ######################################################################################################
                                            #Função para download
@@ -353,11 +357,6 @@ df_pendencia = load_pendencias()
 gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() == 'sim']['Nome'])
 nao_gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() != 'sim']['Nome'])
 colunas = dados.columns
-
-st.write(usuarios_fb)
-gestor_email = usuarios_fb[usuarios_fb['Nome'] == 'Gestor']['Email']
-st.write(str(gestor_email.iloc[0]))
-
 
 # Constantes
 equipamentos = []
