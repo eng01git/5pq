@@ -387,7 +387,7 @@ if func_escolhida == 'Pendências':
 		st1, st2, st3 = st.beta_columns(3)
 		dic['data'] = st1.date_input('Data da pendência')
 		dic['turno'] = st2.selectbox('Selecione turno', turnos )
-		dic['tipo'] = st3.selectbox('Selecione o tipo ', tipos)
+		dic['departamento'] = st3.selectbox('Selecione o departamento ', tipos)
 		dic['linha'] = sap_nv2
 		dic['equipamento'] = sp3.selectbox('Selecione equipamento', equipamentos)	
 		dic['descrição'] = st.text_input('Descreva o ocorrido', "")
