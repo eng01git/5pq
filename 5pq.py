@@ -291,7 +291,7 @@ def formulario(linhas):
 	sap_nv2 = sp2.selectbox('Selecione a linha', list_linhas)	
 	equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
 	
-	gestor_email = usuarios_fb[usuarios_fb['Nome'] == 'Teste gestor']['Email']
+	gestor_email = usuarios_fb[usuarios_fb['Nome'] == 'Teste gestor']
 	st.write(gestor_email)
 
 	with st.form('Form_ins'):
