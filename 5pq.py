@@ -149,6 +149,13 @@ def load_data():
 	data['hora'] = pd.to_datetime(data['hora']).dt.time
 	return data
 
+@st.cache
+def load_mes(uploaded_file):
+	data = pd.read_excel(uploaded_file)
+	data['Data'] = pd.to_datetime(data['Data']).dt.date
+	data['Hora'] = pd.to_datetime(data['Hora']).dt.time
+	return data
+
 # Efetua a leitura dos dados dos usuários no banco
 @st.cache
 def load_usuarios():
@@ -376,6 +383,18 @@ st.write('Selecione no menu lateral a opção desejada')
 dic = {} #dicionario
 
 if func_escolhida == 'Pendências':
+	
+	
+	
+	uploaded_file = st.file_uploader("Choose a file")
+	if uploaded_file is not None:
+		mes = load_mes(uploaded_file)
+		st.write(mes)
+
+	
+	
+	
+	
 	st.subheader('Últimas pendências')
 	qtd_pendencias = st.slider('Selecione quantas pendencias deseja visualiar', 10)
 	st.write(df_pendencia.tail(qtd_pendencias)[['data', 'turno', 'linha', 'equipamento', 'departamento', 'usuario', 'descrição']])
