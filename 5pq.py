@@ -101,7 +101,7 @@ def load_mes(uploaded_file, tipos):
 		batch = db.batch()
 		for index, row in to_include.iterrows():
 			ref = db.collection('MES_data').document(row['documento'])
-			batch.set(ref, row)
+			batch.set(ref, row.to_dict())
 		batch.commit()		      
 	
 	#dicionario.keys
