@@ -85,6 +85,7 @@ def load_mes():
 	mes_df = pd.DataFrame.from_dict(dicionario)
 	mes_df = mes_df.T
 	mes_df.reset_index(inplace=True)
+	mes_df.drop('index', axis=1)
 	return mes_df
 
 def upload_mes(uploaded_file, tipos):
