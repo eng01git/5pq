@@ -74,7 +74,7 @@ def load_data():
 	return data
 
 
-@st.cache
+#@st.cache
 def load_mes(uploaded_file, tipos):
 	#Leitura dos dados do arquivo excel
 	data = pd.read_excel(uploaded_file, sheet_name='Parada')
