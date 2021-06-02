@@ -56,6 +56,77 @@ st.sidebar.title("Menu 5-Porques")
 func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Pendências', 'Inserir', 'Consultar', 'Estatísticas'), index=0)
 
 ######################################################################################################
+                                           #Função para leitura do banco (Firebase)
+######################################################################################################
+# Efetua a leitura de todos os documentos presentes no banco e passa para um dataframe pandas
+# Função para carregar os dados do firebase (utiliza cache para agilizar a aplicação)
+@st.cache
+def load_data():
+	data = pd.read_csv(DATA_URL)
+	posts_ref = db.collection("5porques_2")	
+	for doc in posts_ref.stream():
+		dicionario = doc.to_dict()
+		dicionario['document'] = doc.id
+		data = data.append(dicionario, ignore_index=True)
+
+	data['data'] = pd.to_datetime(data['data']).dt.date
+	data['hora'] = pd.to_datetime(data['hora']).dt.time
+	return data
+
+
+@st.cache
+def load_mes(uploaded_file, tipos):
+	#Leitura dos dados do arquivo excel
+	data = pd.read_excel(uploaded_file, sheet_name='Parada')
+	#filtrando os dados (tempo maior que 30 e eventos incluídos em tipo)
+	data = data[(data['Tempo'] > 30.0)]
+	data = data[data['Definição do Evento'].isin(tipos)]
+	#ajuste da variável de data
+	data['Data'] = data['Data'].dt.date
+	#criação do nome do documento
+	data['documento'] = data['Linha'].astype(str) + data['Equipamento'].astype(str) + data['Data'].astype(str) + data['Hora'].astype(str)
+	
+	dicionario = {}
+	posts_ref = db.collection("MES_data")	
+	for doc in posts_ref.stream():
+		dic_auxiliar = doc.to_dict()
+		dicionario[dic_auxiliar['documento']] = doc.to_dict()
+			   
+	mes_df = pd.Dataframe(dicionario)
+	st.write(mes_df)		
+	
+	
+	return data
+
+# Efetua a leitura dos dados dos usuários no banco
+@st.cache
+def load_usuarios():
+	data = pd.DataFrame(columns=['Nome', 'Email', 'Gestor', 'Codigo'])
+	posts_ref = db.collection("Usuarios")	
+	for doc in posts_ref.stream():
+		dicionario = doc.to_dict()
+		dicionario['document'] = doc.id
+		data = data.append(dicionario, ignore_index=True)
+	return data
+
+# Efetua a leitura das pendencias no banco
+@st.cache
+def load_pendencias():
+	data = pd.DataFrame(columns=['data', 'turno', 'linha', 'equipamento', 'departamento', 'usuario', 'descrição'])
+	posts_ref = db.collection("pendencias")	
+	for doc in posts_ref.stream():
+		dicionario = doc.to_dict()
+		dicionario['document'] = doc.id
+		data = data.append(dicionario, ignore_index=True)
+	return data
+
+# Efetua a leitura dos dados das linhas e dos equipamentos
+@st.cache
+def load_sap_nv3():
+	data = pd.read_csv('SAP_nivel3.csv', sep=';')
+	return data
+
+######################################################################################################
                                            #Função para enviar email
 ######################################################################################################
 # Recebe como parâmetros destinatário e um código de atividade para o envio
@@ -131,61 +202,6 @@ def get_table_download_link(df):
 	b64 = base64.b64encode(val)  # val looks like b'...'
 	return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="dados.xlsx">Download dos dados em Excel</a>' # decode b'abc' => abc
 
-######################################################################################################
-                                           #Função para leitura do banco (Firebase)
-######################################################################################################
-# Efetua a leitura de todos os documentos presentes no banco e passa para um dataframe pandas
-# Função para carregar os dados do firebase (utiliza cache para agilizar a aplicação)
-@st.cache
-def load_data():
-	data = pd.read_csv(DATA_URL)
-	posts_ref = db.collection("5porques_2")	
-	for doc in posts_ref.stream():
-		dicionario = doc.to_dict()
-		dicionario['document'] = doc.id
-		data = data.append(dicionario, ignore_index=True)
-
-	data['data'] = pd.to_datetime(data['data']).dt.date
-	data['hora'] = pd.to_datetime(data['hora']).dt.time
-	return data
-
-@st.cache
-def load_mes(uploaded_file, tipos):
-	data = pd.read_excel(uploaded_file, sheet_name='Parada')
-	data = data[(data['Tempo'] > 30.0)]
-	#df[~df[ ‘Author’ ].isin(remove_lst)]
-	data = data[data['Definição do Evento'].isin(tipos)]
-	data['Data'] = data['Data'].dt.date
-	data['documento'] = data['Linha'].astype(str) + data['Equipamento'].astype(str) + data['Data'].astype(str) + data['Hora'].astype(str)
-	return data
-
-# Efetua a leitura dos dados dos usuários no banco
-@st.cache
-def load_usuarios():
-	data = pd.DataFrame(columns=['Nome', 'Email', 'Gestor', 'Codigo'])
-	posts_ref = db.collection("Usuarios")	
-	for doc in posts_ref.stream():
-		dicionario = doc.to_dict()
-		dicionario['document'] = doc.id
-		data = data.append(dicionario, ignore_index=True)
-	return data
-
-# Efetua a leitura das pendencias no banco
-@st.cache
-def load_pendencias():
-	data = pd.DataFrame(columns=['data', 'turno', 'linha', 'equipamento', 'departamento', 'usuario', 'descrição'])
-	posts_ref = db.collection("pendencias")	
-	for doc in posts_ref.stream():
-		dicionario = doc.to_dict()
-		dicionario['document'] = doc.id
-		data = data.append(dicionario, ignore_index=True)
-	return data
-
-# Efetua a leitura dos dados das linhas e dos equipamentos
-@st.cache
-def load_sap_nv3():
-	data = pd.read_csv('SAP_nivel3.csv', sep=';')
-	return data
 			   
 ######################################################################################################
                                            #Avaliação e edição das ocorrências
