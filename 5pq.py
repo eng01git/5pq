@@ -90,7 +90,7 @@ def load_mes(uploaded_file, tipos):
 	posts_ref = db.collection("MES_data")	
 	for doc in posts_ref.stream():
 		dic_auxiliar = doc.to_dict()
-		dicionario[dic_auxiliar['documento']] = doc.to_dict()
+		dicionario[dic_auxiliar['documento']] = dic_auxiliar
 			   
 	mes_df = pd.DataFrame.from_dict(dicionario)
 	
