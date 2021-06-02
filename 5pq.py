@@ -474,6 +474,8 @@ if func_escolhida == 'Pendências':
 	mes = load_mes()
 	st.write(mes)
 	
+	st.write(mes.groupy(['Linha', 'Equipamento']).count_values())
+	
 if func_escolhida == 'Inserir':
 	st.subheader('Formulário 5-porques')
 	formulario(linhas)
