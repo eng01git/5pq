@@ -97,6 +97,12 @@ def load_mes(uploaded_file, tipos):
 	
 	to_include = data[~data['documento'].isin(dicionario.keys())]
 	
+	if to_include.shape[0] > 0 :
+		for index, row in to_include.iterrows():
+			ref = db.collecion('MES_data').document(row['documento'])
+			batch.set(ref, row)
+		batch.commit()		      
+	
 	#dicionario.keys
 	
 	return to_include
