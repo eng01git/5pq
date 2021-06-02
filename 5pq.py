@@ -390,7 +390,8 @@ def formulario(linhas):
 				
 		if '@ambev.com.br' in new_d['email responsável']:
 			ts = time.time()
-			val_documento = new_d['linha'] + '-' + new_d['equipamento'].replace(" ", "") + '-' + str(int(ts))
+			val_documento = new_d['linha'] + new_d['equipamento'].replace(" ", "") + new_d['data'] + new_d['hora']
+			#val_documento = new_d['linha'] + '-' + new_d['equipamento'].replace(" ", "") + '-' + str(int(ts))
 			doc_ref = db.collection("5porques_2").document(val_documento)
 			doc_ref.set(new_d)
 			email_gestor = usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email']
