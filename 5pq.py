@@ -95,7 +95,7 @@ def load_mes(uploaded_file, tipos):
 	mes_df = pd.DataFrame.from_dict(dicionario)
 	mes_df = mes_df.T
 	
-	to_include = data[~data['documento'].isin(dicionario.keys)]
+	to_include = data[~data['documento'].isin(dicionario.keys())]
 	
 	#dicionario.keys
 	
