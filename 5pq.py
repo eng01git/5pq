@@ -94,7 +94,12 @@ def load_mes(uploaded_file, tipos):
 			   
 	mes_df = pd.DataFrame.from_dict(dicionario)
 	mes_df = mes_df.T
-	return mes_df
+	
+	to_include = data[~data['documento'].isin(dicionario.keys)]
+	
+	#dicionario.keys
+	
+	return to_include
 	#return data
 
 # Efetua a leitura dos dados dos usuários no banco
