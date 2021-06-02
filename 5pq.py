@@ -93,7 +93,7 @@ def load_mes(uploaded_file, tipos):
 		dicionario[dic_auxiliar['documento']] = dic_auxiliar
 			   
 	mes_df = pd.DataFrame.from_dict(dicionario)
-	
+	mes_df = mes_df.T
 	return mes_df
 	#return data
 
