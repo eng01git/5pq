@@ -93,10 +93,9 @@ def load_mes(uploaded_file, tipos):
 		dicionario[dic_auxiliar['documento']] = doc.to_dict()
 			   
 	mes_df = pd.Dataframe(dicionario)
-	st.write(mes_df)		
 	
-	
-	return data
+	return mes_df
+	#return data
 
 # Efetua a leitura dos dados dos usuários no banco
 @st.cache
