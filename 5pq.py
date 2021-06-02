@@ -150,10 +150,11 @@ def load_data():
 	return data
 
 @st.cache
-def load_mes(uploaded_file):
+def load_mes(uploaded_file, tipos):
 	data = pd.read_excel(uploaded_file, sheet_name='Parada')
 	data = data[(data['Tempo'] > 30.0)]
-	#data = data[(data['Definição do Evento'].astype(str) in tipos)]
+	#df[~df[ ‘Author’ ].isin(remove_lst)]
+	data = data[data['Definição do Evento'].isin(tipos)	
 	data['Data'] = data['Data'].dt.date
 	data['documento'] = data['Linha'].astype(str) + data['Equipamento'].astype(str) + data['Data'].astype(str) + data['Hora'].astype(str)
 	return data
@@ -427,7 +428,7 @@ if func_escolhida == 'Pendências':
 		
 	uploaded_file = st.file_uploader("Selecione o arquivo Excel para upload")
 	if uploaded_file is not None:
-		mes = load_mes(uploaded_file)
+		mes = load_mes(uploaded_file, tipos)
 		st.write(mes)
 
 if func_escolhida == 'Inserir':
