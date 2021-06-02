@@ -56,7 +56,7 @@ st.sidebar.title("Menu 5-Porques")
 func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Pendências', 'Inserir', 'Consultar', 'Estatísticas'), index=0)
 
 ######################################################################################################
-                                           #Função para leitura do banco (Firebase)
+                               #Função para leitura do banco (Firebase)
 ######################################################################################################
 # Efetua a leitura de todos os documentos presentes no banco e passa para um dataframe pandas
 # Função para carregar os dados do firebase (utiliza cache para agilizar a aplicação)
@@ -73,7 +73,6 @@ def load_data():
 	data['hora'] = pd.to_datetime(data['hora']).dt.time
 	return data
 
-
 @st.cache
 def load_mes():
 	dicionario = {}
@@ -86,6 +85,8 @@ def load_mes():
 	mes_df = mes_df.T
 	mes_df.reset_index(inplace=True)
 	mes_df.drop('index', axis=1, inplace=True)
+	lista_colunas = ['Linha', 'Data', 'Hora', 'Tempo', 'Micro/Macro', 'Definição do Evento', 'Nome', 'Equipamento','Ponto Produtivo', 'SubConjunto', 'Componente', 'Modo de Falha - Sintoma', 'Descrição', 'Lote', 'Resultante', 'FluxoProduto', 'FluxoIntervalo', 'Turno', 'Gargalo', 'FiltroExterna']
+	mes_df = mes_df.reindex(columns=lista_colunas)
 	return mes_df
 
 def upload_mes(uploaded_file, tipos):
