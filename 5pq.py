@@ -99,7 +99,7 @@ def load_mes(uploaded_file, tipos):
 	
 	if to_include.shape[0] > 0 :
 		for index, row in to_include.iterrows():
-			ref = db.collecion('MES_data').document(row['documento'])
+			ref = db.collection('MES_data').document(row['documento'])
 			batch.set(ref, row)
 		batch.commit()		      
 	
