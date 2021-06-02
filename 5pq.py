@@ -466,7 +466,7 @@ if func_escolhida == 'Pendências':
 		doc_ref = db.collection("pendencias").document(val_documento)
 		doc_ref.set(new_d)
 		st.write('Pendência criada com sucesso')
-		
+	st.title('Integração com MES')
 	uploaded_file = st.file_uploader("Selecione o arquivo Excel para upload")
 	if uploaded_file is not None:
 		up_mes = upload_mes(uploaded_file, tipos)
@@ -474,7 +474,7 @@ if func_escolhida == 'Pendências':
 	mes = load_mes()
 	st.write(mes)
 	
-	st.write(mes.groupby(['Linha', 'Equipamento']).count_values())
+	#st.write(mes.groupby(['Linha', 'Equipamento']).count_values())
 	
 if func_escolhida == 'Inserir':
 	st.subheader('Formulário 5-porques')
