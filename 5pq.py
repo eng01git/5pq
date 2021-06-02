@@ -74,8 +74,20 @@ def load_data():
 	return data
 
 
-#@st.cache
-def load_mes(uploaded_file, tipos):
+@st.cache
+def load_mes():
+	dicionario = {}
+	posts_ref = db.collection("MES_data")	
+	for doc in posts_ref.stream():
+		dic_auxiliar = doc.to_dict()
+		dicionario[dic_auxiliar['documento']] = dic_auxiliar
+			   
+	mes_df = pd.DataFrame.from_dict(dicionario)
+	mes_df = mes_df.T
+	mes_df.reset_index(inplace=True)
+	return mes_df
+
+def upload_mes(uploaded_file, tipos):
 	#Leitura dos dados do arquivo excel
 	data = pd.read_excel(uploaded_file, sheet_name='Parada')
 	#filtrando os dados (tempo maior que 30 e eventos incluídos em tipo)
@@ -86,17 +98,18 @@ def load_mes(uploaded_file, tipos):
 	#criação do nome do documento
 	data['documento'] = data['Linha'].astype(str) + data['Equipamento'].astype(str) + data['Data'].astype(str) + data['Hora'].astype(str)
 	
+	#cria dicionário vazio
 	dicionario = {}
+	#importa valores do firebase
 	posts_ref = db.collection("MES_data")	
 	for doc in posts_ref.stream():
 		dic_auxiliar = doc.to_dict()
 		dicionario[dic_auxiliar['documento']] = dic_auxiliar
-			   
-	mes_df = pd.DataFrame.from_dict(dicionario)
-	mes_df = mes_df.T
-	
+		
+	#Filtra os valores presentes no arquivo e não presentes na base dados
 	to_include = data[~data['documento'].isin(dicionario.keys())]
 	
+	#Se houver variáveis a serem incluídas e faz a inclusão
 	if to_include.shape[0] > 0 :
 		batch = db.batch()
 		for index, row in to_include.iterrows():
@@ -105,10 +118,8 @@ def load_mes(uploaded_file, tipos):
 			batch.set(ref, row_string.to_dict())
 		batch.commit()		      
 	
-	#dicionario.keys
-	
 	return to_include
-	#return data
+
 
 # Efetua a leitura dos dados dos usuários no banco
 @st.cache
@@ -456,9 +467,11 @@ if func_escolhida == 'Pendências':
 		
 	uploaded_file = st.file_uploader("Selecione o arquivo Excel para upload")
 	if uploaded_file is not None:
-		mes = load_mes(uploaded_file, tipos)
-		st.write(mes)
-
+		up_mes = upload_mes(uploaded_file, tipos)
+		st.write(up_mes)
+	mes = load_mes()
+	st.write(mes)
+	
 if func_escolhida == 'Inserir':
 	st.subheader('Formulário 5-porques')
 	formulario(linhas)
