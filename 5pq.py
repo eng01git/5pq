@@ -527,7 +527,7 @@ if func_escolhida == 'Consultar':
 			        
 if func_escolhida == 'Estatísticas':
 	st.subheader("Estatísticas 5-Porques")
-	graf1, graf2, graf3 = beta.columns(3)
+	graf1, graf2, graf3 = beta_columns(3)
 	#variavel =  st.selectbox('Selecione o item para análise', colunas)
 	fig1 = px.histogram(dados, x='turno')
 	graf1.write(fig1)
