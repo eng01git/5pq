@@ -534,7 +534,7 @@ if __name__ == '__main__':
 				func_validar(index, row, indice_doc)
 
 	if func_escolhida == 'Estatísticas':
-			try:
+		try:
 			st.subheader("Estatísticas 5-Porques")
 			#graf1, graf2, graf3 = st.beta_columns(3)
 			#variavel =  st.selectbox('Selecione o item para análise', colunas)
