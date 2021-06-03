@@ -531,90 +531,93 @@ if __name__ == '__main__':
 				func_validar(index, row, indice_doc)
 
 	if func_escolhida == 'Estatísticas':
+		st.subheader("5-Porques comparado ao MES")
+		st_grafico = st.empty()
+		#graf1, graf2, graf3 = st.beta_columns(3)
+		#variavel =  st.selectbox('Selecione o item para análise', colunas)
+		#fig1 = px.histogram(dados, x='turno')
+		#graf1.write(fig1)
+
+		#fig2 = px.histogram(dados, x='data', nbins=31)
+		#graf2.write(fig2)
+
+		#line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
+		#fig3 = px.histogram(line_equip)
+
+		#st.subheader("Estatísticas MES")
+		#variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
+		#fig_mes = px.histogram(mes, x=variavel_mes)
+		#st.write(fig_mes)
+
+		#st.text('Selecione a data')
+		col_1, col_2 = st.beta_columns(2)
+
+		#seleciona a data que mostra os 50 primeiros itens do MES (carrega com data e já mostra valores)
+		data_row = mes.shape[0] - 50
+		data_default = mes.iloc[data_row, 1]
+		inicio_filt = col_1.date_input("Data inicial", value=data_default)
+		fim_filt = col_2.date_input("Data final")
+		filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
+		filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
+
+		# Criação dos gráficos (5 subplots)
+		fig = make_subplots(rows=1, 
+				    cols=5,
+				    subplot_titles=("Datas", "Turnos", "Equipamentos", 'Linhas', '60 min ou mais?'),
+				    column_widths=[0.2, 0.2, 0.4, 0.1, 0.1]
+				   )
 		try:
-			st.subheader("5-Porques comparado ao MES")
-			st_grafico = st.empty()
-			#graf1, graf2, graf3 = st.beta_columns(3)
-			#variavel =  st.selectbox('Selecione o item para análise', colunas)
-			#fig1 = px.histogram(dados, x='turno')
-			#graf1.write(fig1)
-
-			#fig2 = px.histogram(dados, x='data', nbins=31)
-			#graf2.write(fig2)
-
-			#line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
-			#fig3 = px.histogram(line_equip)
-
-			#st.subheader("Estatísticas MES")
-			#variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
-			#fig_mes = px.histogram(mes, x=variavel_mes)
-			#st.write(fig_mes)
-
-			#st.text('Selecione a data')
-			col_1, col_2 = st.beta_columns(2)
-			
-			#seleciona a data que mostra os 50 primeiros itens do MES (carrega com data e já mostra valores)
-			data_row = mes.shape[0] - 50
-			data_default = mes.iloc[data_row, 1]
-			inicio_filt = col_1.date_input("Data inicial", value=data_default)
-			fim_filt = col_2.date_input("Data final")
-			filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
-			filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
-
-			# Criação dos gráficos (5 subplots)
-			fig = make_subplots(rows=1, 
-					    cols=5,
-					    subplot_titles=("Datas", "Turnos", "Equipamentos", 'Linhas', '60 min ou mais?'),
-					    column_widths=[0.2, 0.2, 0.4, 0.1, 0.1]
-					   )
-
 			# Histograma da data
 			fig.add_trace(go.Histogram(x=filtrado_5pq['data'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=1)
-			fig.add_trace(go.Histogram(x=filtrado_mes['Data'], marker=dict(color='grey')), row=1, col=1)
-
 			# Histograma do turno
 			fig.add_trace(go.Histogram(x=filtrado_5pq['turno'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=2)
-			fig.add_trace(go.Histogram(x=filtrado_mes['Turno'], marker=dict(color='grey')), row=1, col=2)
-			fig.update_xaxes(categoryorder='category ascending', row=1, col=2)
-
 			# Histograma da equipamento (ponto produtivo)
 			mes_produtivo = filtrado_5pq['linha'].astype(str) + filtrado_5pq['equipamento'].astype(str)
 			fig.add_trace(go.Histogram(x=mes_produtivo, marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=3)
-			fig.add_trace(go.Histogram(x=filtrado_mes['Ponto Produtivo'].sort_values(), marker=dict(color='grey')), row=1, col=3)
-			fig.update_xaxes(categoryorder='total descending', row=1, col=3)
-
 			# Histograma das linhas
 			filtrado_5pq['linha'] = filtrado_5pq['linha'].str.replace('0','').str.replace('M-', '')
 			fig.add_trace(go.Histogram(x=filtrado_5pq['linha'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=4)
-			fig.add_trace(go.Histogram(x=filtrado_mes['Linha'], marker=dict(color='grey')), row=1, col=4)
-			fig.update_xaxes(categoryorder='total descending', row=1, col=3)
-
 			# Lógica para mostrar quantos possuem mais de 60 minutos
 			filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) > 60, '60minutos'] = 'Sim'
 			filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) <= 60, '60minutos'] = 'Não'
-			filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) > 60, '60minutos'] = 'Sim'
-			filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) <= 60, '60minutos'] = 'Não'
-
 			# Histograma dos 60 minutos
 			fig.add_trace(go.Histogram(x=filtrado_5pq['60minutos'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=5)
-			fig.add_trace(go.Histogram(x=filtrado_mes['60minutos'], marker=dict(color='grey')), row=1, col=5)
-			
-			# Configura figura e plota o gráfico
-			fig.update_layout(height=600, width=1500, showlegend=False) #, title_text="5-Porques (azul) vs MES (cinza)", showlegend=False
-			st_grafico.write(fig)
 		except:
-			st.error('Não há dados nesse intervalo de tempo')
-		
+			st.error('Não há dados de 5-Porques nesse período')
+
+		try:	
+			# Histograma da data
+			fig.add_trace(go.Histogram(x=filtrado_mes['Data'], marker=dict(color='grey')), row=1, col=1)
+			# Histograma do turno
+			fig.add_trace(go.Histogram(x=filtrado_mes['Turno'], marker=dict(color='grey')), row=1, col=2)
+			# Histograma da equipamento (ponto produtivo)
+			fig.add_trace(go.Histogram(x=filtrado_mes['Ponto Produtivo'].sort_values(), marker=dict(color='grey')), row=1, col=3)
+			# Histograma das linhas
+			fig.add_trace(go.Histogram(x=filtrado_mes['Linha'], marker=dict(color='grey')), row=1, col=4)
+			# Lógica para mostrar quantos possuem mais de 60 minutos
+			filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) > 60, '60minutos'] = 'Sim'
+			filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) <= 60, '60minutos'] = 'Não'
+			# Histograma dos 60 minutos
+			fig.add_trace(go.Histogram(x=filtrado_mes['60minutos'], marker=dict(color='grey')), row=1, col=5)
+		except:
+			st.error('Não há dados do MES nesse período')	
+
+		# Configura figura e plota o gráfico
+		fig.update_xaxes(categoryorder='total descending', row=1, col=3)	
+		fig.update_xaxes(categoryorder='category ascending', row=1, col=2)			
+		fig.update_xaxes(categoryorder='total descending', row=1, col=3)
+		fig.update_layout(height=600, width=1500, showlegend=False) #, title_text="5-Porques (azul) vs MES (cinza)", showlegend=False
+		st_grafico.write(fig)
+
 		# Etapa de integração com o MES
 		st.subheader('Integração com MES')
 		st.write('Dados do MES no sistema')
 		mes = load_mes()
 		st.write(mes)
-		
+
 		# Upload do arquivo
 		uploaded_file = st.file_uploader("Selecione o arquivo Excel para upload")
 		if uploaded_file is not None:
 			up_mes = upload_mes(uploaded_file, tipos)
 			st.write(up_mes)
 			mes = load_mes()
-
