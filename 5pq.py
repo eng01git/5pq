@@ -568,9 +568,7 @@ if func_escolhida == 'Estatísticas':
 	)
 	#fig
 	fig.add_trace(
-	    go.Histogram(x=filtrado_5pq['turno']),
-	    row=1, col=2
-	)
+	    go.Histogram(x=filtrado_5pq['turno']), marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=1)
 
 	fig.add_trace(
 	    go.Histogram(x=filtrado_mes['Turno']),
