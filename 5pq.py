@@ -558,7 +558,7 @@ if func_escolhida == 'Estatísticas':
 	filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
 	
 	fig = make_subplots(rows=1, 
-			    cols=3,
+			    cols=5,
 			    subplot_titles=("Datas", "Turnos", "Equipamentos", 'Linhas', 'Parada maior que 60 min?'),
 			    column_widths=[0.2, 0.2, 0.4, 0.1, 0.1],
 			    
