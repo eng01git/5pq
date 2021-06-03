@@ -549,33 +549,40 @@ if func_escolhida == 'Estatísticas':
 	
 #fig.add_trace(go.Histogram(x=x0))
 #data=[go.Histogram(x=x)
+	st.text('Selecione a data')
+	col_1, col_2 = st.beta_columns(2)
+	inicio_filt = col_1.date_input("Início")
+	fim_filt = col_2.date_input("Fim")
+	filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
+	filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
+
       
 	fig.add_trace(
-	    go.Histogram(x=dados['data'], nbinsy=31),
+	    go.Histogram(x=filtrado_5pq['data'], nbinsy=31),
 	    row=1, col=1
 	)
 
 	fig.add_trace(
-	    go.Histogram(x=mes['Data'], nbinsy=31),
+	    go.Histogram(x=filtrado_mes['Data'], nbinsy=31),
 	    row=1, col=2
 	)
 	fig.add_trace(
-	    go.Histogram(x=dados['turno']),
+	    go.Histogram(x=filtrado_5pq['turno']),
 	    row=2, col=1
 	)
 
 	fig.add_trace(
-	    go.Histogram(x=mes['Turno']),
+	    go.Histogram(x=filtrado_mes['Turno']),
 	    row=2, col=2
 	)
-	mes_produtivo = dados['linha'].astype(str) + dados['equipamento'].astype(str)
+	mes_produtivo = filtrado_5pq['linha'].astype(str) + filtrado_5pq['equipamento'].astype(str)
 	fig.add_trace(
 	    go.Histogram(x=mes_produtivo),
 	    row=3, col=1
 	)
 
 	fig.add_trace(
-	    go.Histogram(x=mes['Ponto Produtivo']),
+	    go.Histogram(x=filtrado_mes['Ponto Produtivo']),
 	    row=3, col=2
 	)
 
