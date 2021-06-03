@@ -431,9 +431,9 @@ if __name__ == '__main__':
 	deterioização = ['Forçada', 'Natural', 'Nenhuma']
 
 	# Imagem
-	st.image('Ambev.jpeg')
-	st.subheader('Aplicação 5-Porques')
-	st.write('Selecione no menu lateral a opção desejada')
+	st.image('Ambev.jpeg', width=100)
+	#st.subheader('Aplicação 5-Porques')
+	#st.write('Selecione no menu lateral a opção desejada')
 
 	# Lista vazia para input dos dados do formulário
 	dic = {} #dicionario
