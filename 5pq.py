@@ -563,11 +563,11 @@ if func_escolhida == 'Estatísticas':
 	fig.add_trace(go.Histogram(x=filtrado_mes['Data'], marker=dict(color='red')), row=1, col=1)
 
 	fig.add_trace(go.Histogram(x=filtrado_5pq['turno'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=2)
-	fig.add_trace(go.Histogram(x=filtrado_mes['Turno'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=2)
+	fig.add_trace(go.Histogram(x=filtrado_mes['Turno'], marker=dict(color='red')), row=1, col=2)
 	
 	mes_produtivo = filtrado_5pq['linha'].astype(str) + filtrado_5pq['equipamento'].astype(str)
 	fig.add_trace(go.Histogram(x=mes_produtivo, marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=3)
-	fig.add_trace(go.Histogram(x=filtrado_mes['Ponto Produtivo'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=3)
+	fig.add_trace(go.Histogram(x=filtrado_mes['Ponto Produtivo'], marker=dict(color='red')), row=1, col=3)
 
 	fig.update_layout(height=600, width=1200, title_text="5-Porques vs MES")
 	st.write(fig)
