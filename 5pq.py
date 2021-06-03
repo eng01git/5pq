@@ -17,6 +17,8 @@ import streamlit as st
 from streamlit_tags import st_tags
 from streamlit import caching
 import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
 import pandas as pd
 import json
 import smtplib
@@ -543,6 +545,20 @@ if func_escolhida == 'Estatísticas':
 	fig_mes = px.histogram(mes, x=variavel_mes)
 	st.write(fig_mes)
 
+	fig = make_subplots(rows=1, cols=2)
+
+	fig.add_trace(
+	    go.Scatter(x=[1, 2, 3], y=[4, 5, 6]),
+	    row=1, col=1
+	)
+
+	fig.add_trace(
+	    go.Scatter(x=[20, 30, 40], y=[50, 60, 70]),
+	    row=1, col=2
+	)
+
+	fig.update_layout(height=600, width=800, title_text="Side By Side Subplots")
+	st.write(fig)
 
 
 
