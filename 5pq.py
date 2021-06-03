@@ -92,6 +92,7 @@ def load_mes():
 	mes_df['Data'] = pd.to_datetime(mes_df['Data']).dt.date
 	mes_df['Hora'] = pd.to_datetime(mes_df['Hora']).dt.time
 	mes_df['Turno'] = mes_df['Turno'].map({'Morning': 'Turno A', 'Afternoon': 'Turno B', 'Evening': 'Turno C'})
+	mes_df.sort_values(by=['Data'], inplace=True)
 	return mes_df
 
 def upload_mes(uploaded_file, tipos):
