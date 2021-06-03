@@ -431,7 +431,7 @@ if __name__ == '__main__':
 	deterioização = ['Forçada', 'Natural', 'Nenhuma']
 
 	# Imagem
-	st.image('Ambev.jpeg', width=100)
+	st.image('Ambev.jpeg', width=200)
 	#st.subheader('Aplicação 5-Porques')
 	#st.write('Selecione no menu lateral a opção desejada')
 
