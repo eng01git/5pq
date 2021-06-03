@@ -408,188 +408,190 @@ def formulario(linhas):
                                            #Main
 ######################################################################################################
 
-# Carrega dataframe e extrai suas colunas
-dados = load_data()
-usuarios_fb = load_usuarios()
-sap_nv3 = load_sap_nv3()
-df_pendencia = load_pendencias()
-gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() == 'sim']['Nome'])
-nao_gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() != 'sim']['Nome'])
-colunas = dados.columns
-mes = load_mes()
-colunas_mes = mes.columns
-#st.write(mes)
+if __name__ == '__main__':
 
-# Constantes
-equipamentos = []
-#gatilhos = [ 'Segurança', '10 minutos', '30 minutos', '1 hora']
-linhas = sap_nv3['Linha'].drop_duplicates()
-turnos = ['Turno A', 'Turno B', 'Turno C']
-tipos = ['Automação', 'Eletricidade', 'Elétrico', 'Falha - Automação', 'Falha - Elétrica', 'Falha - Mecânica', 'Falha - Operacional', 'Mecânica', 'Operacional']
-falhas = ['Máquina', 'Mão-de-obra', 'Método', 'Materiais', 'Meio ambiente', 'Medição', 'Outra']
-deterioização = ['Forçada', 'Natural', 'Nenhuma']
-
-# Imagem
-st.image('Ambev.jpeg')
-st.subheader('Aplicação 5-porques')
-st.write('Selecione no menu lateral a opção desejada')
-
-# Lista vazia para input dos dados do formulário
-dic = {} #dicionario
-
-if func_escolhida == 'Pendências':
-	
-	st.subheader('Últimas pendências')
-	qtd_pendencias = st.slider('Selecione quantas pendencias deseja visualiar', 10)
-	st.write(df_pendencia.tail(qtd_pendencias)[['data', 'turno', 'linha', 'equipamento', 'departamento', 'usuario', 'descrição']])
-		 
-	st.subheader('Inserir pendências')
-	st.write('Inserir possíveis 5-Porques para verificação')
-	sp2, sp3= st.beta_columns(2)
-	list_linhas = list(linhas)
-	sap_nv2 = sp2.selectbox('Selecione a linha ', list_linhas)	
-	equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
-
-	with st.form('Form_pend'):
-		st1, st2, st3 = st.beta_columns(3)
-		dic['data'] = st1.date_input('Data da pendência')
-		dic['turno'] = st2.selectbox('Selecione turno', turnos )
-		dic['definição do evento'] = st3.selectbox('Definição do Evento ', tipos)
-		dic['linha'] = sap_nv2
-		dic['equipamento'] = sp3.selectbox('Selecione equipamento', equipamentos)	
-		dic['descrição'] = st.text_input('Descreva o ocorrido', "")
-		dic['usuario'] = st.text_input('Nome do colaborador que identificou a pendência')
-		dic['status'] = 'Pendente'
-		submitted_pend = st.form_submit_button('Criar pendência')
-
-	if submitted_pend:
-		caching.clear_cache()
-		keys_values = dic.items()
-		new_d = {str(key): str(value) for key, value in keys_values}
-		for key, value in new_d.items():
-			if (value == '') or value == '[]':
-				new_d[key] = 'Não informado'
-				
-		ts = time.time()
-		val_documento = new_d['linha'] + '-' + new_d['equipamento'].replace(" ", "") + '-' + str(int(ts))
-		doc_ref = db.collection("pendencias").document(val_documento)
-		doc_ref.set(new_d)
-		st.write('Pendência criada com sucesso')
-	st.subheader('Integração com MES')
-	uploaded_file = st.file_uploader("Selecione o arquivo Excel para upload")
-	if uploaded_file is not None:
-		up_mes = upload_mes(uploaded_file, tipos)
-		st.write(up_mes)
+	# Carrega dataframe e extrai suas colunas
+	dados = load_data()
+	usuarios_fb = load_usuarios()
+	sap_nv3 = load_sap_nv3()
+	df_pendencia = load_pendencias()
+	gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() == 'sim']['Nome'])
+	nao_gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() != 'sim']['Nome'])
+	colunas = dados.columns
 	mes = load_mes()
-	st.write(mes)
-	
-	#st.write(mes.groupby(['Linha', 'Equipamento']).count_values())
-	
-if func_escolhida == 'Inserir':
-	st.subheader('Formulário 5-porques')
-	formulario(linhas)
+	colunas_mes = mes.columns
+	#st.write(mes)
 
-if func_escolhida == 'Consultar':
-	st.subheader('Configure as opções de filtro')
-	st.text('Selecione a data')
-	col1, col2 = st.beta_columns(2)
-	inicio_filtro = col1.date_input("Início")
-	fim_filtro = col2.date_input("Fim")
-	filtrado = (dados[(dados['data'] >= inicio_filtro) & (dados['data'] <= fim_filtro)]) 
-	
-	list_resp = list(filtrado['responsável identificação'].drop_duplicates())
-	list_resp.append('todos') 
-	responsavel = st.selectbox("Selecione o responsável", list_resp, list_resp.index('todos'))
-	if responsavel == 'todos':
-		pass
-	elif responsavel is not None and (str(responsavel) != 'nan'):
-		filtrado = filtrado[filtrado['responsável identificação'] == responsavel]
-		
-	list_gestor = list(filtrado['gestor'].drop_duplicates())
-	list_gestor.append('todos')  
-	gestor = st.selectbox("Selecione o gestor", list_gestor, list_gestor.index('todos'))
-	if gestor == 'todos':
-		pass
-	elif gestor is not None and (str(gestor) != 'nan'):
-		filtrado = filtrado[filtrado['gestor'] == gestor]	
-	
-	list_status = list(filtrado['status'].drop_duplicates())
-	list_status.append('todos') 
-	status = st.selectbox("Selecione o status", list_status, list_status.index('todos'))
-	if status == 'todos':
-		pass
-	elif status is not None and (str(status) != 'nan'):
-		filtrado = filtrado[filtrado['status'] == status]	
-	
-	st.write(filtrado[['data', 'document', 'gestor', 'status','responsável identificação', 'turno', 'linha', 'equipamento']])
-	st.markdown(get_table_download_link(filtrado), unsafe_allow_html=True)
-	indice_doc = st.multiselect('Selecione a ocorrência', filtrado['document'].tolist())
-	
-	for index, row in filtrado.iterrows():
-		if row['document'] in indice_doc:
-			st.subheader('Ocorrência ' + str(row['document']))
-			func_validar(index, row, indice_doc)
-			        
-if func_escolhida == 'Estatísticas':
-	st.subheader("Estatísticas 5-Porques")
-	#graf1, graf2, graf3 = st.beta_columns(3)
-	#variavel =  st.selectbox('Selecione o item para análise', colunas)
-	#fig1 = px.histogram(dados, x='turno')
-	#graf1.write(fig1)
-	
-	#fig2 = px.histogram(dados, x='data', nbins=31)
-	#graf2.write(fig2)
-	
-	#line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
-	#fig3 = px.histogram(line_equip)
-	
-	#st.subheader("Estatísticas MES")
-	#variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
-	#fig_mes = px.histogram(mes, x=variavel_mes)
-	#st.write(fig_mes)
+	# Constantes
+	equipamentos = []
+	#gatilhos = [ 'Segurança', '10 minutos', '30 minutos', '1 hora']
+	linhas = sap_nv3['Linha'].drop_duplicates()
+	turnos = ['Turno A', 'Turno B', 'Turno C']
+	tipos = ['Automação', 'Eletricidade', 'Elétrico', 'Falha - Automação', 'Falha - Elétrica', 'Falha - Mecânica', 'Falha - Operacional', 'Mecânica', 'Operacional']
+	falhas = ['Máquina', 'Mão-de-obra', 'Método', 'Materiais', 'Meio ambiente', 'Medição', 'Outra']
+	deterioização = ['Forçada', 'Natural', 'Nenhuma']
+
+	# Imagem
+	st.image('Ambev.jpeg')
+	st.subheader('Aplicação 5-porques')
+	st.write('Selecione no menu lateral a opção desejada')
+
+	# Lista vazia para input dos dados do formulário
+	dic = {} #dicionario
+
+	if func_escolhida == 'Pendências':
+
+		st.subheader('Últimas pendências')
+		qtd_pendencias = st.slider('Selecione quantas pendencias deseja visualiar', 10)
+		st.write(df_pendencia.tail(qtd_pendencias)[['data', 'turno', 'linha', 'equipamento', 'departamento', 'usuario', 'descrição']])
+
+		st.subheader('Inserir pendências')
+		st.write('Inserir possíveis 5-Porques para verificação')
+		sp2, sp3= st.beta_columns(2)
+		list_linhas = list(linhas)
+		sap_nv2 = sp2.selectbox('Selecione a linha ', list_linhas)	
+		equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
+
+		with st.form('Form_pend'):
+			st1, st2, st3 = st.beta_columns(3)
+			dic['data'] = st1.date_input('Data da pendência')
+			dic['turno'] = st2.selectbox('Selecione turno', turnos )
+			dic['definição do evento'] = st3.selectbox('Definição do Evento ', tipos)
+			dic['linha'] = sap_nv2
+			dic['equipamento'] = sp3.selectbox('Selecione equipamento', equipamentos)	
+			dic['descrição'] = st.text_input('Descreva o ocorrido', "")
+			dic['usuario'] = st.text_input('Nome do colaborador que identificou a pendência')
+			dic['status'] = 'Pendente'
+			submitted_pend = st.form_submit_button('Criar pendência')
+
+		if submitted_pend:
+			caching.clear_cache()
+			keys_values = dic.items()
+			new_d = {str(key): str(value) for key, value in keys_values}
+			for key, value in new_d.items():
+				if (value == '') or value == '[]':
+					new_d[key] = 'Não informado'
+
+			ts = time.time()
+			val_documento = new_d['linha'] + '-' + new_d['equipamento'].replace(" ", "") + '-' + str(int(ts))
+			doc_ref = db.collection("pendencias").document(val_documento)
+			doc_ref.set(new_d)
+			st.write('Pendência criada com sucesso')
+		st.subheader('Integração com MES')
+		uploaded_file = st.file_uploader("Selecione o arquivo Excel para upload")
+		if uploaded_file is not None:
+			up_mes = upload_mes(uploaded_file, tipos)
+			st.write(up_mes)
+		mes = load_mes()
+		st.write(mes)
+
+		#st.write(mes.groupby(['Linha', 'Equipamento']).count_values())
+
+	if func_escolhida == 'Inserir':
+		st.subheader('Formulário 5-porques')
+		formulario(linhas)
+
+	if func_escolhida == 'Consultar':
+		st.subheader('Configure as opções de filtro')
+		st.text('Selecione a data')
+		col1, col2 = st.beta_columns(2)
+		inicio_filtro = col1.date_input("Início")
+		fim_filtro = col2.date_input("Fim")
+		filtrado = (dados[(dados['data'] >= inicio_filtro) & (dados['data'] <= fim_filtro)]) 
+
+		list_resp = list(filtrado['responsável identificação'].drop_duplicates())
+		list_resp.append('todos') 
+		responsavel = st.selectbox("Selecione o responsável", list_resp, list_resp.index('todos'))
+		if responsavel == 'todos':
+			pass
+		elif responsavel is not None and (str(responsavel) != 'nan'):
+			filtrado = filtrado[filtrado['responsável identificação'] == responsavel]
+
+		list_gestor = list(filtrado['gestor'].drop_duplicates())
+		list_gestor.append('todos')  
+		gestor = st.selectbox("Selecione o gestor", list_gestor, list_gestor.index('todos'))
+		if gestor == 'todos':
+			pass
+		elif gestor is not None and (str(gestor) != 'nan'):
+			filtrado = filtrado[filtrado['gestor'] == gestor]	
+
+		list_status = list(filtrado['status'].drop_duplicates())
+		list_status.append('todos') 
+		status = st.selectbox("Selecione o status", list_status, list_status.index('todos'))
+		if status == 'todos':
+			pass
+		elif status is not None and (str(status) != 'nan'):
+			filtrado = filtrado[filtrado['status'] == status]	
+
+		st.write(filtrado[['data', 'document', 'gestor', 'status','responsável identificação', 'turno', 'linha', 'equipamento']])
+		st.markdown(get_table_download_link(filtrado), unsafe_allow_html=True)
+		indice_doc = st.multiselect('Selecione a ocorrência', filtrado['document'].tolist())
+
+		for index, row in filtrado.iterrows():
+			if row['document'] in indice_doc:
+				st.subheader('Ocorrência ' + str(row['document']))
+				func_validar(index, row, indice_doc)
+
+	if func_escolhida == 'Estatísticas':
+		st.subheader("Estatísticas 5-Porques")
+		#graf1, graf2, graf3 = st.beta_columns(3)
+		#variavel =  st.selectbox('Selecione o item para análise', colunas)
+		#fig1 = px.histogram(dados, x='turno')
+		#graf1.write(fig1)
+
+		#fig2 = px.histogram(dados, x='data', nbins=31)
+		#graf2.write(fig2)
+
+		#line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
+		#fig3 = px.histogram(line_equip)
+
+		#st.subheader("Estatísticas MES")
+		#variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
+		#fig_mes = px.histogram(mes, x=variavel_mes)
+		#st.write(fig_mes)
 
 
 
-	st.text('Selecione a data')
-	col_1, col_2 = st.beta_columns(2)
-	inicio_filt = col_1.date_input("Início")
-	fim_filt = col_2.date_input("Fim")
-	filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
-	filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
-	
-	fig = make_subplots(rows=1, 
-			    cols=5,
-			    subplot_titles=("Datas", "Turnos", "Equipamentos", 'Linhas', '60 min ou mais?'),
-			    column_widths=[0.2, 0.2, 0.4, 0.1, 0.1],
-			    
-			   )
-  
-	fig.add_trace(go.Histogram(x=filtrado_5pq['data'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=1)
-	fig.add_trace(go.Histogram(x=filtrado_mes['Data'], marker=dict(color='red')), row=1, col=1)
+		st.text('Selecione a data')
+		col_1, col_2 = st.beta_columns(2)
+		inicio_filt = col_1.date_input("Início")
+		fim_filt = col_2.date_input("Fim")
+		filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
+		filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
 
-	fig.add_trace(go.Histogram(x=filtrado_5pq['turno'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=2)
-	fig.add_trace(go.Histogram(x=filtrado_mes['Turno'], marker=dict(color='red')), row=1, col=2)
-	
-	mes_produtivo = filtrado_5pq['linha'].astype(str) + filtrado_5pq['equipamento'].astype(str)
-	fig.add_trace(go.Histogram(x=mes_produtivo, marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=3)
-	fig.add_trace(go.Histogram(x=filtrado_mes['Ponto Produtivo'], marker=dict(color='red')), row=1, col=3)
-	
-	filtrado_5pq['linha'] = filtrado_5pq['linha'].str.replace('0','').str.replace('M-', '')
-	fig.add_trace(go.Histogram(x=filtrado_5pq['linha'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=4)
-	fig.add_trace(go.Histogram(x=filtrado_mes['Linha'], marker=dict(color='red')), row=1, col=4)
-	
-	filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) > 60, '60minutos'] = 'Sim'
-	filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) <= 60, '60minutos'] = 'Não'
-	filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) > 60, '60minutos'] = 'Sim'
-	filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) <= 60, '60minutos'] = 'Não'
-	
-	fig.add_trace(go.Histogram(x=filtrado_5pq['60minutos'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=5)
-	fig.add_trace(go.Histogram(x=filtrado_mes['60minutos'], marker=dict(color='red')), row=1, col=5)
+		fig = make_subplots(rows=1, 
+				    cols=5,
+				    subplot_titles=("Datas", "Turnos", "Equipamentos", 'Linhas', '60 min ou mais?'),
+				    column_widths=[0.2, 0.2, 0.4, 0.1, 0.1],
 
-	fig.update_layout(height=600, width=1500, title_text="5-Porques (azul) vs MES (vermelho)", showlegend=False)
-	st.write(fig)
-	
-	
+				   )
+
+		fig.add_trace(go.Histogram(x=filtrado_5pq['data'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=1)
+		fig.add_trace(go.Histogram(x=filtrado_mes['Data'], marker=dict(color='red')), row=1, col=1)
+
+		fig.add_trace(go.Histogram(x=filtrado_5pq['turno'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=2)
+		fig.add_trace(go.Histogram(x=filtrado_mes['Turno'], marker=dict(color='red')), row=1, col=2)
+
+		mes_produtivo = filtrado_5pq['linha'].astype(str) + filtrado_5pq['equipamento'].astype(str)
+		fig.add_trace(go.Histogram(x=mes_produtivo, marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=3)
+		fig.add_trace(go.Histogram(x=filtrado_mes['Ponto Produtivo'], marker=dict(color='red')), row=1, col=3)
+
+		filtrado_5pq['linha'] = filtrado_5pq['linha'].str.replace('0','').str.replace('M-', '')
+		fig.add_trace(go.Histogram(x=filtrado_5pq['linha'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=4)
+		fig.add_trace(go.Histogram(x=filtrado_mes['Linha'], marker=dict(color='red')), row=1, col=4)
+
+		filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) > 60, '60minutos'] = 'Sim'
+		filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) <= 60, '60minutos'] = 'Não'
+		filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) > 60, '60minutos'] = 'Sim'
+		filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) <= 60, '60minutos'] = 'Não'
+
+		fig.add_trace(go.Histogram(x=filtrado_5pq['60minutos'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=5)
+		fig.add_trace(go.Histogram(x=filtrado_mes['60minutos'], marker=dict(color='red')), row=1, col=5)
+
+		fig.update_layout(height=600, width=1500, title_text="5-Porques (azul) vs MES (vermelho)", showlegend=False)
+		st.write(fig)
+
+
 
 
 
