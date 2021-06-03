@@ -551,16 +551,16 @@ if func_escolhida == 'Estatísticas':
 #data=[go.Histogram(x=x)
       
 	fig.add_trace(
-	    go.Histogram(x=dados['data']),
+	    go.Histogram(x=dados['data'], nbinsy=31),
 	    row=1, col=1
 	)
 
 	fig.add_trace(
-	    go.Histogram(x=mes['Data']),
+	    go.Histogram(x=mes['Data'], nbinsy=31),
 	    row=1, col=2
 	)
 
-	fig.update_layout(height=600, width=800, title_text="Side By Side Subplots")
+	fig.update_layout(height=300, width=1200, title_text="Side By Side Subplots")
 	st.write(fig)
 
 
