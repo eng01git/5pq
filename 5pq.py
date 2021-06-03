@@ -581,10 +581,10 @@ if func_escolhida == 'Estatísticas':
 #df.loc[df['set_of_numbers'] > 4, 'equal_or_lower_than_4?'] = 'False' 
 	
 	
-	filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(int) > 60, '60minutos'] = 'Sim'
-	filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(int) <= 60, '60minutos'] = 'Não'
-	filtrado_mes.loc[filtrado_mes['Tempo'].astype(int) > 60, '60minutos'] = 'Sim'
-	filtrado_mes.loc[filtrado_mes['Tempo'].astype(int) <= 60, '60minutos'] = 'Não'
+	filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) > 60, '60minutos'] = 'Sim'
+	filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) <= 60, '60minutos'] = 'Não'
+	filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) > 60, '60minutos'] = 'Sim'
+	filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) <= 60, '60minutos'] = 'Não'
 	
 	fig.add_trace(go.Histogram(x=filtrado_5pq['60minutos'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=4)
 	fig.add_trace(go.Histogram(x=filtrado_mes['60minutos'], marker=dict(color='red')), row=1, col=4)
