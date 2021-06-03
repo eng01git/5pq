@@ -554,7 +554,12 @@ if __name__ == '__main__':
 
 		st.text('Selecione a data')
 		col_1, col_2 = st.beta_columns(2)
-		inicio_filt = col_1.date_input("Início")
+		
+		
+		data_row = mes.shape[0] - 50
+		data_default = mes.iloc[data_row, 1]
+		
+		inicio_filt = col_1.date_input("Início", value=data_default)
 		fim_filt = col_2.date_input("Fim")
 		filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
 		filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
@@ -567,18 +572,18 @@ if __name__ == '__main__':
 				   )
 
 		fig.add_trace(go.Histogram(x=filtrado_5pq['data'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=1)
-		fig.add_trace(go.Histogram(x=filtrado_mes['Data'], marker=dict(color='red')), row=1, col=1)
+		fig.add_trace(go.Histogram(x=filtrado_mes['Data'], marker=dict(color='grey')), row=1, col=1)
 
 		fig.add_trace(go.Histogram(x=filtrado_5pq['turno'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=2)
-		fig.add_trace(go.Histogram(x=filtrado_mes['Turno'], marker=dict(color='red')), row=1, col=2)
+		fig.add_trace(go.Histogram(x=filtrado_mes['Turno'], marker=dict(color='grey')), row=1, col=2)
 
 		mes_produtivo = filtrado_5pq['linha'].astype(str) + filtrado_5pq['equipamento'].astype(str)
 		fig.add_trace(go.Histogram(x=mes_produtivo, marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=3)
-		fig.add_trace(go.Histogram(x=filtrado_mes['Ponto Produtivo'], marker=dict(color='red')), row=1, col=3)
+		fig.add_trace(go.Histogram(x=filtrado_mes['Ponto Produtivo'], marker=dict(color='grey')), row=1, col=3)
 
 		filtrado_5pq['linha'] = filtrado_5pq['linha'].str.replace('0','').str.replace('M-', '')
 		fig.add_trace(go.Histogram(x=filtrado_5pq['linha'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=4)
-		fig.add_trace(go.Histogram(x=filtrado_mes['Linha'], marker=dict(color='red')), row=1, col=4)
+		fig.add_trace(go.Histogram(x=filtrado_mes['Linha'], marker=dict(color='grey')), row=1, col=4)
 
 		filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) > 60, '60minutos'] = 'Sim'
 		filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) <= 60, '60minutos'] = 'Não'
@@ -586,7 +591,7 @@ if __name__ == '__main__':
 		filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) <= 60, '60minutos'] = 'Não'
 
 		fig.add_trace(go.Histogram(x=filtrado_5pq['60minutos'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=5)
-		fig.add_trace(go.Histogram(x=filtrado_mes['60minutos'], marker=dict(color='red')), row=1, col=5)
+		fig.add_trace(go.Histogram(x=filtrado_mes['60minutos'], marker=dict(color='grey')), row=1, col=5)
 
 		fig.update_layout(height=600, width=1500, title_text="5-Porques (azul) vs MES (vermelho)", showlegend=False)
 		st.write(fig)
