@@ -91,7 +91,7 @@ def load_mes():
 	mes_df = mes_df.reindex(columns=lista_colunas)
 	mes_df['Data'] = pd.to_datetime(mes_df['Data']).dt.date
 	mes_df['Hora'] = pd.to_datetime(mes_df['Hora']).dt.time
-	mes_df[mes_df['Turno'] == 'Morning'] = 'Turno A'
+	mes_df[mes_df['Turno'] == 'Morning']['Turno'] = 'Turno A'
 	return mes_df
 
 def upload_mes(uploaded_file, tipos):
