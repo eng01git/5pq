@@ -89,6 +89,8 @@ def load_mes():
 	mes_df.drop('index', axis=1, inplace=True)
 	lista_colunas = ['Linha', 'Data', 'Hora', 'Tempo', 'Micro/Macro', 'Definição do Evento', 'Nome', 'Equipamento','Ponto Produtivo', 'SubConjunto', 'Componente', 'Modo de Falha - Sintoma', 'Descrição', 'Lote', 'Resultante', 'FluxoProduto', 'FluxoIntervalo', 'Turno', 'Gargalo', 'FiltroExterna', 'documento']
 	mes_df = mes_df.reindex(columns=lista_colunas)
+	mes_df['data'] = pd.to_datetime(mes_df['Data']).dt.date
+	mes_df['hora'] = pd.to_datetime(mes_df['Hora']).dt.time
 	return mes_df
 
 def upload_mes(uploaded_file, tipos):
