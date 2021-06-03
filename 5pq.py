@@ -560,7 +560,7 @@ if func_escolhida == 'Estatísticas':
 	filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
   
 	fig.add_trace(
-	    go.Histogram(x=filtrado_5pq['data'], nbinsy=31, marker=dict(color='rgba(12, 50, 196, 0.6)'), row=1, col=1)
+	    go.Histogram(x=filtrado_5pq['data'], nbinsy=31, marker=dict(color='rgba(12, 50, 196, 0.6)'), row=1, col=1))
 
 	fig.add_trace(
 	    go.Histogram(x=filtrado_mes['Data'], nbinsy=31),
