@@ -532,7 +532,7 @@ if __name__ == '__main__':
 
 	if func_escolhida == 'Estatísticas':
 		try:
-			st.subheader("Benchmark AmBev 5-Porques")
+			st.subheader("5-Porques")
 			st_grafico = st.empty()
 			#graf1, graf2, graf3 = st.beta_columns(3)
 			#variavel =  st.selectbox('Selecione o item para análise', colunas)
