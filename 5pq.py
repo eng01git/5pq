@@ -566,7 +566,7 @@ if func_escolhida == 'Estatísticas':
 
 	fig.add_trace(
 	    go.Histogram(x=filtrado_mes['Data'], nbinsy=31),
-	    row=1, col=2
+	    row=1, col=1
 	)
 	fig.add_trace(
 	    go.Histogram(x=filtrado_5pq['turno']),
