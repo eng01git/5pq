@@ -548,12 +548,12 @@ if func_escolhida == 'Estatísticas':
 	fig = make_subplots(rows=1, cols=2)
 
 	fig.add_trace(
-	    go.Scatter(x=[1, 2, 3], y=[4, 5, 6]),
+	    go.Histogram(dados, x='data'),
 	    row=1, col=1
 	)
 
 	fig.add_trace(
-	    go.Scatter(x=[20, 30, 40], y=[50, 60, 70]),
+	    go.Histogram(mes, x='Data'),
 	    row=1, col=2
 	)
 
