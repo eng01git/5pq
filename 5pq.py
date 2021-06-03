@@ -559,31 +559,15 @@ if func_escolhida == 'Estatísticas':
 	filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
 	filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
   
-	fig.add_trace(
-	    go.Histogram(x=filtrado_5pq['data'], nbinsy=31, marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=1)
+	fig.add_trace(go.Histogram(x=filtrado_5pq['data'], nbinsy=31, marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=1)
+	fig.add_trace(go.Histogram(x=filtrado_mes['Data'], nbinsy=31), marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=1)
 
-	fig.add_trace(
-	    go.Histogram(x=filtrado_mes['Data'], nbinsy=31),
-	    row=1, col=1
-	)
-	#fig
-	fig.add_trace(
-	    go.Histogram(x=filtrado_5pq['turno'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=2)
-
-	fig.add_trace(
-	    go.Histogram(x=filtrado_mes['Turno']),
-	    row=1, col=2
-	)
+	fig.add_trace(go.Histogram(x=filtrado_5pq['turno'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=2)
+	fig.add_trace(go.Histogram(x=filtrado_mes['Turno'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=2)
+	
 	mes_produtivo = filtrado_5pq['linha'].astype(str) + filtrado_5pq['equipamento'].astype(str)
-	fig.add_trace(
-	    go.Histogram(x=mes_produtivo),
-	    row=1, col=3
-	)
-
-	fig.add_trace(
-	    go.Histogram(x=filtrado_mes['Ponto Produtivo']),
-	    row=1, col=3
-	)
+	fig.add_trace(go.Histogram(x=mes_produtivo, marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=3)
+	fig.add_trace(go.Histogram(x=filtrado_mes['Ponto Produtivo'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=3)
 
 	fig.update_layout(height=600, width=1200, title_text="5-Porques vs MES")
 	st.write(fig)
