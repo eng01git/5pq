@@ -410,7 +410,6 @@ def formulario(linhas):
 ######################################################################################################
 
 if __name__ == '__main__':
-	st.write('teste')
 	# Carrega dataframe e extrai suas colunas
 	dados = load_data()
 	usuarios_fb = load_usuarios()
