@@ -536,7 +536,7 @@ if func_escolhida == 'Estatísticas':
 	graf2.write(fig2)
 	
 	line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
-	fig3 = px.historgram(line_equip)
+	fig3 = px.histogram(line_equip)
 	
 	st.subheader("Estatísticas MES")
 	variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
