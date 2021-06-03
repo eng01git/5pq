@@ -529,21 +529,21 @@ if func_escolhida == 'Consultar':
 			        
 if func_escolhida == 'Estatísticas':
 	st.subheader("Estatísticas 5-Porques")
-	graf1, graf2, graf3 = st.beta_columns(3)
+	#graf1, graf2, graf3 = st.beta_columns(3)
 	#variavel =  st.selectbox('Selecione o item para análise', colunas)
-	fig1 = px.histogram(dados, x='turno')
-	graf1.write(fig1)
+	#fig1 = px.histogram(dados, x='turno')
+	#graf1.write(fig1)
 	
-	fig2 = px.histogram(dados, x='data', nbins=31)
-	graf2.write(fig2)
+	#fig2 = px.histogram(dados, x='data', nbins=31)
+	#graf2.write(fig2)
 	
-	line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
-	fig3 = px.histogram(line_equip)
+	#line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
+	#fig3 = px.histogram(line_equip)
 	
-	st.subheader("Estatísticas MES")
-	variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
-	fig_mes = px.histogram(mes, x=variavel_mes)
-	st.write(fig_mes)
+	#st.subheader("Estatísticas MES")
+	#variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
+	#fig_mes = px.histogram(mes, x=variavel_mes)
+	#st.write(fig_mes)
 
 	fig = make_subplots(rows=1, cols=2)
 
