@@ -532,7 +532,7 @@ if func_escolhida == 'Estatísticas':
 	fig1 = px.histogram(dados, x='turno')
 	graf1.write(fig1)
 	
-	fig2 = px.line(dados, x='data', y=dados['data'].count())
+	fig2 = px.histogra,(dados, x='data', bins=31)
 	graf2.write(fig2)
 	
 	line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
