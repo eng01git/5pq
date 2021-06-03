@@ -546,14 +546,17 @@ if func_escolhida == 'Estatísticas':
 	#st.write(fig_mes)
 
 	fig = make_subplots(rows=1, cols=2)
-
+	
+#fig.add_trace(go.Histogram(x=x0))
+#data=[go.Histogram(x=x)
+      
 	fig.add_trace(
-	    go.Histogram(dados, x='data'),
+	    go.Histogram(x=dados['data']),
 	    row=1, col=1
 	)
 
 	fig.add_trace(
-	    go.Histogram(mes, x='Data'),
+	    go.Histogram(x=mes['Data']),
 	    row=1, col=2
 	)
 
