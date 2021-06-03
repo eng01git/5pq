@@ -527,9 +527,16 @@ if func_escolhida == 'Consultar':
 			        
 if func_escolhida == 'Estatísticas':
 	st.subheader("Estatísticas 5-Porques")
-	variavel =  st.selectbox('Selecione o item para análise', colunas)
-	fig = px.histogram(dados, x=variavel)
-	st.write(fig)
+	graf1, graf2, graf3 = beta.columns(3)
+	#variavel =  st.selectbox('Selecione o item para análise', colunas)
+	fig1 = px.histogram(dados, x='turno')
+	graf1.write(fig1)
+	
+	fig2 = px.line(dados, x='data', y=dados['data'].count())
+	graf2.write(fig2)
+	
+	line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
+	fig3 = px.historgram(line_equip)
 	
 	st.subheader("Estatísticas MES")
 	variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
