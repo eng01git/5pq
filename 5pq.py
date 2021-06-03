@@ -411,6 +411,9 @@ df_pendencia = load_pendencias()
 gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() == 'sim']['Nome'])
 nao_gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() != 'sim']['Nome'])
 colunas = dados.columns
+mes = load_mes()
+colunas_mes = mes.columns
+#st.write(mes)
 
 # Constantes
 equipamentos = []
@@ -527,7 +530,11 @@ if func_escolhida == 'Estatísticas':
 	variavel =  st.selectbox('Selecione o item para análise', colunas)
 	fig = px.histogram(dados, x=variavel)
 	st.write(fig)
-		
+	
+	st.subheader("Estatísticas MES")
+	variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
+	fig_mes = px.histogram(mes, x=variavel_mes)
+	st.write(fig_mes)
 
 
 
