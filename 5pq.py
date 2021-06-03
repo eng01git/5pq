@@ -42,8 +42,11 @@ st.set_page_config(
 				#Configurando acesso ao firebase
 ######################################################################################################
 
+# Pega as configurações do banco do segredo
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
+
+# Seleciona o projeto
 db = firestore.Client(credentials=creds, project="st-5why")
 doc_ref = db.collection(u'5porques')
 
@@ -65,75 +68,104 @@ func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Pendências',
 @st.cache
 def load_data():
 	data = pd.read_csv(DATA_URL)
+	
+	# Define o caminho da coleção do firebase
 	posts_ref = db.collection("5porques_2")	
+	
+	# Busca todos os documentos presentes na coleção e salva num dataframe
 	for doc in posts_ref.stream():
 		dicionario = doc.to_dict()
 		dicionario['document'] = doc.id
 		data = data.append(dicionario, ignore_index=True)
-
+	
+	# Formata as colunas de data e hora para possibilitar filtros
 	data['data'] = pd.to_datetime(data['data']).dt.date
 	data['hora'] = pd.to_datetime(data['hora']).dt.time
 	return data
 
 @st.cache
 def load_mes():
+	# Cria dicionário vazio
 	dicionario = {}
-	posts_ref = db.collection("MES_data")	
+	
+	# Define o caminho da coleção do firebase
+	posts_ref = db.collection("MES_data")
+	
+	# Busca todos os documentos presentes na coleção e salva num dicionário
 	for doc in posts_ref.stream():
 		dic_auxiliar = doc.to_dict()
 		dicionario[dic_auxiliar['documento']] = dic_auxiliar
-			   
+	
+	# Ajusta o dicionário para um dataframe
 	mes_df = pd.DataFrame.from_dict(dicionario)
 	mes_df = mes_df.T
 	mes_df.reset_index(inplace=True)
 	mes_df.drop('index', axis=1, inplace=True)
+	
+	# Lista e ordena as colunas do dataframe
 	lista_colunas = ['Linha', 'Data', 'Hora', 'Tempo', 'Micro/Macro', 'Definição do Evento', 'Nome', 'Equipamento','Ponto Produtivo', 'SubConjunto', 'Componente', 'Modo de Falha - Sintoma', 'Descrição', 'Lote', 'Resultante', 'FluxoProduto', 'FluxoIntervalo', 'Turno', 'Gargalo', 'FiltroExterna', 'documento']
 	mes_df = mes_df.reindex(columns=lista_colunas)
+	
+	# Formata as colunas de data e hora para possibilitar filtros
 	mes_df['Data'] = pd.to_datetime(mes_df['Data']).dt.date
 	mes_df['Hora'] = pd.to_datetime(mes_df['Hora']).dt.time
+	
+	# Adequa os valores dos turnos
 	mes_df['Turno'] = mes_df['Turno'].map({'Morning': 'Turno A', 'Afternoon': 'Turno B', 'Evening': 'Turno C'})
+	
+	# Ordena os valores pela data
 	mes_df.sort_values(by=['Data'], inplace=True)
 	return mes_df
 
 def upload_mes(uploaded_file, tipos):
-	#Leitura dos dados do arquivo excel
+	# Leitura dos dados do arquivo excel
 	data = pd.read_excel(uploaded_file, sheet_name='Parada')
-	#filtrando os dados (tempo maior que 30 e eventos incluídos em tipo)
+	
+	# Filtrando os dados (tempo maior que 30 e eventos incluídos em tipo)
 	data = data[(data['Tempo'] > 30.0)]
 	data = data[data['Definição do Evento'].isin(tipos)]
-	#ajuste da variável de data
+	
+	# Ajuste da variável de data
 	data['Data'] = data['Data'].dt.date
-	#criação do nome do documento
+	
+	# Criação do nome do documento
 	data['documento'] = data['Linha'].astype(str) + data['Equipamento'].astype(str) + data['Data'].astype(str) + data['Hora'].astype(str)
 	
-	#cria dicionário vazio
+	# Cria dicionário vazio
 	dicionario = {}
-	#importa valores do firebase
-	posts_ref = db.collection("MES_data")	
+	
+	# Define o caminho da coleção do firebase
+	posts_ref = db.collection("MES_data")
+	
+	# Busca todos os documentos presentes na coleção e salva num dicionário
 	for doc in posts_ref.stream():
 		dic_auxiliar = doc.to_dict()
 		dicionario[dic_auxiliar['documento']] = dic_auxiliar
 		
-	#Filtra os valores presentes no arquivo e não presentes na base dados
+	# Filtra os valores presentes no arquivo e não presentes na base dados
 	to_include = data[~data['documento'].isin(dicionario.keys())]
 	
-	#Se houver variáveis a serem incluídas e faz a inclusão
+	# Se houver variáveis a serem incluídas e faz a inclusão
 	if to_include.shape[0] > 0 :
 		batch = db.batch()
 		for index, row in to_include.iterrows():
 			ref = db.collection('MES_data').document(row['documento'])
 			row_string = row.astype(str)
 			batch.set(ref, row_string.to_dict())
-		batch.commit()		      
-	
+		batch.commit()		      	
 	return to_include
 
 
 # Efetua a leitura dos dados dos usuários no banco
 @st.cache
 def load_usuarios():
+	# Define as colunas do dataframe
 	data = pd.DataFrame(columns=['Nome', 'Email', 'Gestor', 'Codigo'])
+	
+	# Define o caminho da coleção do firebase
 	posts_ref = db.collection("Usuarios")	
+	
+	# Busca todos os documentos presentes na coleção e salva num dataframe
 	for doc in posts_ref.stream():
 		dicionario = doc.to_dict()
 		dicionario['document'] = doc.id
@@ -143,8 +175,13 @@ def load_usuarios():
 # Efetua a leitura das pendencias no banco
 @st.cache
 def load_pendencias():
+	# Define as colunas do dataframe
 	data = pd.DataFrame(columns=['data', 'turno', 'linha', 'equipamento', 'departamento', 'usuario', 'descrição'])
+	
+	# Define o caminho da coleção do firebase
 	posts_ref = db.collection("pendencias")	
+	
+	# Busca todos os documentos presentes na coleção e salva num dataframe
 	for doc in posts_ref.stream():
 		dicionario = doc.to_dict()
 		dicionario['document'] = doc.id
@@ -154,6 +191,7 @@ def load_pendencias():
 # Efetua a leitura dos dados das linhas e dos equipamentos
 @st.cache
 def load_sap_nv3():
+	# Efetua a leitura dos dados do arquivo csv
 	data = pd.read_csv('SAP_nivel3.csv', sep=';')
 	return data
 
@@ -163,35 +201,52 @@ def load_sap_nv3():
 # Recebe como parâmetros destinatário e um código de atividade para o envio
 # O email está configurado por parâmetros presentes no streamlit share (secrets)
 def send_email(to, atividade, documento, comentario, gatilho):
+	
+	# Configura quem vai enviar o email
 	gmail_user = st.secrets["email"]
 	gmail_password = st.secrets["senha"]
 	sent_from = gmail_user
+	
+	# Cria os campos que estarão no e-mail
 	from_ = 'Ambev 5 Porques'
 	subject = ""
 	body = ''
 	atividade = int(atividade)
 	
+	# Verifica o código da atividade e edita a mensagem (criação, retificação, aprovação ou reproavação de 5-Porques
+	# Criação
 	if atividade == 0:
 		body = "Ola, foi gerada um novo 5-Porques, acesse a plataforma para avaliar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py\n\nAtenciosamente, \nAmbev 5-Porques"
 		subject = """Gerado 5-Porques %s""" % (documento)
+		
+	# Retificação
 	elif atividade == 1:
 		body = "Ola, o responsavel retificou 5-Porques, acesse a plataforma para reavaliar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py\n\nAtenciosamente, \nAmbev 5-Porques"
 		subject = """Retificado 5-Porques %s""" % (documento)
+		
+	# Aprovação
 	elif atividade == 2:
 		body = """Ola, o gestor aprovou 5-Porques.\n\n%s \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = """Aprovado 5-Porques %s""" % (documento)	
+		
+	# Reprovação
 	elif atividade == 3:
 		body = """Ola, o gestor reprovou 5-Porques, acesse a plataforma para retificar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py \n\n Comentario do gestor: \n\n%s  \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = """Reprovado 5-Porques %s""" % (documento)
-		
+	
+	# Transforma o remetente em lista
 	list_to = [to]
+	
+	# Verifica se precisa mandar o e-mail para a engenharia
 	if int(gatilho) > 60:	
 		list_to.append('marius.lisboa@gmail.com')
 		list_to.append('BRMAI0514@ambev.com.br')
 	
+	# Monta a mensagem
 	email_text = """From: %s\nTo: %s\nSubject: %s\n\n%s
 	""" % (from_, list_to, subject, body)
 	
+	# Envia a mensagem
 	try:
 		server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 		server.ehlo()
@@ -205,7 +260,7 @@ def send_email(to, atividade, documento, comentario, gatilho):
 ######################################################################################################
                                            #Função para download
 ######################################################################################################
-#download csv		
+# download de csv		
 def download(df):
 	"""Generates a link allowing the data in a given panda dataframe to be downloaded
 	in:  dataframe
@@ -215,7 +270,8 @@ def download(df):
 	b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
 	href = f'<a href="data:file/csv;base64,{b64}">Download dos dados como csv</a>'
 	return href
-#excel
+
+# Gera arquivo excel
 def to_excel(df):
 	output = BytesIO()
 	writer = pd.ExcelWriter(output, engine='xlsxwriter')
@@ -224,6 +280,7 @@ def to_excel(df):
 	processed_data = output.getvalue()
 	return processed_data
 
+# Gera o link para o download do excel
 def get_table_download_link(df):
 	"""Generates a link allowing the data in a given panda dataframe to be downloaded
 	in:  dataframe
@@ -243,14 +300,26 @@ def get_table_download_link(df):
 
 def func_validar(index, row, indice):
 	
+	# Verifica se o documento deve ser exibido
 	if row['document'] in indice:
+		
+		# Checkbox para habilitar edição
 		editar = st.checkbox('Editar 5-Porques ' + str(row['document']))
 		
+		# Etapa de avaliação do 5-Porque
 		if not editar:
+			
+			# Mostra os dados do 5-Porque selecionado
 			st.table(row)
 			st.subheader('Avaliação do 5-Porques')
+			
+			# Verifica código do gestor
 			codigo_gestor = st.text_input('Inserir código do gestor', type='password')
-			comentario = st.text_input('Envie um comentário sobre 5-Porques' + ' (' + str(index) + '):',"")			
+			
+			# Comentário do Gestor
+			comentario = st.text_input('Envie um comentário sobre 5-Porques' + ' (' + str(index) + '):',"")		
+			
+			# Botões para avaliação do 5-Porque
 			bt1, bt2 = st.beta_columns(2)
 			aprovar = bt1.button('Aprovar 5-Porques ' + '(' + str(index) + ')')
 			reprovar = bt2.button('Reprovar 5-Porques ' + '(' + str(index) + ')')
@@ -259,7 +328,8 @@ def func_validar(index, row, indice):
 			#Download do documento selecionado
 			export = filtrado[filtrado['document'] == row['document']]
 			st.markdown(get_table_download_link(export), unsafe_allow_html=True)
-					
+			
+			# Aprova 5-Poque
 			if aprovar:
 				if codigo_gestor == 'GestorAmbev':
 					caching.clear_cache()
@@ -270,6 +340,7 @@ def func_validar(index, row, indice):
 				else:
 					st.error('Código do gestor incorreto')
 
+			# Reprova 5-Porque
 			if reprovar:
 				if codigo_gestor != 'GestorAmbev':
 					st.error('Código do gestor incorreto')
@@ -281,8 +352,9 @@ def func_validar(index, row, indice):
 					send_email(row['email responsável'], 3, str(row['document']), comentario, 0)
 				else: 
 					st.error('Obrigatório o preenchimento do comentário!')
-
+		# Etapa de edição
 		else:
+			# Preenchimento do formulário
 			documento = str(row['document'])	
 			doc = row.to_dict()
 			sp2, sp3, st0 = st.beta_columns(3)
@@ -327,27 +399,38 @@ def func_validar(index, row, indice):
 				dic['ordem manutenção'] = st_tags(label=('Ordem de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['ordem manutenção'].replace(']', '').replace('[','').replace("'",'').split(','))
 				dic['status'] = 'Retificado'
 				submitted_edit = st.form_submit_button('Editar 5 Porquês' + ' (' + str(index) + '):')
-
+			
+			# Envio do formulario
 			if submitted_edit:
+				
+				# Transforma dados do formulário em um dicionário
 				keys_values = dic.items()
 				new_d = {str(key): str(value) for key, value in keys_values}
+				
+				# Verifica campos não preenchidos e os modifica
 				for key, value in new_d.items():
 					if (value == '') or value == '[]':
 						new_d[key] = 'Não informado'
+						
+				#verifica o campo de e-mail (é obrigatório o preenchimento)
 				if '@ambev.com.br' in new_d['email responsável']:
 					db.collection("5porques_2").document(documento).set(new_d,merge=True)
 					editar = False
 					email_gestor = usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email']
 					send_email(str(email_gestor.iloc[0]), 1, documento, '', new_d['gatilho'])
+					
+					# Limpa cache
 					caching.clear_cache()
 				else:
 					st.error('Por favor inserir e-mail Ambev válido')
 					
 ######################################################################################################
-                                           #Formulário para inclusão de ocorrência
+                              #Formulário para inclusão de 5-Porques
 ######################################################################################################
 
 def formulario(linhas):
+	
+	# Preenchimento do formulário
 	sp2, sp3, st0 = st.beta_columns(3)
 	list_linhas = list(linhas)
 	sap_nv2 = sp2.selectbox('Selecione a linha', list_linhas)	
@@ -385,17 +468,24 @@ def formulario(linhas):
 		dic['ordem manutenção'] = st_tags(label='Ordens de manutenção', text='Pressione enter')
 		dic['status'] = 'Pendente'
 		submitted_ins = st.form_submit_button('Enviar 5 Porquês')
-
+		
+	# Envio do formulário
 	if submitted_ins:
+		# Limpa cache
 		caching.clear_cache()
+		
+		# Transforma dados do formulário em um dicionário
 		keys_values = dic.items()
 		new_d = {str(key): str(value) for key, value in keys_values}
+
+		# Verifica campos não preenchidos e os modifica
 		for key, value in new_d.items():
 			if (value == '') or value == '[]':
 				new_d[key] = 'Não informado'
-				
+		
+		#verifica o campo de e-mail (é obrigatório o preenchimento)
 		if '@ambev.com.br' in new_d['email responsável']:
-			ts = time.time()
+			#ts = time.time()
 			val_documento = new_d['linha'] + new_d['equipamento'].replace(" ", "") + new_d['data'] + new_d['hora']
 			#val_documento = new_d['linha'] + '-' + new_d['equipamento'].replace(" ", "") + '-' + str(int(ts))
 			doc_ref = db.collection("5porques_2").document(val_documento)
@@ -415,10 +505,14 @@ if __name__ == '__main__':
 	usuarios_fb = load_usuarios()
 	sap_nv3 = load_sap_nv3()
 	df_pendencia = load_pendencias()
+	mes = load_mes()
+	
+	# Separa os gestores e não-gestores
 	gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() == 'sim']['Nome'])
 	nao_gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() != 'sim']['Nome'])
+	
+	# Separa as colunas dos dataframes
 	colunas = dados.columns
-	mes = load_mes()
 	colunas_mes = mes.columns
 
 	# Constantes
@@ -593,7 +687,6 @@ if __name__ == '__main__':
 		# Configura figura e plota o gráfico	
 		fig.update_xaxes(categoryorder='category ascending', row=1, col=2)			
 		fig.update_xaxes(categoryorder='total descending', row=1, col=3)
-		fig.update_xaxes(tickvals=['L571', 'L572', 'L581'], row=1, col=4)
 		fig.update_layout(height=600, width=1500, showlegend=False) #, title_text="5-Porques (azul) vs MES (cinza)", showlegend=False
 		st_grafico.write(fig)
 
