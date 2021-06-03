@@ -558,10 +558,9 @@ if func_escolhida == 'Estatísticas':
 	fim_filt = col_2.date_input("Fim")
 	filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
 	filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
-
-      
+  
 	fig.add_trace(
-	    go.Histogram(x=filtrado_5pq['data'], nbinsy=31),
+	    go.Histogram(x=filtrado_5pq['data'], nbinsy=31, bar=go.scatter.Bar(color="gray")),
 	    row=1, col=1
 	)
 
@@ -569,6 +568,7 @@ if func_escolhida == 'Estatísticas':
 	    go.Histogram(x=filtrado_mes['Data'], nbinsy=31),
 	    row=1, col=1
 	)
+	fig
 	fig.add_trace(
 	    go.Histogram(x=filtrado_5pq['turno']),
 	    row=1, col=2
