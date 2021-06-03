@@ -559,7 +559,7 @@ if func_escolhida == 'Estatísticas':
 	
 	fig = make_subplots(rows=1, 
 			    cols=5,
-			    subplot_titles=("Datas", "Turnos", "Equipamentos", 'Linhas', 'Parada maior que 60 min?'),
+			    subplot_titles=("Datas", "Turnos", "Equipamentos", 'Linhas', '60 min ou mais?'),
 			    column_widths=[0.2, 0.2, 0.4, 0.1, 0.1],
 			    
 			   )
@@ -574,20 +574,17 @@ if func_escolhida == 'Estatísticas':
 	fig.add_trace(go.Histogram(x=mes_produtivo, marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=3)
 	fig.add_trace(go.Histogram(x=filtrado_mes['Ponto Produtivo'], marker=dict(color='red')), row=1, col=3)
 	
+	filtrado_5pq['linha'] = filtrado_5pq['linha'].str.replace('0','').str.replace('M-', '')
 	fig.add_trace(go.Histogram(x=filtrado_5pq['linha'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=4)
 	fig.add_trace(go.Histogram(x=filtrado_mes['Linha'], marker=dict(color='red')), row=1, col=4)
-	
-#	df.loc[df['set_of_numbers'] <= 4, 'equal_or_lower_than_4?'] = 'True' 
-#df.loc[df['set_of_numbers'] > 4, 'equal_or_lower_than_4?'] = 'False' 
-	
 	
 	filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) > 60, '60minutos'] = 'Sim'
 	filtrado_5pq.loc[filtrado_5pq['gatilho'].astype(float) <= 60, '60minutos'] = 'Não'
 	filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) > 60, '60minutos'] = 'Sim'
 	filtrado_mes.loc[filtrado_mes['Tempo'].astype(float) <= 60, '60minutos'] = 'Não'
 	
-	fig.add_trace(go.Histogram(x=filtrado_5pq['60minutos'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=4)
-	fig.add_trace(go.Histogram(x=filtrado_mes['60minutos'], marker=dict(color='red')), row=1, col=4)
+	fig.add_trace(go.Histogram(x=filtrado_5pq['60minutos'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=5)
+	fig.add_trace(go.Histogram(x=filtrado_mes['60minutos'], marker=dict(color='red')), row=1, col=5)
 
 	fig.update_layout(height=600, width=1500, title_text="5-Porques (azul) vs MES (vermelho)", showlegend=False)
 	st.write(fig)
