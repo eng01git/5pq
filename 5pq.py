@@ -532,7 +532,7 @@ if __name__ == '__main__':
 
 	if func_escolhida == 'Estatísticas':
 		try:
-			st.subheader("Estatísticas 5-Porques")
+			st.subheader("Benchmark AmBev 5-Porques")
 			st_grafico = st.empty()
 			#graf1, graf2, graf3 = st.beta_columns(3)
 			#variavel =  st.selectbox('Selecione o item para análise', colunas)
@@ -600,7 +600,7 @@ if __name__ == '__main__':
 			fig.add_trace(go.Histogram(x=filtrado_mes['60minutos'], marker=dict(color='grey')), row=1, col=5)
 			
 			# Configura figura e plota o gráfico
-			fig.update_layout(height=600, width=1500, title_text="5-Porques (azul) vs MES (cinza)", showlegend=False)
+			fig.update_layout(height=600, width=1500)
 			st_grafico.write(fig)
 		except:
 			st.error('Não há dados nesse intervalo de tempo')
