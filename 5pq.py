@@ -533,28 +533,13 @@ if __name__ == '__main__':
 	if func_escolhida == 'Estatísticas':
 		st.subheader("5-Porques comparado ao MES")
 		st_grafico = st.empty()
-		#graf1, graf2, graf3 = st.beta_columns(3)
-		#variavel =  st.selectbox('Selecione o item para análise', colunas)
-		#fig1 = px.histogram(dados, x='turno')
-		#graf1.write(fig1)
-
-		#fig2 = px.histogram(dados, x='data', nbins=31)
-		#graf2.write(fig2)
-
-		#line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
-		#fig3 = px.histogram(line_equip)
-
-		#st.subheader("Estatísticas MES")
-		#variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
-		#fig_mes = px.histogram(mes, x=variavel_mes)
-		#st.write(fig_mes)
-
-		#st.text('Selecione a data')
 		col_1, col_2 = st.beta_columns(2)
 
 		#seleciona a data que mostra os 50 primeiros itens do MES (carrega com data e já mostra valores)
 		data_row = mes.shape[0] - 50
 		data_default = mes.iloc[data_row, 1]
+		
+		#filtra os dados com base na data
 		inicio_filt = col_1.date_input("Data inicial", value=data_default)
 		fim_filt = col_2.date_input("Data final")
 		filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
@@ -566,6 +551,8 @@ if __name__ == '__main__':
 				    subplot_titles=("Datas", "Turnos", "Equipamentos", 'Linhas', '60 min ou mais?'),
 				    column_widths=[0.2, 0.2, 0.4, 0.1, 0.1]
 				   )
+		
+		# verifica se há dados de 5-Porques para o período
 		try:
 			# Histograma da data
 			fig.add_trace(go.Histogram(x=filtrado_5pq['data'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=1)
@@ -584,7 +571,8 @@ if __name__ == '__main__':
 			fig.add_trace(go.Histogram(x=filtrado_5pq['60minutos'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=5)
 		except:
 			st.error('Não há dados de 5-Porques nesse período')
-
+			
+		# Verifica se há dados do MES para o período
 		try:	
 			# Histograma da data
 			fig.add_trace(go.Histogram(x=filtrado_mes['Data'], marker=dict(color='grey')), row=1, col=1)
@@ -602,10 +590,10 @@ if __name__ == '__main__':
 		except:
 			st.error('Não há dados do MES nesse período')	
 
-		# Configura figura e plota o gráfico
-		fig.update_xaxes(categoryorder='total descending', row=1, col=3)	
+		# Configura figura e plota o gráfico	
 		fig.update_xaxes(categoryorder='category ascending', row=1, col=2)			
 		fig.update_xaxes(categoryorder='total descending', row=1, col=3)
+		fig.update_xaxes(tickvals=['L571', 'L572', 'L581'], row=1, col=4)
 		fig.update_layout(height=600, width=1500, showlegend=False) #, title_text="5-Porques (azul) vs MES (cinza)", showlegend=False
 		st_grafico.write(fig)
 
@@ -621,3 +609,22 @@ if __name__ == '__main__':
 			up_mes = upload_mes(uploaded_file, tipos)
 			st.write(up_mes)
 			mes = load_mes()
+
+			
+		#graf1, graf2, graf3 = st.beta_columns(3)
+		#variavel =  st.selectbox('Selecione o item para análise', colunas)
+		#fig1 = px.histogram(dados, x='turno')
+		#graf1.write(fig1)
+
+		#fig2 = px.histogram(dados, x='data', nbins=31)
+		#graf2.write(fig2)
+
+		#line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
+		#fig3 = px.histogram(line_equip)
+
+		#st.subheader("Estatísticas MES")
+		#variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
+		#fig_mes = px.histogram(mes, x=variavel_mes)
+		#st.write(fig_mes)
+
+		#st.text('Selecione a data')
