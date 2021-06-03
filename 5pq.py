@@ -548,16 +548,16 @@ if func_escolhida == 'Estatísticas':
 	#fig_mes = px.histogram(mes, x=variavel_mes)
 	#st.write(fig_mes)
 
-	fig = make_subplots(rows=1, cols=3)
-	
-#fig.add_trace(go.Histogram(x=x0))
-#data=[go.Histogram(x=x)
+
+
 	st.text('Selecione a data')
 	col_1, col_2 = st.beta_columns(2)
 	inicio_filt = col_1.date_input("Início")
 	fim_filt = col_2.date_input("Fim")
 	filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
 	filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
+	
+	fig = make_subplots(rows=1, cols=3, subplot_titles=("Distribuição das datas", "Distribuição dos turnos", "Distribuição dos equipamentos"))
   
 	fig.add_trace(go.Histogram(x=filtrado_5pq['data'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=1)
 	fig.add_trace(go.Histogram(x=filtrado_mes['Data'], marker=dict(color='red')), row=1, col=1)
