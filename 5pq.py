@@ -589,7 +589,7 @@ if func_escolhida == 'Estatísticas':
 	    row=1, col=3
 	)
 
-	fig.update_layout(height=300, width=1200, title_text="5-Porques vs MES")
+	fig.update_layout(height=600, width=1200, title_text="5-Porques vs MES")
 	st.write(fig)
 
 
