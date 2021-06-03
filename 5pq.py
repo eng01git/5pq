@@ -581,6 +581,7 @@ if __name__ == '__main__':
 		mes_produtivo = filtrado_5pq['linha'].astype(str) + filtrado_5pq['equipamento'].astype(str)
 		fig.add_trace(go.Histogram(x=mes_produtivo, marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=3)
 		fig.add_trace(go.Histogram(x=filtrado_mes['Ponto Produtivo'].sort_values(), marker=dict(color='grey')), row=1, col=3)
+		fig.update_xaxes(categoryorder='total ascending')
 
 		filtrado_5pq['linha'] = filtrado_5pq['linha'].str.replace('0','').str.replace('M-', '')
 		fig.add_trace(go.Histogram(x=filtrado_5pq['linha'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=4)
