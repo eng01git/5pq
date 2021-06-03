@@ -551,12 +551,9 @@ if __name__ == '__main__':
 		#fig_mes = px.histogram(mes, x=variavel_mes)
 		#st.write(fig_mes)
 
-
-
 		st.text('Selecione a data')
 		col_1, col_2 = st.beta_columns(2)
-		
-		
+			
 		data_row = mes.shape[0] - 50
 		data_default = mes.iloc[data_row, 1]
 		
@@ -568,8 +565,7 @@ if __name__ == '__main__':
 		fig = make_subplots(rows=1, 
 				    cols=5,
 				    subplot_titles=("Datas", "Turnos", "Equipamentos", 'Linhas', '60 min ou mais?'),
-				    column_widths=[0.2, 0.2, 0.4, 0.1, 0.1],
-
+				    column_widths=[0.2, 0.2, 0.4, 0.1, 0.1]
 				   )
 
 		fig.add_trace(go.Histogram(x=filtrado_5pq['data'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=1)
@@ -596,7 +592,7 @@ if __name__ == '__main__':
 		fig.add_trace(go.Histogram(x=filtrado_5pq['60minutos'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=5)
 		fig.add_trace(go.Histogram(x=filtrado_mes['60minutos'], marker=dict(color='grey')), row=1, col=5)
 
-		fig.update_layout(height=600, width=1500, title_text="5-Porques (azul) vs MES (vermelho)", showlegend=False)
+		fig.update_layout(height=600, width=1500, title_text="5-Porques (azul) vs MES (cinza)", showlegend=False)
 		st.write(fig)
 
 
