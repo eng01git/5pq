@@ -430,7 +430,7 @@ if __name__ == '__main__':
 	deterioização = ['Forçada', 'Natural', 'Nenhuma']
 
 	# Imagem
-	st.image('Ambev.jpeg', width=200)
+	st.image('Ambev.jpeg', width=250)
 	#st.subheader('Aplicação 5-Porques')
 	#st.write('Selecione no menu lateral a opção desejada')
 
@@ -550,14 +550,14 @@ if __name__ == '__main__':
 			#fig_mes = px.histogram(mes, x=variavel_mes)
 			#st.write(fig_mes)
 
-			st.text('Selecione a data')
+			#st.text('Selecione a data')
 			col_1, col_2 = st.beta_columns(2)
 			
 			#seleciona a data que mostra os 50 primeiros itens do MES (carrega com data e já mostra valores)
 			data_row = mes.shape[0] - 50
 			data_default = mes.iloc[data_row, 1]
-			inicio_filt = col_1.date_input("Início", value=data_default)
-			fim_filt = col_2.date_input("Fim")
+			inicio_filt = col_1.date_input("Data inicial", value=data_default)
+			fim_filt = col_2.date_input("Data final")
 			filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
 			filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
 
