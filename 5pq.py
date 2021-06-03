@@ -547,7 +547,7 @@ if func_escolhida == 'Estatísticas':
 	#fig_mes = px.histogram(mes, x=variavel_mes)
 	#st.write(fig_mes)
 
-	fig = make_subplots(rows=3, cols=2)
+	fig = make_subplots(rows=1, cols=3)
 	
 #fig.add_trace(go.Histogram(x=x0))
 #data=[go.Histogram(x=x)
@@ -570,22 +570,22 @@ if func_escolhida == 'Estatísticas':
 	)
 	fig.add_trace(
 	    go.Histogram(x=filtrado_5pq['turno']),
-	    row=2, col=1
+	    row=1, col=2
 	)
 
 	fig.add_trace(
 	    go.Histogram(x=filtrado_mes['Turno']),
-	    row=2, col=2
+	    row=1, col=2
 	)
 	mes_produtivo = filtrado_5pq['linha'].astype(str) + filtrado_5pq['equipamento'].astype(str)
 	fig.add_trace(
 	    go.Histogram(x=mes_produtivo),
-	    row=3, col=1
+	    row=1, col=3
 	)
 
 	fig.add_trace(
 	    go.Histogram(x=filtrado_mes['Ponto Produtivo']),
-	    row=3, col=2
+	    row=1, col=3
 	)
 
 	fig.update_layout(height=1200, width=1200, title_text="5-Porques vs MES")
