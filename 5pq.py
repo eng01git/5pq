@@ -58,10 +58,10 @@ DATA_URL = "data.csv"
 ######################################################################################################
 
 
-fig1s, fig2s, fig3s = st.beta_columns(3)
-fig1s.sidebar.write('')
-fig2s.sidebar.image('latas minas.png', width=150)
-fig3s.sidebar.write('')
+fig1s, fig2s, fig3s = st.sidebar.beta_columns(3)
+fig1s.write('')
+fig2s.image('latas minas.png', width=150)
+fig3s.write('')
 #st.sidebar.image('latas minas.png', width=150)
 st.sidebar.title("Menu 5-Porques")
 func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Visibilidade', 'Inserir', 'Consultar', 'Suporte Engenharia'), index=0)
