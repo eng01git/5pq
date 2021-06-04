@@ -732,12 +732,7 @@ if __name__ == '__main__':
 		if uploaded_file is not None:
 			up_mes = upload_mes(uploaded_file, tipos)
 			st.write('A seguir os dados a serem armazenados no banco. Falta de dados significa que os dados do arquivo estão no sistema')
-			st.write(up_mes)
-			st.write('Arquivo importado')
-			st.write(up_mes)
-			#mes = load_mes()
-			
-			
+			st.write(up_mes)			
 			
 	if func_escolhida == 'Suporte Engenharia':
 		st.subheader('Suporte da aplicação 5-Porques')
