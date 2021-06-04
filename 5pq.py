@@ -666,7 +666,7 @@ if __name__ == '__main__':
 			# Histograma do turno
 			fig.add_trace(go.Histogram(x=filtrado_5pq['turno'], marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=2)
 			# Histograma da equipamento (ponto produtivo)
-			mes_produtivo = filtrado_5pq['linha'].astype(str) + filtrado_5pq['equipamento'].astype(str)
+			mes_produtivo = filtrado_5pq['linha'].astype(str) + '-' + filtrado_5pq['equipamento'].astype(str)
 			fig.add_trace(go.Histogram(x=mes_produtivo, marker=dict(color='rgba(12, 50, 196, 0.6)')), row=1, col=3)
 			# Histograma das linhas
 			filtrado_5pq['linha'] = filtrado_5pq['linha'].str.replace('0','').str.replace('M-', '')
