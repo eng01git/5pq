@@ -731,7 +731,7 @@ if __name__ == '__main__':
 		uploaded_file = st.file_uploader("Selecione o arquivo Excel para upload")
 		if uploaded_file is not None:
 			up_mes = upload_mes(uploaded_file, tipos)
-			st.write('Dados a serem armazenados no banco. Falta de dados significa que os dados do arquivo estão no sistema')
+			st.write('A seguir os dados a serem armazenados no banco. Falta de dados significa que os dados do arquivo estão no sistema')
 			st.write(up_mes)
 			#mes = load_mes()
 			
