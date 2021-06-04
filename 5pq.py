@@ -234,6 +234,11 @@ def send_email(to, atividade, documento, comentario, gatilho):
 		body = """Ola, o gestor reprovou 5-Porques, acesse a plataforma para retificar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py \n\n Comentario do gestor: \n\n%s  \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = """Reprovado 5-Porques %s""" % (documento)
 	
+	# Mensagem pro suporte
+	elif atividade == 4:
+		body = """Ola, segue mensagem enviada ao suporte.\n\n%s \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
+		subject = 'Suporte 5-Porques'
+	
 	# Transforma o remetente em lista
 	list_to = [to]
 	
@@ -721,7 +726,21 @@ if __name__ == '__main__':
 			
 			
 	if func_escolhida == 'Suporte Engenharia':
-		pass
+		st.subheader('Suporte da aplicação 5-Porques')
+		mensagem_suporte = st.text_input('Preencha o campo abaixo para reportar erros ou sugerir melhorias')
+		
+		enviar_suporte = st.button('Enviar e-mail para suporte')
+		
+		if enviar_suporte:
+			if mensagem_suporte != '':
+				send_email('BRMAI0513@ambev.com.br', 4, '', mensagem_suporte, 0)
+			else:
+				st.error('Preencher a mensagem')
+		reset_db = st.button('Atualiza base de dados')
+		
+		if reset_db:
+			caching.clear_cache()
+		
 		
 		
 
