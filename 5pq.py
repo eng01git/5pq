@@ -732,7 +732,7 @@ if __name__ == '__main__':
 		if uploaded_file is not None:
 			up_mes = upload_mes(uploaded_file, tipos)
 			st.write(up_mes)
-			mes = load_mes()
+			#mes = load_mes()
 			
 			
 			
