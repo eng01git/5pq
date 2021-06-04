@@ -733,6 +733,8 @@ if __name__ == '__main__':
 			up_mes = upload_mes(uploaded_file, tipos)
 			st.write('A seguir os dados a serem armazenados no banco. Falta de dados significa que os dados do arquivo estão no sistema')
 			st.write(up_mes)
+			st.write('Arquivo importado')
+			st.write(up_mes)
 			#mes = load_mes()
 			
 			
