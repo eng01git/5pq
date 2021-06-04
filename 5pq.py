@@ -58,7 +58,7 @@ DATA_URL = "data.csv"
 ######################################################################################################
 
 st.sidebar.title("Menu 5-Porques")
-func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Pendências', 'Inserir', 'Consultar', 'Estatísticas'), index=0)
+func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Visibilidade', 'Inserir', 'Consultar', 'Suporte Engenharia'), index=0)
 
 ######################################################################################################
                                #Função para leitura do banco (Firebase)
@@ -637,7 +637,7 @@ if __name__ == '__main__':
 				st.subheader('Ocorrência ' + str(row['document']))
 				func_validar(index, row, indice_doc)
 
-	if func_escolhida == 'Estatísticas':
+	if func_escolhida == 'Visibilidade':
 		st.subheader("Visibilidade 5-Porques vs MES")
 		st_grafico = st.empty()
 		col_1, col_2 = st.beta_columns(2)
@@ -717,6 +717,12 @@ if __name__ == '__main__':
 			up_mes = upload_mes(uploaded_file, tipos)
 			st.write(up_mes)
 			mes = load_mes()
+			
+			
+			
+	if func_escolhida == 'Suporte Engenharia':
+		
+		
 
 			
 		#graf1, graf2, graf3 = st.beta_columns(3)
