@@ -700,6 +700,8 @@ if __name__ == '__main__':
 		# Configura figura e plota o gráfico	
 		fig.update_xaxes(categoryorder='category ascending', row=1, col=2)			
 		fig.update_xaxes(categoryorder='total descending', row=1, col=3)
+		fig.update_xaxes(categoryorder='category ascending', row=1, col=4)
+		fig.update_xaxes(categoryorder='category ascending', row=1, col=5)
 		fig.update_layout(height=600, width=1500, showlegend=False) #, title_text="5-Porques (azul) vs MES (cinza)", showlegend=False
 		st_grafico.write(fig)
 
