@@ -529,7 +529,12 @@ if __name__ == '__main__':
 	deterioização = ['Forçada', 'Natural', 'Nenhuma']
 
 	# Imagem
-	st.image('Ambev.jpeg', width=250)
+	col1_, col2_, col3_ = st.beta_columns([1,6,1])
+	col1_.write('')
+	col2_.image('Ambev.jpeg', width=250)
+	col3_.write('')
+	
+	#st.image('Ambev.jpeg', width=250)
 	#st.subheader('Aplicação 5-Porques')
 	#st.write('Selecione no menu lateral a opção desejada')
 
