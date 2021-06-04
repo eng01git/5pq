@@ -58,7 +58,7 @@ DATA_URL = "data.csv"
 ######################################################################################################
 
 
-fig1s, fig2s, fig3s = st.sidebar.beta_columns(3)
+fig1s, fig2s, fig3s = st.sidebar.beta_columns([1,2,1])
 fig1s.write('')
 fig2s.image('latas minas.png', width=150)
 fig3s.write('')
