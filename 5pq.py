@@ -727,19 +727,28 @@ if __name__ == '__main__':
 			
 	if func_escolhida == 'Suporte Engenharia':
 		st.subheader('Suporte da aplicação 5-Porques')
+		
+		# Campo para preenchimento de mensagem
 		mensagem_suporte = st.text_input('Preencha o campo abaixo para reportar erros ou sugerir melhorias')
+		
+		# Campo para email
 		email_contato = st.text_input('E-mail para contato')
+		
+		# Montagem da mensagem
 		mensagem = mensagem_suporte + '\n\n' + email_contato
 		
+		# Envio da mensagem
 		enviar_suporte = st.button('Enviar e-mail para suporte')
-		
 		if enviar_suporte:
 			if mensagem_suporte != '':
 				send_email('BRMAI0513@ambev.com.br', 4, '', mensagem, 0)
 			else:
 				st.error('Preencher a mensagem')
-		reset_db = st.button('Atualiza base de dados')
+				
+		st.subheader('Gestão da aplicação')
 		
+		# Reseta cache para refazer leitura dos bancos
+		reset_db = st.button('Atualiza base de dados')
 		if reset_db:
 			caching.clear_cache()
 		
