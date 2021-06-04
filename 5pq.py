@@ -748,7 +748,7 @@ if __name__ == '__main__':
 		st.subheader('Gestão da aplicação')
 		
 		# Reseta cache para refazer leitura dos bancos
-		reset_db = st.button('Atualiza base de dados')
+		reset_db = st.button('Atualizar base de dados')
 		if reset_db:
 			caching.clear_cache()
 		
