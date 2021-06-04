@@ -732,7 +732,7 @@ if __name__ == '__main__':
 		mensagem_suporte = st.text_input('Preencha o campo abaixo para reportar erros ou sugerir melhorias')
 		
 		# Campo para email
-		email_contato = st.text_input('E-mail para contato')
+		email_contato = st.text_input('E-mail para contato (Optativo)')
 		
 		# Montagem da mensagem
 		mensagem = mensagem_suporte + '\n\n' + email_contato
