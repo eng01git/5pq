@@ -638,7 +638,7 @@ if __name__ == '__main__':
 				func_validar(index, row, indice_doc)
 
 	if func_escolhida == 'Estatísticas':
-		st.subheader("5-Porques comparado ao MES")
+		st.subheader("Visibilidade 5-Porques vs MES")
 		st_grafico = st.empty()
 		col_1, col_2 = st.beta_columns(2)
 
