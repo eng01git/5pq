@@ -756,15 +756,19 @@ if __name__ == '__main__':
 				
 		st.subheader('Gestão da aplicação')
 		
+		# Video
+		st.subheader('Video de usabilidade da aplicação')
+		video_file = open('streamlit-5pq-2021-06-05-09-06-63.webm', 'rb')
+		video_bytes = video_file.read()
+		st.video(video_bytes)
+		
+		
 		# Reseta cache para refazer leitura dos bancos
 		reset_db = st.button('Atualizar base de dados')
 		if reset_db:
 			caching.clear_cache()
 		
-		video_file = open('streamlit-5pq-2021-06-02-14-06-54.webm', 'rb')
-		video_bytes = video_file.read()
-		st.video(video_bytes)
-		
+
 
 			
 		#graf1, graf2, graf3 = st.beta_columns(3)
