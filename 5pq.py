@@ -761,7 +761,9 @@ if __name__ == '__main__':
 		if reset_db:
 			caching.clear_cache()
 		
-		
+		video_file = open('streamlit-5pq-2021-06-02-14-06-54.webm', 'rb')
+		video_bytes = video_file.read()
+		st.video(video_bytes)
 		
 
 			
