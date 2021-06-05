@@ -757,7 +757,7 @@ if __name__ == '__main__':
 		
 		
 		# Video
-		st.subheader('Video de usabilidade da aplicação')
+		st.subheader('Tutoriais')
 		video_file = open('streamlit-5pq-2021-06-05-09-06-63.webm', 'rb')
 		video_bytes = video_file.read()
 		st.video(video_bytes)
