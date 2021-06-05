@@ -754,7 +754,7 @@ if __name__ == '__main__':
 			else:
 				st.error('Preencher a mensagem')
 				
-		st.subheader('Gestão da aplicação')
+		
 		
 		# Video
 		st.subheader('Video de usabilidade da aplicação')
@@ -762,6 +762,7 @@ if __name__ == '__main__':
 		video_bytes = video_file.read()
 		st.video(video_bytes)
 		
+		st.subheader('Gestão da aplicação')
 		
 		# Reseta cache para refazer leitura dos bancos
 		reset_db = st.button('Atualizar base de dados')
