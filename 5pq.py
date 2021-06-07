@@ -127,7 +127,7 @@ def upload_mes(uploaded_file, tipos):
 	# Leitura dos dados do arquivo excel
 	try:
 		data = pd.read_excel(uploaded_file, sheet_name='Parada')
-
+		
 		# Filtrando os dados (tempo maior que 30 e eventos incluídos em tipo)
 		data = data[(data['Tempo'] > 30.0)]
 		data = data[data['Definição do Evento'].isin(tipos)]
@@ -163,6 +163,7 @@ def upload_mes(uploaded_file, tipos):
 		return to_include
 	except:
 		st.error('Arquivo não compatível com exportação do MES')
+		return None
 
 
 # Efetua a leitura dos dados dos usuários no banco
@@ -734,8 +735,9 @@ if __name__ == '__main__':
 		uploaded_file = st.file_uploader("Selecione o arquivo Excel para upload")
 		if uploaded_file is not None:
 			up_mes = upload_mes(uploaded_file, tipos)
-			st.write('A seguir os dados a serem armazenados no banco. Falta de dados significa que os dados do arquivo estão no sistema')
-			st.write(up_mes)			
+			if up_mes is not None:
+				st.write('A seguir os dados a serem armazenados no banco. Falta de dados significa que os dados do arquivo estão no sistema')
+				st.write(up_mes)			
 			
 	if func_escolhida == 'Suporte Engenharia':
 		st.subheader('Suporte da aplicação 5-Porques')
