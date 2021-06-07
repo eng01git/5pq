@@ -125,41 +125,44 @@ def load_mes():
 
 def upload_mes(uploaded_file, tipos):
 	# Leitura dos dados do arquivo excel
-	data = pd.read_excel(uploaded_file, sheet_name='Parada')
-	
-	# Filtrando os dados (tempo maior que 30 e eventos incluídos em tipo)
-	data = data[(data['Tempo'] > 30.0)]
-	data = data[data['Definição do Evento'].isin(tipos)]
-	
-	# Ajuste da variável de data
-	data['Data'] = data['Data'].dt.date
-	
-	# Criação do nome do documento
-	data['documento'] = data['Linha'].astype(str) + data['Equipamento'].astype(str) + data['Data'].astype(str) + data['Hora'].astype(str)
-	
-	# Cria dicionário vazio
-	dicionario = {}
-	
-	# Define o caminho da coleção do firebase
-	posts_ref = db.collection("MES_data")
-	
-	# Busca todos os documentos presentes na coleção e salva num dicionário
-	for doc in posts_ref.stream():
-		dic_auxiliar = doc.to_dict()
-		dicionario[dic_auxiliar['documento']] = dic_auxiliar
-		
-	# Filtra os valores presentes no arquivo e não presentes na base dados
-	to_include = data[~data['documento'].isin(dicionario.keys())]
-	
-	# Se houver variáveis a serem incluídas e faz a inclusão
-	if to_include.shape[0] > 0 :
-		batch = db.batch()
-		for index, row in to_include.iterrows():
-			ref = db.collection('MES_data').document(row['documento'])
-			row_string = row.astype(str)
-			batch.set(ref, row_string.to_dict())
-		batch.commit()		      	
-	return to_include
+	try:
+		data = pd.read_excel(uploaded_file, sheet_name='Parada')
+
+		# Filtrando os dados (tempo maior que 30 e eventos incluídos em tipo)
+		data = data[(data['Tempo'] > 30.0)]
+		data = data[data['Definição do Evento'].isin(tipos)]
+
+		# Ajuste da variável de data
+		data['Data'] = data['Data'].dt.date
+
+		# Criação do nome do documento
+		data['documento'] = data['Linha'].astype(str) + data['Equipamento'].astype(str) + data['Data'].astype(str) + data['Hora'].astype(str)
+
+		# Cria dicionário vazio
+		dicionario = {}
+
+		# Define o caminho da coleção do firebase
+		posts_ref = db.collection("MES_data")
+
+		# Busca todos os documentos presentes na coleção e salva num dicionário
+		for doc in posts_ref.stream():
+			dic_auxiliar = doc.to_dict()
+			dicionario[dic_auxiliar['documento']] = dic_auxiliar
+
+		# Filtra os valores presentes no arquivo e não presentes na base dados
+		to_include = data[~data['documento'].isin(dicionario.keys())]
+
+		# Se houver variáveis a serem incluídas e faz a inclusão
+		if to_include.shape[0] > 0 :
+			batch = db.batch()
+			for index, row in to_include.iterrows():
+				ref = db.collection('MES_data').document(row['documento'])
+				row_string = row.astype(str)
+				batch.set(ref, row_string.to_dict())
+			batch.commit()		      	
+		return to_include
+	except:
+		st.error('Arquivo não compatível com exportação do MES')
 
 
 # Efetua a leitura dos dados dos usuários no banco
