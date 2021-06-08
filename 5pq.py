@@ -117,7 +117,9 @@ def load_mes():
 	mes_df['Hora'] = pd.to_datetime(mes_df['Hora']).dt.time
 	
 	# Adequa os valores dos turnos
-	mes_df['Turno'] = mes_df['Turno'].map({'Morning': 'Turno A', 'Afternoon': 'Turno B', 'Evening': 'Turno C'})
+	#mes_df['Turno'] = mes_df['Turno'].map({'Morning': 'Turno A', 'Afternoon': 'Turno B', 'Evening': 'Turno C'})
+	mes_df.loc[(mes_df['Hora'] >= 23) & (mes_df['Hora'] < 7), 'Turno'] = 'Turno A'
+	
 	
 	# Ordena os valores pela data
 	mes_df.sort_values(by=['Data'], inplace=True)
