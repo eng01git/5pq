@@ -262,8 +262,9 @@ def send_email(to, atividade, documento, comentario, gatilho):
 	
 	# Verifica se precisa mandar o e-mail para a engenharia
 	if int(gatilho) > 60:	
-		list_to.append('marius.lisboa@gmail.com')
-		list_to.append('BRMAI0514@ambev.com.br')
+		
+		list_to.append('99814840@ambev.com.br')
+		list_to.append('99814849@ambev.com.br')
 	
 	# Monta a mensagem
 	email_text = """From: %s\nTo: %s\nSubject: %s\n\n%s
