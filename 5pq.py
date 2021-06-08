@@ -122,10 +122,7 @@ def load_mes():
 	mes_df.loc[(mes_df['Hora'] >= datetime.time(23, 0, 0)) | (mes_df['Hora'] < datetime.time(7, 0, 0)), 'Turno'] = 'Turno A'
 	mes_df.loc[(mes_df['Hora'] >= datetime.time(7, 0, 0)) & (mes_df['Hora'] < datetime.time(15, 0, 0)), 'Turno'] = 'Turno B'
 	mes_df.loc[(mes_df['Hora'] >= datetime.time(15, 0, 0)) & (mes_df['Hora'] < datetime.time(23, 0, 0)), 'Turno'] = 'Turno C'
-	
-	datetime.time(23, 0, 0)
-	
-	
+
 	# Ordena os valores pela data
 	mes_df.sort_values(by=['Data'], inplace=True)
 	return mes_df
@@ -166,7 +163,11 @@ def upload_mes(uploaded_file, tipos):
 				ref = db.collection('MES_data').document(row['documento'])
 				row_string = row.astype(str)
 				batch.set(ref, row_string.to_dict())
-			batch.commit()		      	
+			batch.commit()	
+			
+		# Limpa cache
+		caching.clear_cache()
+		
 		return to_include
 	except:
 		st.error('Arquivo não compatível com exportação do MES')
