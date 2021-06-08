@@ -337,7 +337,7 @@ def func_validar(index, row, indice):
 			st.subheader('Avaliação do 5-Porques')
 			
 			# Verifica código do gestor
-			codigo_gestor = st.text_input('Inserir código do gestor' + ' (' + str(index) + '), type='password')
+			codigo_gestor = st.text_input('Inserir código do gestor' + ' (' + str(index) + ')', type='password')
 			
 			# Comentário do Gestor
 			comentario = st.text_input('Envie um comentário sobre 5-Porques' + ' (' + str(index) + '):',"")		
