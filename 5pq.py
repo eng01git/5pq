@@ -119,7 +119,7 @@ def load_mes():
 	
 	# Adequa os valores dos turnos
 	#mes_df['Turno'] = mes_df['Turno'].map({'Morning': 'Turno A', 'Afternoon': 'Turno B', 'Evening': 'Turno C'})
-	mes_df.loc[(mes_df['Hora'] >= datetime.time(23, 0, 0)) & (mes_df['Hora'] < datetime.time(7, 0, 0)), 'Turno'] = 'Turno A'
+	mes_df.loc[(mes_df['Hora'] >= datetime.time(23, 0, 0)) | (mes_df['Hora'] < datetime.time(7, 0, 0)), 'Turno'] = 'Turno A'
 	
 	datetime.time(23, 0, 0)
 	
