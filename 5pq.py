@@ -417,7 +417,7 @@ def func_validar(index, row, indice):
 				dic['correção deterioização'] = st7.multiselect('Selecione o tipo da deterioização (correção)' + ' (' + str(index) + '):', deterioização)
 				
 				lista = doc['ações'].replace('[', '').replace(']', '').split("',")
-				st.write(lista)
+				#st.write(lista)
 				
 				dict_acoes = []
 				_index = 0
@@ -555,8 +555,6 @@ def formulario(linhas):
 		
 	# Envio do formulário
 	if submitted_ins:
-		st.write(dict_acoes)
-		pass
 		# Limpa cache
 		caching.clear_cache()
 		
