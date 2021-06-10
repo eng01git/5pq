@@ -214,6 +214,11 @@ def load_sap_nv3():
 	data = pd.read_csv('SAP_nivel3.csv', sep=';')
 	return data
 
+# Efetua a escrita das acoes
+def write_acoes(acoes, doc):
+	pass
+	
+
 ######################################################################################################
                                            #Função para enviar email
 ######################################################################################################
@@ -457,6 +462,9 @@ def func_validar(index, row, indice):
 			# Envio do formulario
 			if submitted_edit:
 				
+				# Escreve as acoes em um banco
+				write_acoes(dic['ações'], documento)
+				
 				# Transforma dados do formulário em um dicionário
 				keys_values = dic.items()
 				new_d = {str(key): str(value) for key, value in keys_values}
@@ -537,6 +545,9 @@ def formulario(linhas):
 	if submitted_ins:
 		# Limpa cache
 		caching.clear_cache()
+						
+		# Escreve as acoes em um banco
+		write_acoes(dic['ações'], documento)
 		
 		# Transforma dados do formulário em um dicionário
 		keys_values = dic.items()
