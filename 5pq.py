@@ -484,24 +484,24 @@ def formulario(linhas):
 		dic['tipo de correção'] = st6.multiselect('Selecione o tipo da correção', falhas)
 		dic['correção deterioização'] = st7.multiselect('Selecione o tipo da deterioização (correção)', deterioização)
 		
-		dict_acoes[5]
+		dict_acoes = []
 		if dic['quantidade de ações'] >= 1:
 			_ação = st.text_input('Ação (' + str(1) + '):', "") 
 			_dono = st.text_input('Dono (' + str(1) + '):', "") 
 			_prazo = st.text_input('Prazo (' + str(1) + '):', "") 
-			dict_acoes[0] = str(_ação) + ';' + str(_dono) + ';' + str(_prazo)
+			dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))
 			
 		if dic['quantidade de ações'] >= 2:
 			_ação = st.text_input('Ação (' + str(2) + '):', "") 
 			_dono = st.text_input('Dono (' + str(2) + '):', "") 
 			_prazo = st.text_input('Prazo (' + str(2) + '):', "") 
-			dict_acoes[1] = str(_ação) + ';' + str(_dono) + ';' + str(_prazo)
+			dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))
 			
 		if dic['quantidade de ações'] >= 3:
 			_ação = st.text_input('Ação (' + str(3) + '):', "") 
 			_dono = st.text_input('Dono (' + str(3) + '):', "") 
 			_prazo = st.text_input('Prazo (' + str(3) + '):', "") 
-			dict_acoes[2] = str(_ação) + ';' + str(_dono) + ';' + str(_prazo)		
+			dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))		
 		
 		
 		#dic['ações'] = st.text_input('Ações', "")
