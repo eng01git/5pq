@@ -423,7 +423,7 @@ def func_validar(index, row, indice):
 				_index = 0
 				for i in lista:
 					i = i.lstrip()
-					array = i.split(';')
+					array = i.split(';;')
 					ac, do, pr = st.beta_columns([3,2,1])
 					_ação = ac.text_input('Ação' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[0]) 
 					_dono = do.text_input('Dono' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[1]) 
@@ -520,7 +520,7 @@ def formulario(linhas):
 			_ação = ac.text_input('Ação (' + str(i) + '):', "") 
 			_dono = do.text_input('Dono (' + str(i) + '):', "") 
 			_prazo = pr.date_input('Prazo (' + str(i) + '):')
-			dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))			
+			dict_acoes.append(str(_ação) + ';;' + str(_dono) + ';;' + str(_prazo))			
 			      
 		
 		#if dic['quantidade de ações'] >= 1:
