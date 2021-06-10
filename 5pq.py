@@ -512,7 +512,7 @@ def formulario(linhas):
 		#	dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))		
 		
 		
-		#dic['ações'] = st.text_input('Ações', "")
+		dic['ações'] = st.text_input('Ações', "")
 		st8, st9 = st.beta_columns(2)
 		dic['responsável identificação'] = st8.text_input('Responsável pela identificação')
 		dic['responsável reparo'] = st9.text_input('Responsável pela correção')
@@ -525,6 +525,8 @@ def formulario(linhas):
 		
 	# Envio do formulário
 	if submitted_ins:
+		st.write(dict_acoes)
+		pass
 		# Limpa cache
 		caching.clear_cache()
 		
