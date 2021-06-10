@@ -24,6 +24,7 @@ import json
 import smtplib
 import time
 import datetime
+from datetime import  date
 import base64
 from io import BytesIO
 
@@ -414,14 +415,16 @@ def func_validar(index, row, indice):
 				dic['tipo de correção'] = st6.multiselect('Selecione o tipo da correção' + ' (' + str(index) + '):', falhas)
 				dic['correção deterioização'] = st7.multiselect('Selecione o tipo da deterioização (correção)' + ' (' + str(index) + '):', deterioização)
 				
-				lista = doc['ações'].lstrip().replace("'",'').replace('[', '').replace(']', '').split(',')
+				lista = doc['ações'].replace("'",'').replace('[', '').replace(']', '').split(',')
 				st.write(lista)
-				#for i in doc['ações']):
-				#	ac, do, pr = st.beta_columns([3,2,1])
-				#	_ação = ac.text_input('Ação (' + str(i) + '):', "") 
-				#	_dono = do.text_input('Dono (' + str(i) + '):', "") 
-				#	_prazo = pr.date_input('Prazo (' + str(i) + '):')
-				#	dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))	
+				for i in lista:
+					i = i.lstrip()
+					array = i.split(';')
+					ac, do, pr = st.beta_columns([3,2,1])
+					_ação = ac.text_input('Ação (' + str(i) + '):', value=array[0]) 
+					_dono = do.text_input('Dono (' + str(i) + '):', value=array[1]) 
+					_prazo = pr.date_input('Prazo (' + str(i) + '):'value=date(array[2]))
+					dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))	
 				
 				
 				dic['ações'] = st.text_input('Ações' + ' (' + str(index) + '):', value=doc['ações'])
