@@ -382,7 +382,7 @@ def func_validar(index, row, indice):
 			# Preenchimento do formulário
 			documento = str(row['document'])	
 			doc = row.to_dict()
-			sp2, sp3, st0 = st.beta_columns(3)
+			sp2, sp3, st0, acoes = st.beta_columns(4)
 			list_linhas = list(linhas)
 			sap_nv2 = sp2.selectbox('Selecione a linha' + ' (' + str(index) + '):', list_linhas, list_linhas.index(doc['linha']))
 			equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
@@ -401,6 +401,7 @@ def func_validar(index, row, indice):
 				dic['linha'] = sap_nv2
 				dic['equipamento'] = sp3.selectbox('Selecione o equipamento' + ' (' + str(index) + '):', equipamentos, equipamento_ant)
 				dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)' + ' (' + str(index) + '):', value=int(doc['gatilho']), min_value=30)
+				dic['quantidade de ações'] = acoes.number_input('Quantidade de ações geradas', min_value=1, max_value=10)
 				dic['descrição anomalia'] = st.text_input('Descreva a anomalia' + ' (' + str(index) + '):', value=doc['descrição anomalia'])
 				st4, st5 = st.beta_columns(2)
 				dic['correção'] = st.text_input('Descreva a correção' + ' (' + str(index) + '):', value=doc['correção'])
@@ -484,7 +485,7 @@ def formulario(linhas):
 		dic['linha'] = sap_nv2
 		dic['equipamento'] = sp3.selectbox('Selecione o equipamento', equipamentos)
 		dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)', min_value=30)
-		dic['quantidade de ações'] = acoes.number_input('Quantidade de ações geradas', min_value=1, max_value=5)
+		dic['quantidade de ações'] = acoes.number_input('Quantidade de ações geradas', min_value=1, max_value=10)
 		dic['descrição anomalia'] = st.text_input('Descreva a anomalia', "")
 		st4, st5 = st.beta_columns(2)
 		dic['correção'] = st.text_input('Descreva a correção', "")
