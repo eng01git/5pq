@@ -442,7 +442,8 @@ def func_validar(index, row, indice):
 						dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))
 						
 				
-				dic['ações'] = st.text_input('Ações' + ' (' + str(index) + '):', value=doc['ações'])
+				#dic['ações'] = st.text_input('Ações' + ' (' + str(index) + '):', value=doc['ações'])
+				dic['ações'] = dict_acoes
 				st8, st9 = st.beta_columns(2)
 				dic['responsável identificação'] = st8.text_input('Responsável pela identificação' + ' (' + str(index) + '):', value=doc['responsável identificação'])
 				dic['responsável reparo'] = st9.text_input('Responsável pela correção' + ' (' + str(index) + '):',value=doc['responsável reparo'])
