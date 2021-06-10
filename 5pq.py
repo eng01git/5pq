@@ -434,7 +434,7 @@ def func_validar(index, row, indice):
 						break
 						
 				if dic['quantidade de ações'] > len(lista):
-					for i in list(range(dic['quantidade de ações'] - len(lista)):
+					for i in list(range(dic['quantidade de ações'] - len(lista))):
 						ac, do, pr = st.beta_columns([3,2,1])
 						_ação = ac.text_input('Ação (' + str(i) + '):', "") 
 						_dono = do.text_input('Dono (' + str(i) + '):', "") 
