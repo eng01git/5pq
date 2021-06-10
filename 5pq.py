@@ -230,7 +230,7 @@ def write_acoes(acoes, documento):
 	
 	index = 0
 	for i in acoes:
-		lista = i.split("',")
+		lista = i.split(",")
 		chave = str(documento) + '_' + str(index)
 		
 		if chave not in acoes_firebase:		
