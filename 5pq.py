@@ -422,9 +422,9 @@ def func_validar(index, row, indice):
 					i = i.lstrip()
 					array = i.split(';')
 					ac, do, pr = st.beta_columns([3,2,1])
-					_ação = ac.text_input('Ação (' + str(_index) + '):', value=array[0]) 
-					_dono = do.text_input('Dono (' + str(_index) + '):', value=array[1]) 
-					_prazo = pr.date_input('Prazo (' + str(_index) + '):', value=date.fromisoformat(array[2]))
+					_ação = ac.text_input('Ação' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[0]) 
+					_dono = do.text_input('Dono' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[1]) 
+					_prazo = pr.date_input('Prazo' + ' (' + str(index) + ')(' + str(_index) + '):', value=date.fromisoformat(array[2]))
 					_index += 1
 				
 				
