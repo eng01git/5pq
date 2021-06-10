@@ -401,7 +401,7 @@ def func_validar(index, row, indice):
 				dic['linha'] = sap_nv2
 				dic['equipamento'] = sp3.selectbox('Selecione o equipamento' + ' (' + str(index) + '):', equipamentos, equipamento_ant)
 				dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)' + ' (' + str(index) + '):', value=int(doc['gatilho']), min_value=30)
-				dic['quantidade de ações'] = acoes.number_input('Quantidade de ações geradas', min_value=1, max_value=10)
+				dic['quantidade de ações'] = acoes.number_input('Quantidade de ações geradas', min_value=1, value=int(doc['quantidade de ações']), max_value=10)
 				dic['descrição anomalia'] = st.text_input('Descreva a anomalia' + ' (' + str(index) + '):', value=doc['descrição anomalia'])
 				st4, st5 = st.beta_columns(2)
 				dic['correção'] = st.text_input('Descreva a correção' + ' (' + str(index) + '):', value=doc['correção'])
@@ -427,6 +427,8 @@ def func_validar(index, row, indice):
 					_dono = do.text_input('Dono' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[1]) 
 					_prazo = pr.date_input('Prazo' + ' (' + str(index) + ')(' + str(_index) + '):', value=date.fromisoformat(array[2]))
 					_index += 1
+					if _index == dic['quantidade de ações']:
+						break
 				
 				
 				dic['ações'] = st.text_input('Ações' + ' (' + str(index) + '):', value=doc['ações'])
