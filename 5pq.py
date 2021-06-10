@@ -66,7 +66,7 @@ fig2s.image('latas minas.png', width=150)
 fig3s.write('')
 #st.sidebar.image('latas minas.png', width=150)
 st.sidebar.title("Menu 5-Porques")
-func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Visibilidade', 'Inserir', 'Consultar', 'Suporte Engenharia'), index=0)
+func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Visibilidade', 'Inserir', 'Consultar', 'Suporte Engenharia', 'Ação'), index=0)
 
 ######################################################################################################
                                #Função para leitura do banco (Firebase)
