@@ -489,7 +489,7 @@ def formulario(linhas):
 			ac, do, pr = st.beta_columns(3)
 			_ação = ac.text_input('Ação (' + str(i) + '):', "") 
 			_dono = do.text_input('Dono (' + str(i) + '):', "") 
-			_prazo = pr.text_input('Prazo (' + str(i) + '):', "") 
+			_prazo = pr.date_input('Prazo (' + str(i) + '):', "")
 			dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))			
 			      
 		
