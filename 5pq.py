@@ -416,13 +416,13 @@ def func_validar(index, row, indice):
 				dic['tipo de correção'] = st6.multiselect('Selecione o tipo da correção' + ' (' + str(index) + '):', falhas)
 				dic['correção deterioização'] = st7.multiselect('Selecione o tipo da deterioização (correção)' + ' (' + str(index) + '):', deterioização)
 				
-				lista = doc['ações'].replace("'",'').replace('[', '').replace(']', '').split(',')
+				lista = doc['ações'].replace('[', '').replace(']', '').split("',")
 				st.write(lista)
 				
 				dict_acoes = []
 				_index = 0
 				for i in lista:
-					i = i.lstrip()
+					i = i.lstrip().replace("'",'')
 					array = i.split(';;')
 					ac, do, pr = st.beta_columns([3,2,1])
 					_ação = ac.text_input('Ação' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[0]) 
