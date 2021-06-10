@@ -227,10 +227,12 @@ def write_acoes(acoes, documento):
 	# Busca todos os documentos presentes na coleção e salva num dataframe
 	for doc in posts_ref.stream():
 		acoes_firebase.append(doc.id)
-	
+	st.write(acoes)
 	index = 0
 	for i in acoes:
 		lista = i.split(",")
+		st.write(i)
+		st.write(lista)
 		chave = str(documento) + '_' + str(index)
 		
 		if chave not in acoes_firebase:		
