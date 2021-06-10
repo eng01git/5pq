@@ -425,7 +425,7 @@ def func_validar(index, row, indice):
 					_ação = ac.text_input('Ação (' + str(_index) + '):', value=array[0]) 
 					_dono = do.text_input('Dono (' + str(_index) + '):', value=array[1]) 
 					_prazo = pr.date_input('Prazo (' + str(_index) + '):', value=date.fromisoformat(array[2]))
-					_index =+ 1
+					_index += 1
 				
 				
 				dic['ações'] = st.text_input('Ações' + ' (' + str(index) + '):', value=doc['ações'])
