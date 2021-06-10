@@ -413,6 +413,17 @@ def func_validar(index, row, indice):
 				dic['falha deterioização'] = st5.multiselect('Selecione o tipo da deterioização (falha)' + ' (' + str(index) + '):', deterioização)
 				dic['tipo de correção'] = st6.multiselect('Selecione o tipo da correção' + ' (' + str(index) + '):', falhas)
 				dic['correção deterioização'] = st7.multiselect('Selecione o tipo da deterioização (correção)' + ' (' + str(index) + '):', deterioização)
+				
+				lista = doc['ações'].split(',')
+				st.write(lista)
+				#for i in doc['ações']):
+				#	ac, do, pr = st.beta_columns([3,2,1])
+				#	_ação = ac.text_input('Ação (' + str(i) + '):', "") 
+				#	_dono = do.text_input('Dono (' + str(i) + '):', "") 
+				#	_prazo = pr.date_input('Prazo (' + str(i) + '):')
+				#	dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))	
+				
+				
 				dic['ações'] = st.text_input('Ações' + ' (' + str(index) + '):', value=doc['ações'])
 				st8, st9 = st.beta_columns(2)
 				dic['responsável identificação'] = st8.text_input('Responsável pela identificação' + ' (' + str(index) + '):', value=doc['responsável identificação'])
