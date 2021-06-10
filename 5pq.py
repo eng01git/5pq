@@ -484,12 +484,12 @@ def formulario(linhas):
 		dic['tipo de correção'] = st6.multiselect('Selecione o tipo da correção', falhas)
 		dic['correção deterioização'] = st7.multiselect('Selecione o tipo da deterioização (correção)', deterioização)
 		
-		dict_acoes = {}
+		dict_acoes = [dic['quantidade de ações']]
 		for i in list(range(0, dic['quantidade de ações'])):
-			dict_acoes[str(i)]['ação'] = st.text_input('Ação (' + str(i) + '):', "") 
-			dict_acoes[str(i)]['dono'] = st.text_input('Dono (' + str(i) + '):', "") 
-			dict_acoes[str(i)]['prazo'] = st.text_input('Prazo (' + str(i) + '):', "") 
-			      
+			ação = st.text_input('Ação (' + str(i) + '):', "") 
+			dono = st.text_input('Dono (' + str(i) + '):', "") 
+			prazo = st.text_input('Prazo (' + str(i) + '):', "") 
+			dict_acoes[i] = str(ação) + ';' + str(dono) + ';' + str(prazo)   
 		
 		
 		#dic['ações'] = st.text_input('Ações', "")
