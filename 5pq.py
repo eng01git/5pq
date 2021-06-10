@@ -484,7 +484,7 @@ def formulario(linhas):
 		dic['tipo de correção'] = st6.multiselect('Selecione o tipo da correção', falhas)
 		dic['correção deterioização'] = st7.multiselect('Selecione o tipo da deterioização (correção)', deterioização)
 		
-		dict_acoes = [5]
+		dict_acoes[5]
 		if dic['quantidade de ações'] >= 1:
 			_ação = st.text_input('Ação (' + str(1) + '):', "") 
 			_dono = st.text_input('Dono (' + str(1) + '):', "") 
