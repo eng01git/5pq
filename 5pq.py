@@ -486,9 +486,9 @@ def formulario(linhas):
 		
 		dict_acoes = {}
 		for i in list(range(0, dic['quantidade de ações'])):
-			dict_acoes[i]['ação'] = st.text_input('Ação (' + i + '):', "") 
-			dict_acoes[i]['dono'] = st.text_input('Dono (' + i + '):', "") 
-			dict_acoes[i]['prazo'] = st.text_input('Prazo (' + i + '):', "") 
+			dict_acoes[i]['ação'] = st.text_input('Ação (' + str(i) + '):', "") 
+			dict_acoes[i]['dono'] = st.text_input('Dono (' + str(i) + '):', "") 
+			dict_acoes[i]['prazo'] = st.text_input('Prazo (' + str(i) + '):', "") 
 			      
 		
 		
