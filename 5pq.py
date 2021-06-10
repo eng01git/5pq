@@ -257,7 +257,8 @@ def read_acao():
 	# Busca todos os documentos presentes na coleção e salva num dicionário
 	for doc in posts_ref.stream():
 		dic_auxiliar = doc.to_dict()
-		dicionario[dic_auxiliar['documento']] = dic_auxiliar
+		dict_key = dic_auxiliar['Numero do 5-Porques'] + '_' + str(dic_auxiliar['Numero da ação'])
+		dicionario[dict_key] = dic_auxiliar
 	
 	# Ajusta o dicionário para um dataframe
 	acao_df = pd.DataFrame.from_dict(dicionario)
