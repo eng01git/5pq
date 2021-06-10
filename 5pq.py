@@ -230,7 +230,7 @@ def write_acoes(acoes, documento):
 	st.write(acoes)
 	index = 0
 	for i in acoes:
-		lista = i.split(",")
+		lista = i.split(";;")
 		st.write(i)
 		st.write(lista)
 		chave = str(documento) + '_' + str(index)
