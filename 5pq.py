@@ -439,7 +439,7 @@ def func_validar(index, row, indice):
 						_ação = ac.text_input('Ação' + ' (' + str(index) + ')(' + str(i + len(lista)) + '):', "") 
 						_dono = do.text_input('Dono' + ' (' + str(index) + ')(' + str(i + len(lista)) + '):', "") 
 						_prazo = pr.date_input('Prazo' + ' (' + str(index) + ')(' + str(i + len(lista)) + '):')
-						dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))
+						dict_acoes.append(str(_ação) + ';;' + str(_dono) + ';;' + str(_prazo))
 						
 				
 				#dic['ações'] = st.text_input('Ações' + ' (' + str(index) + '):', value=doc['ações'])
