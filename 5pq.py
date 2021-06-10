@@ -444,14 +444,14 @@ def func_validar(index, row, indice):
 				
 				#dic['ações'] = st.text_input('Ações' + ' (' + str(index) + '):', value=doc['ações'])
 				dic['ações'] = dict_acoes
+				dic['notas de manutenção'] = st_tags(label=('Notas de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['notas de manutenção'].replace(']', '').replace('[','').replace("'",'').split(','))
+				dic['ordem manutenção'] = st_tags(label=('Ordem de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['ordem manutenção'].replace(']', '').replace('[','').replace("'",'').split(','))
+				dic['status'] = 'Retificado'
 				st8, st9 = st.beta_columns(2)
 				dic['responsável identificação'] = st8.text_input('Responsável pela identificação' + ' (' + str(index) + '):', value=doc['responsável identificação'])
 				dic['responsável reparo'] = st9.text_input('Responsável pela correção' + ' (' + str(index) + '):',value=doc['responsável reparo'])
 				dic['email responsável'] = st.text_input('E-mail do responsável pelo formulário' + ' (' + str(index) + '):', value=doc['email responsável'])
 				dic['gestor'] = st.selectbox('Coordenador' + ' (' + str(index) + '):', gestores, gestores.index(doc['gestor']))
-				dic['notas de manutenção'] = st_tags(label=('Notas de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['notas de manutenção'].replace(']', '').replace('[','').replace("'",'').split(','))
-				dic['ordem manutenção'] = st_tags(label=('Ordem de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['ordem manutenção'].replace(']', '').replace('[','').replace("'",'').split(','))
-				dic['status'] = 'Retificado'
 				submitted_edit = st.form_submit_button('Editar 5 Porquês' + ' (' + str(index) + '):')
 			
 			# Envio do formulario
@@ -522,35 +522,15 @@ def formulario(linhas):
 			_prazo = pr.date_input('Prazo (' + str(i) + '):')
 			dict_acoes.append(str(_ação) + ';;' + str(_dono) + ';;' + str(_prazo))			
 			      
-		
-		#if dic['quantidade de ações'] >= 1:
-		#	_ação = st.text_input('Ação (' + str(1) + '):', "") 
-		#	_dono = st.text_input('Dono (' + str(1) + '):', "") 
-		#	_prazo = st.text_input('Prazo (' + str(1) + '):', "") 
-		#	dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))
-			
-		#if dic['quantidade de ações'] >= 2:
-		#	_ação = st.text_input('Ação (' + str(2) + '):', "") 
-		#	_dono = st.text_input('Dono (' + str(2) + '):', "") 
-		#	_prazo = st.text_input('Prazo (' + str(2) + '):', "") 
-		#	dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))
-			
-		#if dic['quantidade de ações'] >= 3:
-		#	_ação = st.text_input('Ação (' + str(3) + '):', "") 
-		#	_dono = st.text_input('Dono (' + str(3) + '):', "") 
-		#	_prazo = st.text_input('Prazo (' + str(3) + '):', "") 
-		#	dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))		
-		
 		dic['ações'] = dict_acoes
-		#dic['ações'] = st.text_input('Ações', "")
 		st8, st9 = st.beta_columns(2)
+		dic['notas de manutenção'] = st_tags(label='Notas de manutenção', text='Pressione enter')
+		dic['ordem manutenção'] = st_tags(label='Ordens de manutenção', text='Pressione enter')
+		dic['status'] = 'Pendente'
 		dic['responsável identificação'] = st8.text_input('Responsável pela identificação')
 		dic['responsável reparo'] = st9.text_input('Responsável pela correção')
 		dic['email responsável'] = st.text_input('E-mail do responsável pelo formulário')
 		dic['gestor'] = st.selectbox('Coordenador', gestores)
-		dic['notas de manutenção'] = st_tags(label='Notas de manutenção', text='Pressione enter')
-		dic['ordem manutenção'] = st_tags(label='Ordens de manutenção', text='Pressione enter')
-		dic['status'] = 'Pendente'
 		submitted_ins = st.form_submit_button('Enviar 5 Porquês')
 		
 	# Envio do formulário
