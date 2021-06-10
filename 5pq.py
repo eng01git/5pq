@@ -469,7 +469,7 @@ def formulario(linhas):
 		dic['linha'] = sap_nv2
 		dic['equipamento'] = sp3.selectbox('Selecione o equipamento', equipamentos)
 		dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)', min_value=30)
-		dic['quantidade de ações'] = acoes.number_input('Quantidade de ações geradas', min_value=1)
+		dic['quantidade de ações'] = acoes.number_input('Quantidade de ações geradas', min_value=1, max_value=5)
 		dic['descrição anomalia'] = st.text_input('Descreva a anomalia', "")
 		st4, st5 = st.beta_columns(2)
 		dic['correção'] = st.text_input('Descreva a correção', "")
@@ -484,12 +484,24 @@ def formulario(linhas):
 		dic['tipo de correção'] = st6.multiselect('Selecione o tipo da correção', falhas)
 		dic['correção deterioização'] = st7.multiselect('Selecione o tipo da deterioização (correção)', deterioização)
 		
-		dict_acoes = [10]
-		for i in list(range(0, dic['quantidade de ações'])):
-			ação = st.text_input('Ação (' + str(i) + '):', "") 
-			dono = st.text_input('Dono (' + str(i) + '):', "") 
-			prazo = st.text_input('Prazo (' + str(i) + '):', "") 
-			dict_acoes[i] = str(ação) + ';' + str(dono) + ';' + str(prazo)   
+		dict_acoes = [5]
+		if dic['quantidade de ações'] >= 1:
+			_ação = st.text_input('Ação (' + str(1) + '):', "") 
+			_dono = st.text_input('Dono (' + str(1) + '):', "") 
+			_prazo = st.text_input('Prazo (' + str(1) + '):', "") 
+			dict_acoes[0] = str(_ação) + ';' + str(_dono) + ';' + str(_prazo)
+			
+		if dic['quantidade de ações'] >= 2:
+			_ação = st.text_input('Ação (' + str(2) + '):', "") 
+			_dono = st.text_input('Dono (' + str(2) + '):', "") 
+			_prazo = st.text_input('Prazo (' + str(2) + '):', "") 
+			dict_acoes[1] = str(_ação) + ';' + str(_dono) + ';' + str(_prazo)
+			
+		if dic['quantidade de ações'] >= 3:
+			_ação = st.text_input('Ação (' + str(3) + '):', "") 
+			_dono = st.text_input('Dono (' + str(3) + '):', "") 
+			_prazo = st.text_input('Prazo (' + str(3) + '):', "") 
+			dict_acoes[2] = str(_ação) + ';' + str(_dono) + ';' + str(_prazo)		
 		
 		
 		#dic['ações'] = st.text_input('Ações', "")
