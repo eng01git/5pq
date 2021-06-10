@@ -418,6 +418,8 @@ def func_validar(index, row, indice):
 				
 				lista = doc['ações'].replace("'",'').replace('[', '').replace(']', '').split(',')
 				st.write(lista)
+				
+				dict_acoes = []
 				_index = 0
 				for i in lista:
 					i = i.lstrip()
@@ -427,9 +429,18 @@ def func_validar(index, row, indice):
 					_dono = do.text_input('Dono' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[1]) 
 					_prazo = pr.date_input('Prazo' + ' (' + str(index) + ')(' + str(_index) + '):', value=date.fromisoformat(array[2]))
 					_index += 1
+					dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))
 					if _index == dic['quantidade de ações']:
 						break
-				
+						
+				if dic['quantidade de ações'] > len(lista):
+					for i in list(range(dic['quantidade de ações'] - len(lista)):
+						ac, do, pr = st.beta_columns([3,2,1])
+						_ação = ac.text_input('Ação (' + str(i) + '):', "") 
+						_dono = do.text_input('Dono (' + str(i) + '):', "") 
+						_prazo = pr.date_input('Prazo (' + str(i) + '):')
+						dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))
+						
 				
 				dic['ações'] = st.text_input('Ações' + ' (' + str(index) + '):', value=doc['ações'])
 				st8, st9 = st.beta_columns(2)
