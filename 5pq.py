@@ -252,7 +252,7 @@ def read_acao():
 	dicionario = {}
 	
 	# Define o caminho da coleção do firebase
-	posts_ref = db.collection("MES_data")
+	posts_ref = db.collection("acoes")
 	
 	# Busca todos os documentos presentes na coleção e salva num dicionário
 	for doc in posts_ref.stream():
