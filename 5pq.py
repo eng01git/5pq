@@ -429,7 +429,7 @@ def func_validar(index, row, indice):
 					_dono = do.text_input('Dono' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[1]) 
 					_prazo = pr.date_input('Prazo' + ' (' + str(index) + ')(' + str(_index) + '):', value=date.fromisoformat(array[2]))
 					_index += 1
-					dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))
+					dict_acoes.append(str(_ação) + ';;' + str(_dono) + ';;' + str(_prazo))
 					if _index == dic['quantidade de ações']:
 						break
 						
