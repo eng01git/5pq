@@ -455,7 +455,7 @@ def func_validar(index, row, indice):
 def formulario(linhas):
 	
 	# Preenchimento do formulário
-	sp2, sp3, st0 = st.beta_columns(3)
+	sp2, sp3, st0, acoes = st.beta_columns(4)
 	list_linhas = list(linhas)
 	sap_nv2 = sp2.selectbox('Selecione a linha', list_linhas)	
 	equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
@@ -468,7 +468,8 @@ def formulario(linhas):
 		dic['definição do evento'] = st4.selectbox('Definição do Evento', tipos)
 		dic['linha'] = sap_nv2
 		dic['equipamento'] = sp3.selectbox('Selecione o equipamento', equipamentos)
-		dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)', min_value=30)		
+		dic['gatilho'] = st0.number_input('Gatilho em minutos (mínimo 30 min)', min_value=30)
+		dic['quantidade de ações'] = acoes.number_input('Quantidade de ações geradas', min_value=1)
 		dic['descrição anomalia'] = st.text_input('Descreva a anomalia', "")
 		st4, st5 = st.beta_columns(2)
 		dic['correção'] = st.text_input('Descreva a correção', "")
@@ -482,7 +483,16 @@ def formulario(linhas):
 		dic['falha deterioização'] = st5.multiselect('Selecione o tipo da deterioização (falha)', deterioização)
 		dic['tipo de correção'] = st6.multiselect('Selecione o tipo da correção', falhas)
 		dic['correção deterioização'] = st7.multiselect('Selecione o tipo da deterioização (correção)', deterioização)
-		dic['ações'] = st.text_input('Ações', "")
+		
+		dict_acoes = {}
+		for i in list(range(0, dic['quantidade de ações'])):
+			dict_acoes[i]['ação'] = st.text_input('Ação (' + i + '):', "") 
+			dict_acoes[i]['dono'] = st.text_input('Dono (' + i + '):', "") 
+			dict_acoes[i]['prazo'] = st.text_input('Prazo (' + i + '):', "") 
+			      
+		
+		
+		#dic['ações'] = st.text_input('Ações', "")
 		st8, st9 = st.beta_columns(2)
 		dic['responsável identificação'] = st8.text_input('Responsável pela identificação')
 		dic['responsável reparo'] = st9.text_input('Responsável pela correção')
