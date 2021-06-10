@@ -246,7 +246,36 @@ def write_acoes(acoes, documento, gestor):
 			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
 		index += 1
 	
+@st.cache
+def read_acao():
+	# Cria dicionário vazio
+	dicionario = {}
 	
+	# Define o caminho da coleção do firebase
+	posts_ref = db.collection("MES_data")
+	
+	# Busca todos os documentos presentes na coleção e salva num dicionário
+	for doc in posts_ref.stream():
+		dic_auxiliar = doc.to_dict()
+		dicionario[dic_auxiliar['documento']] = dic_auxiliar
+	
+	# Ajusta o dicionário para um dataframe
+	acao_df = pd.DataFrame.from_dict(dicionario)
+	acao_df = acao_df.T
+	acao_df.reset_index(inplace=True)
+	acao_df.drop('index', axis=1, inplace=True)
+	
+	# Lista e ordena as colunas do dataframe
+	lista_colunas = ['Ação', 'Dono', 'Prazo','Status', 'Gestor', 'Alerta', 'Numero do 5-Porques',  'Numero da ação']
+	acao_df = acao_df.reindex(columns=lista_colunas)
+	
+	# Formata a coluna de prazo para possibilitar filtros
+	acao_df['Prazo'] = pd.to_datetime(acao_df['Prazo']).dt.date
+	
+	# Ordena os valores pelo prazo
+	acao_df.sort_values(by=['Data'], inplace=True)
+	return acao_df
+
 
 ######################################################################################################
                                            #Função para enviar email
@@ -864,7 +893,10 @@ if __name__ == '__main__':
 			caching.clear_cache()
 		
 
-
+	if func_escolhida == 'Ação':
+		
+		firebase_acao = read_acao()
+		st.write(firebase_acao)
 			
 		#graf1, graf2, graf3 = st.beta_columns(3)
 		#variavel =  st.selectbox('Selecione o item para análise', colunas)
