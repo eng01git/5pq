@@ -215,7 +215,7 @@ def load_sap_nv3():
 	return data
 
 # Efetua a escrita das acoes
-def write_acoes(acoes, doc):
+def write_acoes(acoes, documento):
 	
 	# Define o caminho da coleção do firebase
 	posts_ref = db.collection("acoes")	
