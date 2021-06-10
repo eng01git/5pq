@@ -216,7 +216,33 @@ def load_sap_nv3():
 
 # Efetua a escrita das acoes
 def write_acoes(acoes, doc):
-	pass
+	
+	# Define o caminho da coleção do firebase
+	posts_ref = db.collection("acoes")	
+	
+	# Lista e dicionario vazio
+	acoes_firebase = []
+	dic_to_firebase = {}
+	
+	# Busca todos os documentos presentes na coleção e salva num dataframe
+	for doc in posts_ref.stream():
+		acoes_firebase.append(doc.id)
+	
+	index = 0
+	for i in acoes:
+		lista = i.split("',")
+		chave = str(documento) + '_' + str(index)
+		
+		if chave not in acoes_firebase:		
+			dic_to_firebase[chave] = {'Ação': lista[0],
+						  'Dono': lista[1],
+						  'Prazo': lista[2],
+						  'Numero da ação': index,
+						  'Numero do 5-Porques': documento,
+						  'Status': 'pendente'}		
+			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
+		index += 1
+	
 	
 
 ######################################################################################################
