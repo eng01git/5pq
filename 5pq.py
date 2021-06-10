@@ -423,7 +423,7 @@ def func_validar(index, row, indice):
 					ac, do, pr = st.beta_columns([3,2,1])
 					_ação = ac.text_input('Ação (' + str(i) + '):', value=array[0]) 
 					_dono = do.text_input('Dono (' + str(i) + '):', value=array[1]) 
-					_data = 
+					
 					_prazo = pr.date_input('Prazo (' + str(i) + '):', value=date.fromisoformat(array[2]))
 					dict_acoes.append(str(_ação) + ';' + str(_dono) + ';' + str(_prazo))	
 				
