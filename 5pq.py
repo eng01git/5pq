@@ -215,7 +215,7 @@ def load_sap_nv3():
 	return data
 
 # Efetua a escrita das acoes
-def write_acoes(acoes, documento):
+def write_acoes(acoes, documento, gestor):
 	
 	# Define o caminho da coleção do firebase
 	posts_ref = db.collection("acoes")	
@@ -241,7 +241,10 @@ def write_acoes(acoes, documento):
 						  'Prazo': lista[2],
 						  'Numero da ação': index,
 						  'Numero do 5-Porques': documento,
-						  'Status': 'pendente'}		
+						  'Status': 'pendente',
+						  'Gestor': gestor,
+						  'Alerta': 'pendente'
+						 }		
 			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
 		index += 1
 	
@@ -491,7 +494,7 @@ def func_validar(index, row, indice):
 			if submitted_edit:
 				
 				# Escreve as acoes em um banco
-				write_acoes(dic['ações'], documento)
+				write_acoes(dic['ações'], documento, dic['gestor'])
 				
 				# Transforma dados do formulário em um dicionário
 				keys_values = dic.items()
@@ -575,7 +578,7 @@ def formulario(linhas):
 		caching.clear_cache()
 						
 		# Escreve as acoes em um banco
-		write_acoes(dic['ações'], documento)
+		write_acoes(dic['ações'], documento, dic['gestor'])
 		
 		# Transforma dados do formulário em um dicionário
 		keys_values = dic.items()
