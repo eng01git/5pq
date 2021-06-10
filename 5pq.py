@@ -273,7 +273,7 @@ def read_acao():
 	acao_df['Prazo'] = pd.to_datetime(acao_df['Prazo']).dt.date
 	
 	# Ordena os valores pelo prazo
-	acao_df.sort_values(by=['Data'], inplace=True)
+	acao_df.sort_values(by=['Prazo'], inplace=True)
 	return acao_df
 
 
