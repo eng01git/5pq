@@ -941,13 +941,13 @@ if __name__ == '__main__':
 			filtrado_ac = filtrado_ac[filtrado_ac['Gestor'] == gestor_ac]	
 			
 		st.subheader('Ações atrasadas')	
-		st.write(filtrado_ac[filtrado_ac['Status'] == 'Atrasadas'])
+		st.write(filtrado_ac[filtrado_ac['Status'] == 'Atrasada'])
 		st.subheader('Ações em aberto')	
 		st.write(filtrado_ac[filtrado_ac['Status'] == 'Em aberto'])
 		st.subheader('Ações concluídas')	
-		st.write(filtrado_ac[filtrado_ac['Status'] == 'Concluídas'])
+		st.write(filtrado_ac[filtrado_ac['Status'] == 'Concluída'])
 		st.subheader('Ações em descartadas')	
-		st.write(filtrado_ac[filtrado_ac['Status'] == 'Descartadas'])
+		st.write(filtrado_ac[filtrado_ac['Status'] == 'Descartada'])
 		
 
 
