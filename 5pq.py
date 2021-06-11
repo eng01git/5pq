@@ -902,8 +902,7 @@ if __name__ == '__main__':
 		# Reseta cache para refazer leitura dos bancos
 		reset_db = st.button('Atualizar base de dados')
 		if reset_db:
-			pass
-			#caching.clear_cache()
+			caching.clear_cache()
 		
 
 	if func_escolhida == 'Gerenciamento das ações':
