@@ -957,6 +957,7 @@ if __name__ == '__main__':
 		
 		for index, row in fb_acao.iterrows():
 			if (data_atual > row['Prazo']) & (row['Status'] == 'Em aberto'):
+				st.write(index)
 				batch = db.batch()
 				ref = db.collection('acoes').document(row['Numero do 5-Porques'])
 				row['Status'] = 'Atrasada'
