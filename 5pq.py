@@ -940,9 +940,16 @@ if __name__ == '__main__':
 		elif gestor_ac is not None and (str(gestor_ac) != 'nan'):
 			filtrado_ac = filtrado_ac[filtrado_ac['Gestor'] == gestor_ac]	
 			
-			
-		st.write(filtrado_ac[filtrado_ac['Status'] == 'pendente'])
-		st.write(filtrado_ac[filtrado_ac['Status'] != 'pendente'])
+		st.subheader('Ações atrasadas')	
+		st.write(filtrado_ac[filtrado_ac['Status'] == 'atrasadas'])
+		st.subheader('Ações em aberto')	
+		st.write(filtrado_ac[filtrado_ac['Status'] == 'em aberto'])
+		st.subheader('Ações concluídas')	
+		st.write(filtrado_ac[filtrado_ac['Status'] == 'concluídas'])
+		st.subheader('Ações em descartadas')	
+		st.write(filtrado_ac[filtrado_ac['Status'] == 'descartadas'])
+		
+
 
 		
 				     
