@@ -964,7 +964,7 @@ if __name__ == '__main__':
 				#row['Status'] = 'Atrasada'
 				row_string = row.astype(str)
 				batch.set(ref, row_string.to_dict())
-				#caching.clear_cache()
+				caching.clear_cache()
 
 		
 				     
