@@ -736,7 +736,8 @@ if __name__ == '__main__':
 		
 		# Filtro para datas
 		st.text('Selecione a data')
-		col1, col2 = st.beta_columns(2)
+		col1, col2, col3 = st.beta_columns(3)
+		user_gest, user_resp = st.beta_columns(2)
 		inicio_filtro = col1.date_input("Início")
 		fim_filtro = col2.date_input("Fim")
 		filtrado = (dados[(dados['data'] >= inicio_filtro) & (dados['data'] <= fim_filtro)]) 
@@ -744,7 +745,7 @@ if __name__ == '__main__':
 		# Gera lista dos responsáveis
 		list_resp = list(filtrado['responsável identificação'].drop_duplicates())
 		list_resp.append('todos') 
-		responsavel = st.selectbox("Selecione o responsável", list_resp, list_resp.index('todos'))
+		responsavel = user_resp.selectbox("Selecione o responsável", list_resp, list_resp.index('todos'))
 		
 		# Inicia o filtro com todos
 		if responsavel == 'todos':
@@ -755,7 +756,7 @@ if __name__ == '__main__':
 		# Gera lista dos gestor	
 		list_gestor = list(filtrado['gestor'].drop_duplicates())
 		list_gestor.append('todos')  
-		gestor = st.selectbox("Selecione o gestor", list_gestor, list_gestor.index('todos'))
+		gestor = user_gest.selectbox("Selecione o gestor", list_gestor, list_gestor.index('todos'))
 		
 		# Inicia o filtro com todos
 		if gestor == 'todos':
@@ -766,7 +767,7 @@ if __name__ == '__main__':
 		# Gera lista dos status	
 		list_status = list(filtrado['status'].drop_duplicates())
 		list_status.append('todos') 
-		status = st.selectbox("Selecione o status", list_status, list_status.index('todos'))
+		status = col3.selectbox("Selecione o status", list_status, list_status.index('todos'))
 		
 		# Inicia o filtro com todos
 		if status == 'todos':
@@ -906,31 +907,5 @@ if __name__ == '__main__':
 
 	if func_escolhida == 'Ação':
 		
-		firebase_acao = read_acao()
-		st.write(firebase_acao)
-		s = firebase_acao.style.applymap(color_negative_red)
-		st.write(s)
+		fn_acao = read_acao()
 		
-		for index, row in firebase_acao.iterrows():
-			tab, but = st.beta_columns(2)
-			st.write(row)
-			tab.table(row)
-			but.button("teste" + str(index))
-			
-		#graf1, graf2, graf3 = st.beta_columns(3)
-		#variavel =  st.selectbox('Selecione o item para análise', colunas)
-		#fig1 = px.histogram(dados, x='turno')
-		#graf1.write(fig1)
-
-		#fig2 = px.histogram(dados, x='data', nbins=31)
-		#graf2.write(fig2)
-
-		#line_equip = dados['linha'].astype(str) + dados['equipamento'].astype(str)
-		#fig3 = px.histogram(line_equip)
-
-		#st.subheader("Estatísticas MES")
-		#variavel_mes =  st.selectbox('Selecione o item para análise', colunas_mes)
-		#fig_mes = px.histogram(mes, x=variavel_mes)
-		#st.write(fig_mes)
-
-		#st.text('Selecione a data')
