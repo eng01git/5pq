@@ -916,7 +916,7 @@ if __name__ == '__main__':
 		inicio_filtro_ac = col1_ac.date_input("Início")
 		fim_filtro_ac = col2_ac.date_input("Fim")
 		#filtrado_ac = (fn_acao[(fn_acao['Prazo'] >= inicio_filtro_ac) & (fn_acao['Prazo'] <= fim_filtro_ac)]) 
-		#filtrado_ac = (fn_acao[(fn_acao['Prazo'] >= inicio_filtro_ac)
+		filtrado_ac = fn_acao
 
 		# Gera lista dos responsáveis
 		list_dono_ac = list(filtrado_ac['Dono'].drop_duplicates())
