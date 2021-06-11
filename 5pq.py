@@ -961,10 +961,10 @@ if __name__ == '__main__':
 		for index, row in fb_acao_2.iterrows():
 			if (data_atual > row['Prazo']) & (row['Status'] == 'Em aberto'):
 				st.write(index)
-				
-				ref = db.collection('acoes').document(row['Numero do 5-Porques'])
-				fb_acao_2.at[index,'Status'] = 'Atrasada'
-				#row['Status'] = 'Atrasada'
+				chave = str(row['Numero do 5-Porques']) + '_' + str(row['Numero da ação'])
+				ref = db.collection('acoes').document(chave)
+				#fb_acao_2.at[index,'Status'] = 'Atrasada'
+				row['Status'] = 'Atrasada'
 				row_string = row.astype(str)
 				batch.set(ref, row_string.to_dict())
 				flag = True
