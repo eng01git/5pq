@@ -71,7 +71,7 @@ func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Visibilidade'
 
 
 def color_negative_red(val):
-	color = 'red' if val == 'pendente' else 'black'
+	color = 'red' if val == 'pendente' else 'white'
 	return 'background-color:  %s' % color
 
 
