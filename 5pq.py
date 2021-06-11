@@ -951,10 +951,12 @@ if __name__ == '__main__':
 		
 		em_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
 		st.write(em_aberto)
+		
 		data_atual = date.today()
 		st.write(data_atual)
+		
 		for index, row in fb_acao.iterrows():
-			if (data_atual > row['Prazo']) and (row['Status'] == 'Em aberto'):
+			if (data_atual > row['Prazo']) & (row['Status'] == 'Em aberto'):
 				batch = db.batch()
 				ref = db.collection('acoes').document(row['Numero do 5-Porques'])
 				row['Status'] = 'Atrasada'
