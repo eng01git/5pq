@@ -954,7 +954,7 @@ if __name__ == '__main__':
 		
 		data_atual = date.today()
 		st.write(data_atual)
-		
+		flag = False
 		for index, row in fb_acao.iterrows():
 			if (data_atual > row['Prazo']) & (row['Status'] == 'Em aberto'):
 				st.write(index)
@@ -964,7 +964,10 @@ if __name__ == '__main__':
 				#row['Status'] = 'Atrasada'
 				row_string = row.astype(str)
 				batch.set(ref, row_string.to_dict())
-				caching.clear_cache()
+				flag = True
+		
+		if flag == True:
+			caching.clear_cache()
 
 		
 				     
