@@ -907,13 +907,12 @@ if __name__ == '__main__':
 		
 		firebase_acao = read_acao()
 		st.write(firebase_acao)
+		s = firebase_acao.style.applymap(color_negative_red)
+		st.write(s)
 		
 		for index, row in firebase_acao.iterrows():
 			tab, but = st.beta_columns(2)
-			
-			
-			s = row.style.applymap(color_negative_red)
-			st.write(s)
+			st.write(row)
 			tab.table(row)
 			but.button("teste" + str(index))
 			
