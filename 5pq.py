@@ -954,9 +954,11 @@ if __name__ == '__main__':
 		data_atual = date.today()
 		for index, row in em_aberto.iterrows():
 			if data_atual > row['Prazo']:
+				batch = db.batch()
+				ref = db.collection('acoes').document(row['Numero do 5-Porques'])
 				row['Status'] = 'Atrasada'
 				row_string = row.astype(str)
-				db.collection("acoes").document(row['Numero do 5-Porques']).set(row_string,merge=True)
+				batch.set(ref, row_string.to_dict())
 				caching.clear_cache()
 
 		
