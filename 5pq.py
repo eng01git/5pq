@@ -898,6 +898,11 @@ if __name__ == '__main__':
 		
 		firebase_acao = read_acao()
 		st.write(firebase_acao)
+		
+		for index, row in firebase_acao.iterrows():
+			tab, but = st.beta_columns(2)
+			tab.table(row.T)
+			but.button("teste" + str(index))
 			
 		#graf1, graf2, graf3 = st.beta_columns(3)
 		#variavel =  st.selectbox('Selecione o item para análise', colunas)
