@@ -66,7 +66,7 @@ fig2s.image('latas minas.png', width=150)
 fig3s.write('')
 #st.sidebar.image('latas minas.png', width=150)
 st.sidebar.title("Menu 5-Porques")
-func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Visibilidade', 'Inserir', 'Consultar', 'Suporte Engenharia', 'Ação'), index=0)
+func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Visibilidade', 'Inserir', 'Consultar' , 'Gerenciamento das ações', 'Suporte Engenharia'), index=0)
 
 
 
@@ -905,7 +905,39 @@ if __name__ == '__main__':
 			caching.clear_cache()
 		
 
-	if func_escolhida == 'Ação':
+	if func_escolhida == 'Gerenciamento das ações':
+		st.subheader('Gerenciamento das ações geradas nos 5-Porques')
 		
 		fn_acao = read_acao()
+				
+		# Filtro para datas
+		st.text('Filtro das ações')
+		col1_ac, col2_ac, col3_ac, col4_ac = st.beta_columns(3)
+		inicio_filtro_ac = col1_ac.date_input("Início")
+		fim_filtro_ac = col2_ac.date_input("Fim")
+		filtrado_ac = (fn_acao[(fn_acao['Prazo'] >= inicio_filtro_ac) & (fn_acao['Prazo'] <= fim_filtro_ac)]) 
+
+		# Gera lista dos responsáveis
+		list_dono_ac = list(filtrado_ac['Dono'].drop_duplicates())
+		list_dono_ac.append('todos') 
+		dono_ac = col3_ac.selectbox("Selecione o dono", list_dono_ac, list_dono_ac.index('todos'))
 		
+		# Inicia o filtro com todos
+		if dono_ac == 'todos':
+			pass
+		elif dono_ac is not None and (str(dono_ac) != 'nan'):
+			filtrado_ac = filtrado_ac[filtrado_ac['Dono'] == dono_ac]
+
+		# Gera lista dos gestor	
+		list_gestor_ac = list(filtrado_ac['Gestor'].drop_duplicates())
+		list_gestor_ac.append('todos')  
+		gestor_ac = col4_ac.selectbox("Selecione o gestor", list_gestor_ac, list_gestor_ac.index('todos'))
+		
+		# Inicia o filtro com todos
+		if gestor_ac == 'todos':
+			pass
+		elif gestor_ac is not None and (str(gestor_ac) != 'nan'):
+			filtrado_ac = filtrado_ac[filtrado_ac['Gestor'] == gestor_ac]	
+			
+		st.write(filtrado_ac)
+
