@@ -971,6 +971,7 @@ if __name__ == '__main__':
 		
 		if flag == True:
 			caching.clear_cache()
+			st.write(fb_acao_2)
 
 		
 				     
