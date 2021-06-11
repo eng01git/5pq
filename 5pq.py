@@ -949,7 +949,14 @@ if __name__ == '__main__':
 		st.subheader('Ações em descartadas')	
 		st.write(filtrado_ac[filtrado_ac['Status'] == 'Descartada'])
 		
-
+		em_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
+		
+		data_atual = date.today()
+		for index, row in em_aberto.iterrows(0):
+			if data_atual > row['Prazo']:
+				row['Status'] = 'Atrasada'
+				row_string = row.astype(str)
+				db.collection("acoes").document(row['Numero do 5-Porques']).set(row_string,merge=True)
 
 		
 				     
