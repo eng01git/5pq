@@ -957,11 +957,11 @@ if __name__ == '__main__':
 		fb_acao_2 = fb_acao.copy()
 		
 		st.write(fb_acao_2)
-		
+		batch = db.batch()
 		for index, row in fb_acao_2.iterrows():
 			if (data_atual > row['Prazo']) & (row['Status'] == 'Em aberto'):
 				st.write(index)
-				batch = db.batch()
+				
 				ref = db.collection('acoes').document(row['Numero do 5-Porques'])
 				fb_acao_2.at[index,'Status'] = 'Atrasada'
 				#row['Status'] = 'Atrasada'
@@ -970,6 +970,7 @@ if __name__ == '__main__':
 				flag = True
 		
 		if flag == True:
+			batch.commit()
 			caching.clear_cache()
 			st.write(fb_acao_2)
 
