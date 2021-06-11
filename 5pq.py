@@ -908,7 +908,7 @@ if __name__ == '__main__':
 	if func_escolhida == 'Gerenciamento das ações':
 		st.subheader('Gerenciamento das ações geradas nos 5-Porques')
 		
-		fn_acao = read_acao()
+		fb_acao = read_acao()
 				
 		# Filtro para datas
 		st.text('Filtro das ações')
@@ -916,7 +916,7 @@ if __name__ == '__main__':
 		inicio_filtro_ac = col1_ac.date_input("Início")
 		fim_filtro_ac = col2_ac.date_input("Fim")
 		#filtrado_ac = (fn_acao[(fn_acao['Prazo'] >= inicio_filtro_ac) & (fn_acao['Prazo'] <= fim_filtro_ac)]) 
-		filtrado_ac = fn_acao
+		filtrado_ac = fb_acao
 
 		# Gera lista dos responsáveis
 		list_dono_ac = list(filtrado_ac['Dono'].drop_duplicates())
@@ -950,10 +950,11 @@ if __name__ == '__main__':
 		st.write(filtrado_ac[filtrado_ac['Status'] == 'Descartada'])
 		
 		em_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
-		
+		st.write(em_aberto)
 		data_atual = date.today()
-		for index, row in em_aberto.iterrows():
-			if data_atual > row['Prazo']:
+		st.write(data_atual)
+		for index, row in fb_acao.iterrows():
+			if (data_atual > row['Prazo']) and (row['Status'] == 'Em aberto'):
 				batch = db.batch()
 				ref = db.collection('acoes').document(row['Numero do 5-Porques'])
 				row['Status'] = 'Atrasada'
