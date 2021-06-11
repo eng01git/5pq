@@ -951,25 +951,25 @@ if __name__ == '__main__':
 		st.write(filtrado_ac[filtrado_ac['Status'] == 'Descartada'])
 		
 		em_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
-		st.write(em_aberto)
 		
 		data_atual = date.today()
 		st.write(data_atual)
 		flag = False
-		for index, row in fb_acao.iterrows():
+		fb_acao_2 = fb_acao.copy()
+		
+		for index, row in fb_acao_2.iterrows():
 			if (data_atual > row['Prazo']) & (row['Status'] == 'Em aberto'):
 				st.write(index)
 				batch = db.batch()
 				ref = db.collection('acoes').document(row['Numero do 5-Porques'])
-				fb_acao.at[index,'Status'] = 'Atrasada'
+				fb_acao_2.at[index,'Status'] = 'Atrasada'
 				#row['Status'] = 'Atrasada'
 				row_string = row.astype(str)
 				batch.set(ref, row_string.to_dict())
 				flag = True
 		
 		if flag == True:
-			pass
-			#caching.clear_cache()
+			caching.clear_cache()
 
 		
 				     
