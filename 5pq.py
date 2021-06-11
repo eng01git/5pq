@@ -68,6 +68,15 @@ fig3s.write('')
 st.sidebar.title("Menu 5-Porques")
 func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Visibilidade', 'Inserir', 'Consultar', 'Suporte Engenharia', 'Ação'), index=0)
 
+
+
+def color_negative_red(val):
+	color = 'red' if val == 'pendente' else 'black'
+	return 'color: %s' % color
+
+
+
+
 ######################################################################################################
                                #Função para leitura do banco (Firebase)
 ######################################################################################################
@@ -901,7 +910,10 @@ if __name__ == '__main__':
 		
 		for index, row in firebase_acao.iterrows():
 			tab, but = st.beta_columns(2)
-			st.write(row)
+			
+			
+			s = row.style.applymap(color_negative_red)
+			st.write(s)
 			tab.table(row)
 			but.button("teste" + str(index))
 			
