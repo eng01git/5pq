@@ -952,7 +952,6 @@ if __name__ == '__main__':
 		em_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
 		
 		data_atual = date.today()
-		st.write(data_atual)
 		flag = False
 		fb_acao_2 = fb_acao.copy()
 		batch = db.batch()
