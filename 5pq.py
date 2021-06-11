@@ -915,7 +915,8 @@ if __name__ == '__main__':
 		col1_ac, col2_ac, col3_ac, col4_ac = st.beta_columns(4)
 		inicio_filtro_ac = col1_ac.date_input("Início")
 		fim_filtro_ac = col2_ac.date_input("Fim")
-		filtrado_ac = (fn_acao[(fn_acao['Prazo'] >= inicio_filtro_ac) & (fn_acao['Prazo'] <= fim_filtro_ac)]) 
+		#filtrado_ac = (fn_acao[(fn_acao['Prazo'] >= inicio_filtro_ac) & (fn_acao['Prazo'] <= fim_filtro_ac)]) 
+		#filtrado_ac = (fn_acao[(fn_acao['Prazo'] >= inicio_filtro_ac)
 
 		# Gera lista dos responsáveis
 		list_dono_ac = list(filtrado_ac['Dono'].drop_duplicates())
@@ -939,5 +940,11 @@ if __name__ == '__main__':
 		elif gestor_ac is not None and (str(gestor_ac) != 'nan'):
 			filtrado_ac = filtrado_ac[filtrado_ac['Gestor'] == gestor_ac]	
 			
-		st.write(filtrado_ac)
+			
+		st.write(filtrado_ac[filtrado_ac['Status'] == 'pendente'])
+		st.write(filtrado_ac[filtrado_ac['Status'] != 'pendente'])
+
+		
+				     
+				     
 
