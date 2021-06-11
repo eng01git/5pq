@@ -901,6 +901,7 @@ if __name__ == '__main__':
 		
 		for index, row in firebase_acao.iterrows():
 			tab, but = st.beta_columns(2)
+			st.write(row)
 			tab.table(row)
 			but.button("teste" + str(index))
 			
