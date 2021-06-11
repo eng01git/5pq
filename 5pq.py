@@ -952,11 +952,12 @@ if __name__ == '__main__':
 		em_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
 		
 		data_atual = date.today()
-		for index, row in em_aberto.iterrows(0):
+		for index, row in em_aberto.iterrows():
 			if data_atual > row['Prazo']:
 				row['Status'] = 'Atrasada'
 				row_string = row.astype(str)
 				db.collection("acoes").document(row['Numero do 5-Porques']).set(row_string,merge=True)
+				caching.clear_cache()
 
 		
 				     
