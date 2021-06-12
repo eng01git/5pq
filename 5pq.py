@@ -59,24 +59,12 @@ DATA_URL = "data.csv"
 				     #Definição da sidebar
 ######################################################################################################
 
-
 fig1s, fig2s, fig3s = st.sidebar.beta_columns([1,2,1])
 fig1s.write('')
 fig2s.image('latas minas.png', width=150)
 fig3s.write('')
-#st.sidebar.image('latas minas.png', width=150)
 st.sidebar.title("Menu 5-Porques")
 func_escolhida = st.sidebar.radio('Selecione a opção desejada',('Visibilidade', 'Inserir', 'Consultar' , 'Gerenciamento das ações', 'Suporte Engenharia'), index=0)
-
-
-
-def color_negative_red(val):
-	color = 'red' if val == 'pendente' else 'white'
-	return 'background-color:  %s' % color
-
-
-
-
 
 ######################################################################################################
                                #Função para leitura do banco (Firebase)
@@ -287,6 +275,11 @@ def read_acao():
 	acao_df.sort_values(by=['Prazo'], inplace=True)
 	return acao_df
 
+def editar_acao(row):
+	ea_chave = str(row['Numero do 5-Porques']) + '_' + str(row['Numero da ação'])
+	row_string = row.astype(str)
+	db.collection("acoes").document(ea_chave).set(row_string.to_dict(),merge=True)
+	caching.clear_cache()
 
 ######################################################################################################
                                            #Função para enviar email
@@ -949,12 +942,26 @@ if __name__ == '__main__':
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([9,1])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
-				#botoes1, botoes2, botoes3, botoes4 = st.beta_columns(4)
-				botoes.button('Finalizar Ação ' + str(index))
-				botoes.button('Descartar Ação ' + str(index))
-				botoes.button('Editar Ação ' + str(index))
-				botoes.button('Enviar e-mail para dono ' + str(index))
-				#dataframe(data=None, width=None, height=None)
+
+				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
+				descartar_acao = botoes.button('Descartar Ação ' + str(index))
+				editar_acao = botoes.button('Editar Ação ' + str(index))
+				email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
+				
+				if finalizar_acao:
+					row['Status'] = 'Finalizada'
+					editar_acao(row)
+					
+				if descartar_acao:
+					row['Status'] = 'Finalizada'
+					editar_acao(row)
+					
+				if editar_acao:
+					pass
+					
+				if email_dono:
+					st.error('Em desenvolvimento'
+
 				
 		st.subheader('Ações em aberto')	
 		df_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
