@@ -1028,7 +1028,12 @@ if __name__ == '__main__':
 		st.write(df_people)
 		
 		if people:
-			pass
+			batch = db.batch()
+			for index, row in df_people.iterrows():
+				ref = db.collection('Users').document(row['Codigo'])
+				row_string = row.astype(str)
+				batch.set(ref, row_string.to_dict())
+			batch.commit()	
 
 			
 			
