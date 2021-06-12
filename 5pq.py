@@ -280,6 +280,11 @@ def gravar_acao_edit(row):
 	row_string = row.astype(str)
 	db.collection("acoes").document(ea_chave).set(row_string.to_dict(),merge=True)
 	caching.clear_cache()
+	
+def editar_acao(row):
+	
+	
+	gravar_acao_edit(row)
 
 ######################################################################################################
                                            #Função para enviar email
@@ -1004,6 +1009,18 @@ if __name__ == '__main__':
 		if flag == True:
 			batch.commit()
 			caching.clear_cache()
+			
+			
+		people = st.button('import people')
+		
+		df_people = pd.read_csv('book1.csv', sep=';')
+		df_people[1] = df_people[1].str.capitalize()
+		st.print(df_people)
+
+		if people:
+			pass
+
+			
 			
 		
 
