@@ -275,7 +275,7 @@ def read_acao():
 	acao_df.sort_values(by=['Prazo'], inplace=True)
 	return acao_df
 
-def editar_acao(row):
+def gravar_acao_edit(row):
 	ea_chave = str(row['Numero do 5-Porques']) + '_' + str(row['Numero da ação'])
 	row_string = row.astype(str)
 	db.collection("acoes").document(ea_chave).set(row_string.to_dict(),merge=True)
@@ -950,11 +950,11 @@ if __name__ == '__main__':
 				
 				if finalizar_acao:
 					row['Status'] = 'Finalizada'
-					editar_acao(row)
+					gravar_acao_edit(row)
 					
 				if descartar_acao:
 					row['Status'] = 'Finalizada'
-					editar_acao(row)
+					gravar_acao_edit(row)
 					
 				if editar_acao:
 					pass
