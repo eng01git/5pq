@@ -948,10 +948,11 @@ if __name__ == '__main__':
 			text = str(row['Ação']) + '' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([8,2])
-				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
+				dados.dataframe(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
 				botoes.button('Teste 1' + str(index))
 				botoes.button('Teste 2' + str(index))
 				botoes.button('Teste 3' + str(index))
+				#dataframe(data=None, width=None, height=None)
 				
 		st.subheader('Ações em aberto')	
 		df_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
