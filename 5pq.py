@@ -948,7 +948,7 @@ if __name__ == '__main__':
 			text = str(row['Ação']) + '' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([9,1])
-				st.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
+				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
 				#botoes1, botoes2, botoes3, botoes4 = st.beta_columns(4)
 				botoes.button('Finalizar Ação ' + str(index))
 				botoes.button('Descartar Ação ' + str(index))
