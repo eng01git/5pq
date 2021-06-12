@@ -949,9 +949,9 @@ if __name__ == '__main__':
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([9,1])
 				dados.write(row)
-				botoes.button('Teste 1')
-				botoes.button('Teste 2')
-				botoes.button('Teste 3')
+				botoes.button('Teste 1' + str(index))
+				botoes.button('Teste 2' + str(index))
+				botoes.button('Teste 3' + str(index))
 				
 		st.subheader('Ações em aberto')	
 		df_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
