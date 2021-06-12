@@ -1019,7 +1019,7 @@ if __name__ == '__main__':
 		df_people['Gestor'] = 'Não'
 		st.write(df_people)
 		st.write(usuarios_fb['Codigo'])
-		lista__ = usuarios_fb['Codigo'].astype(str).tolist()
+		lista__ = usuarios_fb['Codigo'].astype(int).tolist()
 		st.write(usuarios_fb['Codigo'].dtypes)
 		
 		st.write(df_people['Codigo'].dtypes)
