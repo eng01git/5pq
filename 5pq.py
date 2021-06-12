@@ -1030,7 +1030,7 @@ if __name__ == '__main__':
 		if people:
 			batch = db.batch()
 			for index, row in df_people.iterrows():
-				ref = db.collection('Users').document(row['Codigo'].astype(str)
+				ref = db.collection('Users').document(row['Codigo'].astype(str))
 				row_string = row.astype(str)
 				batch.set(ref, row_string.to_dict())
 			batch.commit()	
