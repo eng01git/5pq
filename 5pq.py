@@ -960,7 +960,7 @@ if __name__ == '__main__':
 					pass
 					
 				if email_dono:
-					st.error('Em desenvolvimento'
+					st.error('Em desenvolvimento')
 
 				
 		st.subheader('Ações em aberto')	
