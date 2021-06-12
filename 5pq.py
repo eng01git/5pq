@@ -947,13 +947,13 @@ if __name__ == '__main__':
 		for index, row in df_atrasadas.iterrows():
 			text = str(row['Ação']) + '' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
-				
+				dados, botoes = st.beta_columns([9,1])
 				st.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
-				botoes1, botoes2, botoes3, botoes4 = st.beta_columns(4)
-				botoes1.button('Finalizar Ação ' + str(index))
-				botoes2.button('Descartar Ação ' + str(index))
-				botoes3.button('Editar Ação ' + str(index))
-				botoes4.button('Enviar e-mail para dono ' + str(index))
+				#botoes1, botoes2, botoes3, botoes4 = st.beta_columns(4)
+				botoes.button('Finalizar Ação ' + str(index))
+				botoes.button('Descartar Ação ' + str(index))
+				botoes.button('Editar Ação ' + str(index))
+				botoes.button('Enviar e-mail para dono ' + str(index))
 				#dataframe(data=None, width=None, height=None)
 				
 		st.subheader('Ações em aberto')	
