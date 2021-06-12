@@ -498,7 +498,8 @@ def func_validar(index, row, indice):
 					array = i.split(';;')
 					ac, do, pr = st.beta_columns([3,2,1])
 					_ação = ac.text_input('Ação' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[0]) 
-					_dono = do.text_input('Dono' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[1]) 
+					#_dono = do.text_input('Dono' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[1]) 
+					_dono = do.selectbox('Dono' + ' (' + str(index) + ')(' + str(_index) + '):', nao_gestores, nao_gestores.index(array[1])) 
 					_prazo = pr.date_input('Prazo' + ' (' + str(index) + ')(' + str(_index) + '):', value=date.fromisoformat(array[2]))
 					_index += 1
 					dict_acoes.append(str(_ação) + ';;' + str(_dono) + ';;' + str(_prazo))
@@ -597,7 +598,7 @@ def formulario(linhas):
 		for i in list(range(dic['quantidade de ações'])):
 			ac, do, pr = st.beta_columns([3,2,1])
 			_ação = ac.text_input('Ação (' + str(i) + '):', "") 
-			_dono = do.text_input('Dono (' + str(i) + '):', "") 
+			_dono = do.selectbox('Dono (' + str(i) + '):', nao_gestores)
 			_prazo = pr.date_input('Prazo (' + str(i) + '):')
 			dict_acoes.append(str(_ação) + ';;' + str(_dono) + ';;' + str(_prazo))			
 			      
