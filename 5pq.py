@@ -237,7 +237,7 @@ def write_acoes(acoes, documento, gestor):
 						  'Prazo': lista[2],
 						  'Numero da ação': index,
 						  'Numero do 5-Porques': documento,
-						  'Status': 'pendente',
+						  'Status': 'Em aberto',
 						  'Gestor': gestor,
 						  'Alerta': 'pendente'
 						 }		
