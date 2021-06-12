@@ -945,7 +945,7 @@ if __name__ == '__main__':
 		st.subheader('Ações atrasadas')	
 		df_atrasadas = filtrado_ac[filtrado_ac['Status'] == 'Atrasada']
 		for index, row in df_atrasadas.iterrows():
-			text = str(row['Ação']) + '\s\s\s\s\s\ ' + 'Prazo: ' + str(row['Prazo'])
+			text = str(row['Ação']) + '\l\l\l\ ' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				st.write(row)
 				
