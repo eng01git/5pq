@@ -520,8 +520,12 @@ def func_validar(index, row, indice):
 				dic['ordem manutenção'] = st_tags(label=('Ordem de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['ordem manutenção'].replace(']', '').replace('[','').replace("'",'').split(','))
 				dic['status'] = 'Retificado'
 				st8, st9 = st.beta_columns(2)
-				dic['responsável identificação'] = st8.text_input('Responsável pela identificação' + ' (' + str(index) + '):', value=doc['responsável identificação'])
-				dic['responsável reparo'] = st9.text_input('Responsável pela correção' + ' (' + str(index) + '):',value=doc['responsável reparo'])
+				
+				dic['responsável identificação'] = st.selectbox('Responsável pela identificação' + ' (' + str(index) + '):', nao_gestores, nao_gestores.index(doc['responsável identificação']))
+				dic['responsável reparo'] = st.selectbox('Responsável pela correção' + ' (' + str(index) + '):', nao_gestores, nao_gestores.index(doc['responsável reparo']))
+				
+				#dic['responsável identificação'] = st8.text_input('Responsável pela identificação' + ' (' + str(index) + '):', value=doc['responsável identificação'])
+				#dic['responsável reparo'] = st9.text_input('Responsável pela correção' + ' (' + str(index) + '):',value=doc['responsável reparo'])
 				dic['email responsável'] = st.text_input('E-mail do responsável pelo formulário' + ' (' + str(index) + '):', value=doc['email responsável'])
 				dic['gestor'] = st.selectbox('Coordenador' + ' (' + str(index) + '):', gestores, gestores.index(doc['gestor']))
 				submitted_edit = st.form_submit_button('Editar 5 Porquês' + ' (' + str(index) + '):')
