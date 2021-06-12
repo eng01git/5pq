@@ -968,7 +968,7 @@ if __name__ == '__main__':
 					gravar_acao_edit(row)
 					
 				if descartar_acao:
-					row['Status'] = 'Descartada'
+					row['Status'] = 'Cancelada'
 					gravar_acao_edit(row)
 					
 				if editar_acao:
@@ -996,7 +996,7 @@ if __name__ == '__main__':
 					gravar_acao_edit(row)
 					
 				if descartar_acao:
-					row['Status'] = 'Descartada'
+					row['Status'] = 'Cancelada'
 					gravar_acao_edit(row)
 					
 				if editar_acao:
@@ -1023,8 +1023,8 @@ if __name__ == '__main__':
 				
 				
 		st.subheader('Ações canceladas')	
-		df_descartadas = filtrado_ac[filtrado_ac['Status'] == 'Cancelada']
-		for index, row in df_descartadas.iterrows():
+		df_canceladas = filtrado_ac[filtrado_ac['Status'] == 'Cancelada']
+		for index, row in df_canceladas.iterrows():
 			text = str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([9,1])
