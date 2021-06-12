@@ -945,7 +945,7 @@ if __name__ == '__main__':
 		st.subheader('Ações atrasadas')	
 		df_atrasadas = filtrado_ac[filtrado_ac['Status'] == 'Atrasada']
 		for index, row in df_atrasadas.iterrows():
-			text = 'Ação: ' + str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
+			text = str(row['Ação']) + '\s\s\s\s\s\ ' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				st.write(row)
 				
@@ -953,7 +953,7 @@ if __name__ == '__main__':
 		st.subheader('Ações em aberto')	
 		df_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
 		for index, row in df_aberto.iterrows():
-			text = 'Ação: ' + str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
+			text = str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				st.write(row)
 				
@@ -961,7 +961,7 @@ if __name__ == '__main__':
 		st.subheader('Ações concluídas')	
 		df_concluidas = filtrado_ac[filtrado_ac['Status'] == 'Concluída']
 		for index, row in df_concluidas.iterrows():
-			text = 'Ação: ' + str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
+			text = str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				st.write(row)
 				
@@ -969,13 +969,10 @@ if __name__ == '__main__':
 		st.subheader('Ações em descartadas')	
 		df_descartadas = filtrado_ac[filtrado_ac['Status'] == 'Descartada']
 		for index, row in df_descartadas.iterrows():
-			text = 'Ação: ' + str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
+			text = str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				st.write(row)
 				
-				
-		
-
 		# Verifica se ha acoes em aberto
 		data_atual = date.today()
 		flag = False
