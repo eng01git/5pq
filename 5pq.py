@@ -969,12 +969,12 @@ if __name__ == '__main__':
 			batch.commit()
 			caching.clear_cache()
 			
-		with st.beta_expander('Atrasadas'):
-			df_atrasadas = filtrado_ac[filtrado_ac['Status'] == 'Atrasada']
-			
-			for index, row in df_atrasadas.iterrows():
-				text = 'Ação: ' + str(row['Ação']) + 'Prazo :' + str(row['Prazo'])
-				with st.beta_expander(text):
-					st.write(row)
+		
+		df_atrasadas = filtrado_ac[filtrado_ac['Status'] == 'Atrasada']
+
+		for index, row in df_atrasadas.iterrows():
+			text = 'Ação: ' + str(row['Ação']) + 'Prazo :' + str(row['Prazo'])
+			with st.beta_expander(text):
+				st.write(row)
 	
 
