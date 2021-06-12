@@ -968,11 +968,28 @@ if __name__ == '__main__':
 		if flag == True:
 			batch.commit()
 			caching.clear_cache()
-		
-		import streamlit.components.v1 as components
-
-		# embed streamlit docs in a streamlit app
-		components.iframe("https://docs.streamlit.io/en/latest")
+			
+		with st.beta_expander('Atrasadas'):
+			df_atrasadas = filtrado_ac['Status'] == 'Atrasada']
+			
+			for index, row in df_atrsadas.iterrows():
+				text = 'Ação: ' + str(row['Ação']) + 'Prazo :' + str(row['Prazo'])
+				with st.beta_expander(text):
+					st.write(row)
+	
+	
+	
+	
+	
+	>>> st.line_chart({"data": [1, 5, 2, 6, 2, 1]})
+>>>
+>>> with st.beta_expander("See explanation"):
+...     st.write("""
+...         The chart above shows some numbers I picked for you.
+...         I rolled actual dice for these, so they're *guaranteed* to
+...         be random.
+...     """)
+...     st.image("https://static.streamlit.io/examples/dice.jpg")	
 		
 				     
 				     
