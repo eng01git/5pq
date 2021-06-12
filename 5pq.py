@@ -1018,7 +1018,7 @@ if __name__ == '__main__':
 		df_people['Email'] = df_people['Codigo'].astype(str) + '@ambev.com.br'
 		df_people['Gestor'] = 'Não'
 		st.write(df_people)
-		st.write(usuarios_fb['Codigo'].tolist())
+		st.write(usuarios_fb['Codigo'])
 		lista__ = usuarios_fb['Codigo']
 		df_people2 = df_people[~df_people['Codigo'].isin(lista__)]
 		
