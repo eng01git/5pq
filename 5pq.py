@@ -1019,7 +1019,11 @@ if __name__ == '__main__':
 		df_people['Gestor'] = 'Não'
 		st.write(df_people)
 		
+		df_people2 = df_people[~df_people['Codigo'].isin(usuarios_fb['Codigo'].tolist())]
+		
+		st.write(df_people2)
 		#for index, row in df_people.iterrows():
+		#	if df_people['Codigo']
 			
 		
 		if people:
