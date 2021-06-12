@@ -949,9 +949,9 @@ if __name__ == '__main__':
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([8,2])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
-				botoes.button('Finalizar Ação ' + str(index))
-				botoes.button('Descartar Ação ' + str(index))
-				botoes.button('Editar Ação ' + str(index))
+				botoes.button('Finalizar Ação          ' + str(index))
+				botoes.button('Descartar Ação          ' + str(index))
+				botoes.button('Editar Ação             ' + str(index))
 				botoes.button('Enviar e-mail para dono ' + str(index))
 				#dataframe(data=None, width=None, height=None)
 				
