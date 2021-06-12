@@ -976,7 +976,6 @@ if __name__ == '__main__':
 					
 				if email_dono:
 					st.error('Em desenvolvimento')
-
 				
 		st.subheader('Ações em aberto')	
 		df_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
@@ -1004,8 +1003,7 @@ if __name__ == '__main__':
 					
 				if email_dono:
 					st.error('Em desenvolvimento')
-				
-				
+							
 		st.subheader('Ações concluídas')	
 		df_concluidas = filtrado_ac[filtrado_ac['Status'] == 'Concluída']
 		for index, row in df_concluidas.iterrows():
@@ -1019,9 +1017,7 @@ if __name__ == '__main__':
 				if reabrir_acao:
 					row['Status'] = 'Em aberto'
 					gravar_acao_edit(row)
-
-				
-				
+		
 		st.subheader('Ações canceladas')	
 		df_canceladas = filtrado_ac[filtrado_ac['Status'] == 'Cancelada']
 		for index, row in df_canceladas.iterrows():
@@ -1040,7 +1036,6 @@ if __name__ == '__main__':
 				if reabrir_acao:
 					row['Status'] = 'Em aberto'
 					gravar_acao_edit(row)
-
 				
 		# Verifica se ha acoes em aberto
 		data_atual = date.today()
