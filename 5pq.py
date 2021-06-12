@@ -602,8 +602,8 @@ def formulario(linhas):
 		dic['notas de manutenção'] = st_tags(label='Notas de manutenção', text='Pressione enter')
 		dic['ordem manutenção'] = st_tags(label='Ordens de manutenção', text='Pressione enter')
 		dic['status'] = 'Pendente'
-		dic['responsável identificação'] = st8.text_input('Responsável pela identificação')
-		dic['responsável reparo'] = st9.text_input('Responsável pela correção')
+		dic['responsável identificação'] = st8.selectbox('Responsável pela identificação',nao_gestores)
+		dic['responsável reparo'] = st9.selectbox('Responsável pela correção',nao_gestores)
 		dic['email responsável'] = st.text_input('E-mail do responsável pelo formulário')
 		dic['gestor'] = st.selectbox('Coordenador', gestores)
 		submitted_ins = st.form_submit_button('Enviar 5 Porquês')
