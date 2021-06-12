@@ -1020,6 +1020,8 @@ if __name__ == '__main__':
 		st.write(df_people)
 		st.write(usuarios_fb['Codigo'])
 		lista__ = usuarios_fb['Codigo'].tolist()
+		st.write(dtype(usuarios_fb['Codigo']))
+		st.write(dtype(df_people['Codigo']))
 		df_people2 = df_people[df_people['Codigo'].isin(lista__)]
 		
 		st.write(df_people2)
