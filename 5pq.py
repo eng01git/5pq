@@ -1020,10 +1020,9 @@ if __name__ == '__main__':
 		st.write(df_people)
 		st.write(usuarios_fb['Codigo'])
 		lista__ = usuarios_fb['Codigo'].tolist()
-		st.write(usuarios_fb['Codigo'].dtypes)
-
-		st.write(df_people['Codigo'].dtypes)
-		df_people2 = df_people[df_people['Codigo'].astype(str).isin(lista__)]
+		#df_people2 = df_people[df_people['Codigo'].astype(str).isin(lista__)]
+		filtro = df_people['Codigo'].astype(str).isin(lista__)
+		df_people.loc[filtro, 'Gestor'] = 'Sim'
 		df_people2['Gestor'] = 'Sim'
 		st.write(df_people2)	
 		st.write(df_people)
