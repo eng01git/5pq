@@ -912,9 +912,11 @@ if __name__ == '__main__':
 				
 		# Filtro para datas
 		st.text('Filtro das ações')
-		col1_ac, col2_ac, col3_ac, col4_ac = st.beta_columns(4)
-		inicio_filtro_ac = col1_ac.date_input("Início")
-		fim_filtro_ac = col2_ac.date_input("Fim")
+		#col1_ac, col2_ac, col3_ac, col4_ac = st.beta_columns(4)
+		col3_ac, col4_ac = st.beta_columns(2)
+
+		#inicio_filtro_ac = col1_ac.date_input("Início")
+		#fim_filtro_ac = col2_ac.date_input("Fim")
 		#filtrado_ac = (fn_acao[(fn_acao['Prazo'] >= inicio_filtro_ac) & (fn_acao['Prazo'] <= fim_filtro_ac)]) 
 		filtrado_ac = fb_acao.copy()
 
