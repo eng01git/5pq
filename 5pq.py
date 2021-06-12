@@ -983,7 +983,27 @@ if __name__ == '__main__':
 		for index, row in df_aberto.iterrows():
 			text = str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
-				st.write(row)
+				dados, botoes = st.beta_columns([9,1])
+				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
+
+				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
+				descartar_acao = botoes.button('Descartar Ação ' + str(index))
+				editar_acao = botoes.button('Editar Ação ' + str(index))
+				email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
+				
+				if finalizar_acao:
+					row['Status'] = 'Concluída'
+					gravar_acao_edit(row)
+					
+				if descartar_acao:
+					row['Status'] = 'Descartada'
+					gravar_acao_edit(row)
+					
+				if editar_acao:
+					pass
+					
+				if email_dono:
+					st.error('Em desenvolvimento')
 				
 				
 		st.subheader('Ações concluídas')	
@@ -991,15 +1011,36 @@ if __name__ == '__main__':
 		for index, row in df_concluidas.iterrows():
 			text = str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
-				st.write(row)
+				dados, botoes = st.beta_columns([9,1])
+				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
+
+				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
+
+				if reabrir_acao:
+					row['Status'] = 'Em aberto'
+					gravar_acao_edit(row)
+
 				
 				
-		st.subheader('Ações em descartadas')	
-		df_descartadas = filtrado_ac[filtrado_ac['Status'] == 'Descartada']
+		st.subheader('Ações canceladas')	
+		df_descartadas = filtrado_ac[filtrado_ac['Status'] == 'Cancelada']
 		for index, row in df_descartadas.iterrows():
 			text = str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
-				st.write(row)
+				dados, botoes = st.beta_columns([9,1])
+				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
+
+				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
+				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
+				
+				if finalizar_acao:
+					row['Status'] = 'Concluída'
+					gravar_acao_edit(row)
+					
+				if reabrir_acao:
+					row['Status'] = 'Em aberto'
+					gravar_acao_edit(row)
+
 				
 		# Verifica se ha acoes em aberto
 		data_atual = date.today()
