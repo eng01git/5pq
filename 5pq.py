@@ -1014,9 +1014,14 @@ if __name__ == '__main__':
 		people = st.button('import people')
 		
 		df_people = pd.read_csv('Book1.csv', sep=';')
-		df_people['nome'] = df_people['nome'].str.title()
+		df_people['Nome'] = df_people['Nome'].str.title()
+		df_people['Email'] = df_people['Codigo'].str + '@ambev.com.br'
+		df_people['Gestor'] = 'Não'
 		st.write(df_people)
-
+		
+		#for index, row in df_people.iterrows():
+			
+		
 		if people:
 			pass
 
