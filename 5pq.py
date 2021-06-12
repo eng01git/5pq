@@ -942,7 +942,7 @@ if __name__ == '__main__':
 		elif gestor_ac is not None and (str(gestor_ac) != 'nan'):
 			filtrado_ac = filtrado_ac[filtrado_ac['Gestor'] == gestor_ac]	
 		
-		x = ''
+		x = ' '
 		st.subheader('Ações atrasadas')	
 		df_atrasadas = filtrado_ac[filtrado_ac['Status'] == 'Atrasada']
 		for index, row in df_atrasadas.iterrows():
