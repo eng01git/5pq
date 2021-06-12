@@ -1023,7 +1023,7 @@ if __name__ == '__main__':
 		st.write(usuarios_fb['Codigo'].dtypes)
 
 		st.write(df_people['Codigo'].dtypes)
-		df_people2 = df_people[df_people['Codigo'].astype(str).isin(lista__),'Gestor']
+		df_people2 = df_people[df_people['Codigo'].astype(str).isin(lista__)]
 		st.write(df_people2)			
 		
 		if people:
