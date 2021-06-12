@@ -180,7 +180,7 @@ def load_usuarios():
 	data = pd.DataFrame(columns=['Nome', 'Email', 'Gestor', 'Codigo'])
 	
 	# Define o caminho da coleção do firebase
-	posts_ref = db.collection("Usuarios")	
+	posts_ref = db.collection("Users)	
 	
 	# Busca todos os documentos presentes na coleção e salva num dataframe
 	for doc in posts_ref.stream():
