@@ -1015,7 +1015,7 @@ if __name__ == '__main__':
 		
 		df_people = pd.read_csv('Book1.csv', sep=';')
 		#df_people.iloc[:,1] = df_people.iloc[:,1].str.capitalize()
-		st.print(df_people)
+		st.write(df_people)
 
 		if people:
 			pass
