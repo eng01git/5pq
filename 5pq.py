@@ -959,7 +959,7 @@ if __name__ == '__main__':
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
 
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
-				descartar_acao = botoes.button('Descartar Ação ' + str(index))
+				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
 				editar_acao = botoes.button('Editar Ação ' + str(index))
 				email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
 				
@@ -987,7 +987,7 @@ if __name__ == '__main__':
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
 
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
-				descartar_acao = botoes.button('Descartar Ação ' + str(index))
+				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
 				editar_acao = botoes.button('Editar Ação ' + str(index))
 				email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
 				
