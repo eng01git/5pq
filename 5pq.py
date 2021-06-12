@@ -949,11 +949,11 @@ if __name__ == '__main__':
 				email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
 				
 				if finalizar_acao:
-					row['Status'] = 'Finalizada'
+					row['Status'] = 'Concluída'
 					gravar_acao_edit(row)
 					
 				if descartar_acao:
-					row['Status'] = 'Finalizada'
+					row['Status'] = 'Descartada'
 					gravar_acao_edit(row)
 					
 				if editar_acao:
