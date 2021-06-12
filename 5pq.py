@@ -1025,7 +1025,8 @@ if __name__ == '__main__':
 		st.write(df_people['Codigo'].dtypes)
 		df_people2 = df_people[df_people['Codigo'].astype(str).isin(lista__)]
 		df_people2['Gestor'] = 'Sim'
-		st.write(df_people2)			
+		st.write(df_people2)	
+		st.write(df_people)
 		
 		if people:
 			pass
