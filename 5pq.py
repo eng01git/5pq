@@ -972,7 +972,7 @@ if __name__ == '__main__':
 		with st.beta_expander('Atrasadas'):
 			df_atrasadas = filtrado_ac[filtrado_ac['Status'] == 'Atrasada']
 			
-			for index, row in df_atrsadas.iterrows():
+			for index, row in df_atrasadas.iterrows():
 				text = 'Ação: ' + str(row['Ação']) + 'Prazo :' + str(row['Prazo'])
 				with st.beta_expander(text):
 					st.write(row)
