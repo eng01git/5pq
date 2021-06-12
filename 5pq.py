@@ -1023,8 +1023,7 @@ if __name__ == '__main__':
 		st.write(usuarios_fb['Codigo'].dtypes)
 		
 		st.write(df_people['Codigo'].dtypes)
-		filtro = df_people['Codigo'].astype(str).isin(lista__)
-		df_people[filtro, 'Gestor'] = 'Sim'
+		df_people[df_people['Codigo'].astype(str).isin(lista__)]['Gestor'] = 'Sim'
 		st.write(df_people)			
 		
 		if people:
