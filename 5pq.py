@@ -510,7 +510,7 @@ def func_validar(index, row, indice):
 					for i in list(range(dic['quantidade de ações'] - len(lista))):
 						ac, do, pr = st.beta_columns([3,2,1])
 						_ação = ac.text_input('Ação' + ' (' + str(index) + ')(' + str(i + len(lista)) + '):', "") 
-						_dono = do.text_input('Dono' + ' (' + str(index) + ')(' + str(i + len(lista)) + '):', "") 
+						_dono = do.selectbox('Dono' + ' (' + str(index) + ')(' + str(i + len(lista)) + '):', nao_gestores, nao_gestores.index(array[1])) 
 						_prazo = pr.date_input('Prazo' + ' (' + str(index) + ')(' + str(i + len(lista)) + '):')
 						dict_acoes.append(str(_ação) + ';;' + str(_dono) + ';;' + str(_prazo))
 						
