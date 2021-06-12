@@ -970,27 +970,11 @@ if __name__ == '__main__':
 			caching.clear_cache()
 			
 		with st.beta_expander('Atrasadas'):
-			df_atrasadas = filtrado_ac['Status'] == 'Atrasada']
+			df_atrasadas = filtrado_ac[filtrado_ac['Status'] == 'Atrasada']
 			
 			for index, row in df_atrsadas.iterrows():
 				text = 'Ação: ' + str(row['Ação']) + 'Prazo :' + str(row['Prazo'])
 				with st.beta_expander(text):
 					st.write(row)
 	
-	
-	
-	
-	
-	>>> st.line_chart({"data": [1, 5, 2, 6, 2, 1]})
->>>
->>> with st.beta_expander("See explanation"):
-...     st.write("""
-...         The chart above shows some numbers I picked for you.
-...         I rolled actual dice for these, so they're *guaranteed* to
-...         be random.
-...     """)
-...     st.image("https://static.streamlit.io/examples/dice.jpg")	
-		
-				     
-				     
 
