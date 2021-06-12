@@ -941,16 +941,40 @@ if __name__ == '__main__':
 			filtrado_ac = filtrado_ac[filtrado_ac['Gestor'] == gestor_ac]	
 			
 		st.subheader('Ações atrasadas')	
-		st.write(filtrado_ac[filtrado_ac['Status'] == 'Atrasada'])
+		df_atrasadas = filtrado_ac[filtrado_ac['Status'] == 'Atrasada']
+		for index, row in df_atrasadas.iterrows():
+			text = 'Ação: ' + str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
+			with st.beta_expander(text):
+				st.write(row)
+				
+				
 		st.subheader('Ações em aberto')	
-		st.write(filtrado_ac[filtrado_ac['Status'] == 'Em aberto'])
+		df_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
+		for index, row in df_aberto.iterrows():
+			text = 'Ação: ' + str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
+			with st.beta_expander(text):
+				st.write(row)
+				
+				
 		st.subheader('Ações concluídas')	
-		st.write(filtrado_ac[filtrado_ac['Status'] == 'Concluída'])
+		df_concluidas = filtrado_ac[filtrado_ac['Status'] == 'Concluída']
+		for index, row in df_concluidas.iterrows():
+			text = 'Ação: ' + str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
+			with st.beta_expander(text):
+				st.write(row)
+				
+				
 		st.subheader('Ações em descartadas')	
-		st.write(filtrado_ac[filtrado_ac['Status'] == 'Descartada'])
+		df_descartadas = filtrado_ac[filtrado_ac['Status'] == 'Descartada']
+		for index, row in df_descartadas.iterrows():
+			text = 'Ação: ' + str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
+			with st.beta_expander(text):
+				st.write(row)
+				
+				
 		
-		em_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
-		
+
+		# Verifica se ha acoes em aberto
 		data_atual = date.today()
 		flag = False
 		fb_acao_2 = fb_acao.copy()
@@ -970,11 +994,6 @@ if __name__ == '__main__':
 			caching.clear_cache()
 			
 		
-		df_atrasadas = filtrado_ac[filtrado_ac['Status'] == 'Atrasada']
 
-		for index, row in df_atrasadas.iterrows():
-			text = 'Ação: ' + str(row['Ação']) + '     ' + 'Prazo: ' + str(row['Prazo'])
-			with st.beta_expander(text):
-				st.write(row)
 	
 
