@@ -1013,7 +1013,7 @@ if __name__ == '__main__':
 			
 		people = st.button('import people')
 		
-		df_people = pd.read_csv('book1.csv', sep=';')
+		df_people = pd.read_csv('Book1.csv', sep=';')
 		df_people[1] = df_people[1].str.capitalize()
 		st.print(df_people)
 
