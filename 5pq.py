@@ -1014,7 +1014,7 @@ if __name__ == '__main__':
 		people = st.button('import people')
 		
 		df_people = pd.read_csv('Book1.csv', sep=';')
-		df_people['nome'] = df_people['nome'].str.capitalize()
+		df_people['nome'] = df_people['nome'].str.title()
 		st.write(df_people)
 
 		if people:
