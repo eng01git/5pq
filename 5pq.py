@@ -522,8 +522,8 @@ def func_validar(index, row, indice):
 				dic['status'] = 'Retificado'
 				st8, st9 = st.beta_columns(2)
 				
-				dic['responsável identificação'] = st.selectbox('Responsável pela identificação' + ' (' + str(index) + '):', nao_gestores, nao_gestores.index(doc['responsável identificação']))
-				dic['responsável reparo'] = st.selectbox('Responsável pela correção' + ' (' + str(index) + '):', nao_gestores, nao_gestores.index(doc['responsável reparo']))
+				dic['responsável identificação'] = st8.selectbox('Responsável pela identificação' + ' (' + str(index) + '):', nao_gestores, nao_gestores.index(doc['responsável identificação']))
+				dic['responsável reparo'] = st9.selectbox('Responsável pela correção' + ' (' + str(index) + '):', nao_gestores, nao_gestores.index(doc['responsável reparo']))
 				
 				#dic['responsável identificação'] = st8.text_input('Responsável pela identificação' + ' (' + str(index) + '):', value=doc['responsável identificação'])
 				#dic['responsável reparo'] = st9.text_input('Responsável pela correção' + ' (' + str(index) + '):',value=doc['responsável reparo'])
