@@ -549,6 +549,10 @@ def func_validar(index, row, indice):
 				#verifica o campo de e-mail (é obrigatório o preenchimento)
 				if '@ambev.com.br' in new_d['email responsável']:
 					db.collection("5porques_2").document(documento).set(new_d,merge=True)
+					
+					# Escreve as acoes em um banco
+					write_acoes(dic['ações'], documento, dic['gestor'])
+					
 					editar = False
 					email_gestor = usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email']
 					send_email(str(email_gestor.iloc[0]), 1, documento, '', new_d['gatilho'])
@@ -617,9 +621,6 @@ def formulario(linhas):
 	if submitted_ins:
 		# Limpa cache
 		caching.clear_cache()
-						
-		# Escreve as acoes em um banco
-		write_acoes(dic['ações'], documento, dic['gestor'])
 		
 		# Transforma dados do formulário em um dicionário
 		keys_values = dic.items()
@@ -634,6 +635,10 @@ def formulario(linhas):
 		if '@ambev.com.br' in new_d['email responsável']:
 
 			val_documento = new_d['linha'] + new_d['equipamento'].replace(" ", "") + new_d['data'] + new_d['hora']
+			
+			# Escreve as acoes em um banco
+			write_acoes(dic['ações'], val_documento, dic['gestor'])
+			
 			doc_ref = db.collection("5porques_2").document(val_documento)
 			doc_ref.set(new_d)
 			email_gestor = usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email']
@@ -1015,33 +1020,7 @@ if __name__ == '__main__':
 			batch.commit()
 			caching.clear_cache()
 			
-			
-		people = st.button('import people')
-		
-		df_people = pd.read_csv('Book1.csv', sep=';')
-		df_people['Nome'] = df_people['Nome'].str.title()
-		df_people['Email'] = df_people['Codigo'].astype(str) + '@ambev.com.br'
-		df_people['Gestor'] = 'Não'
-		st.write(df_people)
-		st.write(usuarios_fb['Codigo'])
-		lista__ = usuarios_fb['Codigo'].tolist()
-		#df_people2 = df_people[df_people['Codigo'].astype(str).isin(lista__)]
-		filtro = df_people['Codigo'].astype(str).isin(lista__)
-		df_people.loc[filtro, 'Gestor'] = 'Sim'
-		#df_people2['Gestor'] = 'Sim'
-		#st.write(df_people2)	
-		st.write(df_people)
-		
-		if people:
-			batch = db.batch()
-			for index, row in df_people.iterrows():
-				ref = db.collection('Users').document(str(row['Codigo']))
-				row_string = row.astype(str)
-				batch.set(ref, row_string.to_dict())
-			batch.commit()	
 
-			
-			
 		
 
 	
