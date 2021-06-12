@@ -942,14 +942,16 @@ if __name__ == '__main__':
 		elif gestor_ac is not None and (str(gestor_ac) != 'nan'):
 			filtrado_ac = filtrado_ac[filtrado_ac['Gestor'] == gestor_ac]	
 		
-		x = ' '
 		st.subheader('Ações atrasadas')	
 		df_atrasadas = filtrado_ac[filtrado_ac['Status'] == 'Atrasada']
 		for index, row in df_atrasadas.iterrows():
-			text = str(row['Ação']) + x*10 + 'Prazo: ' + str(row['Prazo'])
+			text = str(row['Ação']) + '' + 'Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
-				st.write(row)
-				
+				dados, botoes = st.beta_columns([9,1])
+				dados.write(row)
+				botoes.button('Teste 1')
+				botoes.button('Teste 2')
+				botoes.button('Teste 3')
 				
 		st.subheader('Ações em aberto')	
 		df_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
