@@ -1015,7 +1015,7 @@ if __name__ == '__main__':
 		
 		df_people = pd.read_csv('Book1.csv', sep=';')
 		df_people['Nome'] = df_people['Nome'].str.title()
-		df_people['Email'] = df_people['Codigo'].str + '@ambev.com.br'
+		df_people['Email'] = df_people['Codigo'] + '@ambev.com.br'
 		df_people['Gestor'] = 'Não'
 		st.write(df_people)
 		
