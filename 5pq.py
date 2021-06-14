@@ -375,6 +375,16 @@ def send_email(to, atividade, documento, comentario, gatilho):
 	elif atividade == 6:
 		body = """Olá, a ação  "%s" foi criada e deve ser finalizada ate %s. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
 		subject = 'Ação criada'
+		
+	# acao concluida
+	elif atividade == 7:
+		body = """Olá, a ação  "%s" foi finalizada por %s hoje. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
+		subject = 'Ação criada'
+		
+	# acao cancelada
+	elif atividade == 8:
+		body = """Olá, a ação  "%s" foi cancelada por %s hoje. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
+		subject = 'Ação criada'
 	
 	# Transforma o remetente em lista
 	list_to = [to]
@@ -1030,12 +1040,20 @@ if __name__ == '__main__':
 					row['Status'] = 'Concluída'
 					gravar_acao_edit(row)
 					
+					# Envia email para o dono da acao informando que a mesma esta concluida
+					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Gestor'], 'Email'].to_list()
+					send_email(remetente[0], 7, nome_editor, row['Ação'], 0)
+					
 				if descartar_acao:
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
 					row['Editor'] = nome_editor.to_list()[0]
 					row['Data'] = str(date.today())
 					row['Status'] = 'Cancelada'
 					gravar_acao_edit(row)
+					
+					# Envia email para o dono da acao informando que a mesma esta concluida
+					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Gestor'], 'Email'].to_list()
+					send_email(remetente[0], 8, nome_editor, row['Ação'], 0)
 					
 				#if editar_acao:
 				#	pass
@@ -1054,8 +1072,6 @@ if __name__ == '__main__':
 				codigo_user = botoes.selectbox('ID do usuário ' + str(index), usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
-				#editar_acao = botoes.button('Editar Ação ' + str(index))
-				#email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
 				
 				if finalizar_acao:
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
@@ -1064,6 +1080,10 @@ if __name__ == '__main__':
 					row['Status'] = 'Concluída'
 					gravar_acao_edit(row)
 					
+					# Envia email para o dono da acao informando que a mesma esta concluida
+					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Gestor'], 'Email'].to_list()
+					send_email(remetente[0], 7, nome_editor, row['Ação'], 0)
+
 				if descartar_acao:
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
 					row['Editor'] = nome_editor.to_list()[0]
@@ -1071,11 +1091,10 @@ if __name__ == '__main__':
 					row['Status'] = 'Cancelada'
 					gravar_acao_edit(row)
 					
-				#if editar_acao:
-				#	pass
+					# Envia email para o dono da acao informando que a mesma esta cancelada
+					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Gestor'], 'Email'].to_list()
+					send_email(remetente[0], 8, nome_editor, row['Ação'], 0)
 					
-				#if email_dono:
-				#	st.error('Em desenvolvimento')
 							
 		st.subheader('Ações concluídas')	
 		df_concluidas = filtrado_ac[filtrado_ac['Status'] == 'Concluída']
