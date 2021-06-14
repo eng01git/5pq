@@ -1105,8 +1105,8 @@ if __name__ == '__main__':
 				batch.set(ref, row_string.to_dict())
 				flag = True
 				time.sleep(1)
-				remetente = usuarios_fb.loc[usuarios_fb['Nome' == row['Dono']], 'Email'].to_list()[0]
-				st.write(remetente)
+				remetente = usuarios_fb.loc[usuarios_fb['Nome' == row['Dono']], 'Email'].to_list()
+				st.write(remetente[0])
 							    
 				#def send_email(to, atividade, documento, comentario, gatilho):
 
