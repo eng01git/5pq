@@ -1066,7 +1066,7 @@ if __name__ == '__main__':
 			if (data_atual <= row['Prazo']) & (row['Status'] == 'Atrasada'):
 				chave = str(row['Numero do 5-Porques']) + '_' + str(row['Numero da ação'])
 				ref = db.collection('acoes').document(chave)
-				row['Status'] = 'Atrasada'
+				row['Status'] = 'Em aberto'
 				row_string = row.astype(str)
 				batch.set(ref, row_string.to_dict())
 				flag = True
