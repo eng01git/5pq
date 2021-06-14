@@ -379,12 +379,12 @@ def send_email(to, atividade, documento, comentario, gatilho):
 	# acao concluida
 	elif atividade == 7:
 		body = """Olá, a ação  "%s" foi finalizada por %s hoje. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
-		subject = 'Ação criada'
+		subject = 'Ação concluida'
 		
 	# acao cancelada
 	elif atividade == 8:
 		body = """Olá, a ação  "%s" foi cancelada por %s hoje. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
-		subject = 'Ação criada'
+		subject = 'Ação cancelada'
 	
 	# Transforma o remetente em lista
 	list_to = [to]
