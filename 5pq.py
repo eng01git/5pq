@@ -1072,8 +1072,8 @@ if __name__ == '__main__':
 				codigo_user = botoes.selectbox('Digite seu ID para alterar Ação ' + str(index), usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
-				novo_dono = botoes.selectbox('Alterar dono da Ação ' + str(index), usuarios_fb['Nome'])
-				alterar_dono = botoes.button('Cancelar Ação ' + str(index))
+				novo_dono = botoes.selectbox('Novo dono da Ação ' + str(index), usuarios_fb['Nome'])
+				alterar_dono = botoes.button('Alterar dono' + str(index))
 				
 				if finalizar_acao:
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
