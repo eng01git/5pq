@@ -552,8 +552,8 @@ def func_validar(index, row, indice):
 						dict_acoes.append(str(_ação) + ';;' + str(_dono) + ';;' + str(_prazo))
 						
 				dic['ações'] = dict_acoes
-				dic['notas de manutenção'] = st_tags(label=('Notas de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['notas de manutenção'].replace(']', '').replace('[','').replace("'",'').split(','))
-				dic['ordem manutenção'] = st_tags(label=('Ordem de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['ordem manutenção'].replace(']', '').replace('[','').replace("'",'').split(','))
+				dic['notas de manutenção'] = st_tags(label=('Notas de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['notas de manutenção'].replace(']', '').replace('[','').replace("'",'').split(','), key=[0])
+				dic['ordem manutenção'] = st_tags(label=('Ordem de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['ordem manutenção'].replace(']', '').replace('[','').replace("'",'').split(','),  key=[1])
 				dic['status'] = 'Retificado'
 				st8, st9 = st.beta_columns(2)
 				dic['responsável identificação'] = st8.selectbox('Responsável pela identificação' + ' (' + str(index) + '):', nao_gestores, nao_gestores.index(doc['responsável identificação']))
