@@ -1042,7 +1042,7 @@ if __name__ == '__main__':
 					
 					# Envia email para o dono da acao informando que a mesma esta concluida
 					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Gestor'], 'Email'].to_list()
-					send_email(remetente[0], 7, nome_editor, row['Ação'], 0)
+					send_email(remetente[0], 7, row['Editor'], row['Ação'], 0)
 					
 				if descartar_acao:
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
@@ -1053,7 +1053,7 @@ if __name__ == '__main__':
 					
 					# Envia email para o dono da acao informando que a mesma esta concluida
 					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Gestor'], 'Email'].to_list()
-					send_email(remetente[0], 8, nome_editor, row['Ação'], 0)
+					send_email(remetente[0], 8, row['Editor'], row['Ação'], 0)
 					
 				#if editar_acao:
 				#	pass
@@ -1082,7 +1082,7 @@ if __name__ == '__main__':
 					
 					# Envia email para o dono da acao informando que a mesma esta concluida
 					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Gestor'], 'Email'].to_list()
-					send_email(remetente[0], 7, nome_editor, row['Ação'], 0)
+					send_email(remetente[0], 7, row['Editor'], row['Ação'], 0)
 
 				if descartar_acao:
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
@@ -1093,7 +1093,7 @@ if __name__ == '__main__':
 					
 					# Envia email para o dono da acao informando que a mesma esta cancelada
 					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Gestor'], 'Email'].to_list()
-					send_email(remetente[0], 8, nome_editor, row['Ação'], 0)
+					send_email(remetente[0], 8, row['Editor'], row['Ação'], 0)
 					
 							
 		st.subheader('Ações concluídas')	
