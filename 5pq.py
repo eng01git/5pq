@@ -1087,9 +1087,9 @@ if __name__ == '__main__':
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
 				
-				if finalizar_acao:
-					row['Status'] = 'Concluída'
-					gravar_acao_edit(row)
+				#if finalizar_acao:
+				#	row['Status'] = 'Concluída'
+				#	gravar_acao_edit(row)
 					
 				if reabrir_acao:
 					row['Status'] = 'Em aberto'
