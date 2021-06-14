@@ -165,13 +165,11 @@ def upload_mes(uploaded_file, tipos):
 			batch.commit()	
 			
 		# Limpa cache
-		caching.clear_cache()
-		
+		caching.clear_cache()		
 		return to_include
 	except:
 		st.error('Arquivo não compatível com exportação do MES')
 		return None
-
 
 # Efetua a leitura dos dados dos usuários no banco
 @st.cache
@@ -212,7 +210,7 @@ def load_sap_nv3():
 	data = pd.read_csv('SAP_nivel3.csv', sep=';')
 	return data
 
-# Efetua a escrita das acoes
+# Efetua a escrita das ações no banco de dados
 def write_acoes(acoes, documento, gestor):
 	
 	# Define o caminho da coleção do firebase
@@ -226,12 +224,22 @@ def write_acoes(acoes, documento, gestor):
 	for doc in posts_ref.stream():
 		acoes_firebase.append(doc.id)
 
+		
 	index = 0
+	
+	# Itera sobre todas as ações do 5-Porques
 	for i in acoes:
+		
+		# Separa a string
 		lista = i.split(";;")
+		
+		# Define o nome do documento a ser armazenado na base de dados
 		chave = str(documento) + '_' + str(index)
 		
-		if chave not in acoes_firebase:		
+		# Verifica se a ação já consta no banco de dados
+		if chave not in acoes_firebase:	
+			
+			# Definição da ação com alteração do status para em aberto
 			dic_to_firebase[chave] = {'Ação': lista[0],
 						  'Dono': lista[1],
 						  'Prazo': lista[2],
@@ -243,6 +251,8 @@ def write_acoes(acoes, documento, gestor):
 						 }		
 			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
 		else:
+			
+			# Caso a ação já esteja no banco de dados, ela é modificada mas seu status não é alterado
 			dic_to_firebase[chave] = {'Ação': lista[0],
 						  'Dono': lista[1],
 						  'Prazo': lista[2],
@@ -253,7 +263,8 @@ def write_acoes(acoes, documento, gestor):
 						 }		
 			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
 		index += 1
-	
+
+# Efetua a leitura das ações no banco de dados
 @st.cache
 def read_acao():
 	# Cria dicionário vazio
@@ -285,12 +296,14 @@ def read_acao():
 	acao_df.sort_values(by=['Prazo'], inplace=True)
 	return acao_df
 
+# Grava a edição das ações no banco
 def gravar_acao_edit(row):
 	ea_chave = str(row['Numero do 5-Porques']) + '_' + str(row['Numero da ação'])
 	row_string = row.astype(str)
 	db.collection("acoes").document(ea_chave).set(row_string.to_dict(),merge=True)
 	caching.clear_cache()
-	
+
+# Ainda não definida
 def editar_acao(row):
 	
 	
@@ -459,21 +472,27 @@ def func_validar(index, row, indice):
 					send_email(row['email responsável'], 3, str(row['document']), comentario, 0)
 				else: 
 					st.error('Obrigatório o preenchimento do comentário!')
-		# Etapa de edição
+		# Etapa de edição (Preenchimento do formulário)
 		else:
-			# Preenchimento do formulário
-			documento = str(row['document'])	
+			# Ler o número do documento
+			documento = str(row['document'])
+			
+			# Transforma linha do pandas em dicionário
 			doc = row.to_dict()
+			
+			# Organiza itens na mesma linha
 			sp2, sp3, st0, acoes = st.beta_columns(4)
+			
+			# Lista as linhas da planta e depoois lista os equipamentos em função da linha escolhida
 			list_linhas = list(linhas)
 			sap_nv2 = sp2.selectbox('Selecione a linha' + ' (' + str(index) + '):', list_linhas, list_linhas.index(doc['linha']))
 			equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
-			
 			if sap_nv2 != doc['linha']:
 				equipamento_ant = 0
 			else:
 				equipamento_ant = equipamentos.index(doc['equipamento'])	
 			
+			# Formulário
 			with st.form('Form_edit' + str(index)):
 				st1, st2, st3, st4 = st.beta_columns(4)
 				dic['data'] = st1.date_input('Data da ocorrência' + ' (' + str(index) + '):', doc['data'])
@@ -498,24 +517,25 @@ def func_validar(index, row, indice):
 				dic['tipo de correção'] = st6.multiselect('Selecione o tipo da correção' + ' (' + str(index) + '):', falhas)
 				dic['correção deterioização'] = st7.multiselect('Selecione o tipo da deterioização (correção)' + ' (' + str(index) + '):', deterioização)
 				
+				# Lista as ações (há um tratamento pois todas as ações estão numa mesma string)
 				lista = doc['ações'].replace('[', '').replace(']', '').split("',")
-				#st.write(lista)
-				
 				dict_acoes = []
 				_index = 0
+				
+				# Disponibiliza todas as ações previamente preenchidas para edição
 				for i in lista:
 					i = i.lstrip().replace("'",'')
 					array = i.split(';;')
 					ac, do, pr = st.beta_columns([3,2,1])
 					_ação = ac.text_input('Ação' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[0]) 
-					#_dono = do.text_input('Dono' + ' (' + str(index) + ')(' + str(_index) + '):', value=array[1]) 
 					_dono = do.selectbox('Dono' + ' (' + str(index) + ')(' + str(_index) + '):', nao_gestores, nao_gestores.index(array[1])) 
 					_prazo = pr.date_input('Prazo' + ' (' + str(index) + ')(' + str(_index) + '):', value=date.fromisoformat(array[2]))
 					_index += 1
 					dict_acoes.append(str(_ação) + ';;' + str(_dono) + ';;' + str(_prazo))
 					if _index == dic['quantidade de ações']:
 						break
-						
+				
+				# Verifica se foram acrescentadas novas ações e disponibiliza os campos para edição
 				if dic['quantidade de ações'] > len(lista):
 					for i in list(range(dic['quantidade de ações'] - len(lista))):
 						ac, do, pr = st.beta_columns([3,2,1])
@@ -524,19 +544,13 @@ def func_validar(index, row, indice):
 						_prazo = pr.date_input('Prazo' + ' (' + str(index) + ')(' + str(i + len(lista)) + '):')
 						dict_acoes.append(str(_ação) + ';;' + str(_dono) + ';;' + str(_prazo))
 						
-				
-				#dic['ações'] = st.text_input('Ações' + ' (' + str(index) + '):', value=doc['ações'])
 				dic['ações'] = dict_acoes
 				dic['notas de manutenção'] = st_tags(label=('Notas de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['notas de manutenção'].replace(']', '').replace('[','').replace("'",'').split(','))
 				dic['ordem manutenção'] = st_tags(label=('Ordem de manutenção' + ' (' + str(index) + '):'), text='Pressione enter', value=doc['ordem manutenção'].replace(']', '').replace('[','').replace("'",'').split(','))
 				dic['status'] = 'Retificado'
 				st8, st9 = st.beta_columns(2)
-				
 				dic['responsável identificação'] = st8.selectbox('Responsável pela identificação' + ' (' + str(index) + '):', nao_gestores, nao_gestores.index(doc['responsável identificação']))
 				dic['responsável reparo'] = st9.selectbox('Responsável pela correção' + ' (' + str(index) + '):', nao_gestores, nao_gestores.index(doc['responsável reparo']))
-				
-				#dic['responsável identificação'] = st8.text_input('Responsável pela identificação' + ' (' + str(index) + '):', value=doc['responsável identificação'])
-				#dic['responsável reparo'] = st9.text_input('Responsável pela correção' + ' (' + str(index) + '):',value=doc['responsável reparo'])
 				dic['email responsável'] = st.text_input('E-mail do responsável pelo formulário' + ' (' + str(index) + '):', value=doc['email responsável'])
 				dic['gestor'] = st.selectbox('Coordenador' + ' (' + str(index) + '):', gestores, gestores.index(doc['gestor']))
 				submitted_edit = st.form_submit_button('Editar 5 Porquês' + ' (' + str(index) + '):')
@@ -558,12 +572,16 @@ def func_validar(index, row, indice):
 						
 				#verifica o campo de e-mail (é obrigatório o preenchimento)
 				if '@ambev.com.br' in new_d['email responsável']:
+					
+					# Define o nome do documento a ser editado
 					db.collection("5porques_2").document(documento).set(new_d,merge=True)
 					
 					# Escreve as acoes em um banco
 					write_acoes(dic['ações'], documento, dic['gestor'])
 					
 					editar = False
+					
+					# Envia e-mail para gestor
 					email_gestor = usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email']
 					send_email(str(email_gestor.iloc[0]), 1, documento, '', new_d['gatilho'])
 					
@@ -580,6 +598,8 @@ def formulario(linhas):
 	
 	# Preenchimento do formulário
 	sp2, sp3, st0, acoes = st.beta_columns(4)
+	
+	# Lista as linhas da planta e depoois lista os equipamentos em função da linha escolhid
 	list_linhas = list(linhas)
 	sap_nv2 = sp2.selectbox('Selecione a linha', list_linhas)	
 	equipamentos = list(sap_nv3[sap_nv3['Linha'] == sap_nv2]['equipamento'])
@@ -608,7 +628,10 @@ def formulario(linhas):
 		dic['tipo de correção'] = st6.multiselect('Selecione o tipo da correção', falhas)
 		dic['correção deterioização'] = st7.multiselect('Selecione o tipo da deterioização (correção)', deterioização)
 		
+		# Cria uma lista para armazenar as ações
 		dict_acoes = []
+		
+		# Cria os campos para preenchimento das ações em função da quantidade selecionada
 		for i in list(range(dic['quantidade de ações'])):
 			ac, do, pr = st.beta_columns([3,2,1])
 			_ação = ac.text_input('Ação (' + str(i) + '):', "") 
@@ -643,14 +666,18 @@ def formulario(linhas):
 		
 		#verifica o campo de e-mail (é obrigatório o preenchimento)
 		if '@ambev.com.br' in new_d['email responsável']:
-
+			
+			# Dfine o nome do documento a ser armazenado no banco
 			val_documento = new_d['linha'] + new_d['equipamento'].replace(" ", "") + new_d['data'] + new_d['hora']
 			
 			# Escreve as acoes em um banco
 			write_acoes(dic['ações'], val_documento, dic['gestor'])
 			
+			# Armazena 5-Poruqes no banco
 			doc_ref = db.collection("5porques_2").document(val_documento)
 			doc_ref.set(new_d)
+			
+			# Envia e-mail para gestor
 			email_gestor = usuarios_fb[usuarios_fb['Nome'] == new_d['gestor']]['Email']
 			send_email(str(email_gestor.iloc[0]), 0, val_documento, '', new_d['gatilho'])
 		else:
@@ -661,7 +688,7 @@ def formulario(linhas):
 ######################################################################################################
 
 if __name__ == '__main__':
-	# Carrega dataframe e extrai suas colunas
+	# Carrega dados do firebase
 	dados = load_data()
 	usuarios_fb = load_usuarios()
 	sap_nv3 = load_sap_nv3()
@@ -689,14 +716,11 @@ if __name__ == '__main__':
 	col1_.write('')
 	col2_.image('Ambev.jpeg', width=250)
 	col3_.write('')
-	
-	#st.image('Ambev.jpeg', width=250)
-	#st.subheader('Aplicação 5-Porques')
-	#st.write('Selecione no menu lateral a opção desejada')
 
 	# Lista vazia para input dos dados do formulário
 	dic = {} #dicionario
 
+	# Função desabilitda, remover
 	if func_escolhida == 'Pendências':
 
 		st.subheader('Últimas pendências')
@@ -793,18 +817,22 @@ if __name__ == '__main__':
 		elif status is not None and (str(status) != 'nan'):
 			filtrado = filtrado[filtrado['status'] == status]	
 
-			
+		# Lista o resultado dos filtros	
 		st.write(filtrado[['data', 'document', 'gestor', 'status','responsável identificação', 'turno', 'linha', 'equipamento']])
+		
+		# Disponibiliza os dados filtrados para download
 		st.markdown(get_table_download_link(filtrado), unsafe_allow_html=True)
 		
+		# Campo para selecionar um ou mais 5-Porques para análise
+		indice_doc = st.multiselect('Selecione o 5-Porques', filtrado['document'].tolist())
 		
-		indice_doc = st.multiselect('Selecione a ocorrência', filtrado['document'].tolist())
-
+		# Verifica quais 5 porques foram selecionados e chama a função de validação/edição para cada item selecionado
 		for index, row in filtrado.iterrows():
 			if row['document'] in indice_doc:
 				st.subheader('Ocorrência ' + str(row['document']))
 				func_validar(index, row, indice_doc)
-
+	
+	# Gera estatísticas sobre os 5-Porques comparando com o MES
 	if func_escolhida == 'Visibilidade':
 		st.subheader("Visibilidade 5-Porques vs MES")
 		st_grafico = st.empty()
@@ -906,8 +934,6 @@ if __name__ == '__main__':
 				send_email('BRMAI0513@ambev.com.br', 4, '', mensagem, 0)
 			else:
 				st.error('Preencher a mensagem')
-				
-		
 		
 		# Video
 		st.subheader('Tutoriais')
