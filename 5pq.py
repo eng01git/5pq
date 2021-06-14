@@ -1061,6 +1061,15 @@ if __name__ == '__main__':
 				row_string = row.astype(str)
 				batch.set(ref, row_string.to_dict())
 				flag = True
+				
+		for index, row in fb_acao_2.iterrows():
+			if (data_atual <= row['Prazo']) & (row['Status'] == 'Atrasada'):
+				chave = str(row['Numero do 5-Porques']) + '_' + str(row['Numero da ação'])
+				ref = db.collection('acoes').document(chave)
+				row['Status'] = 'Atrasada'
+				row_string = row.astype(str)
+				batch.set(ref, row_string.to_dict())
+				flag = True
 		
 		if flag == True:
 			batch.commit()
