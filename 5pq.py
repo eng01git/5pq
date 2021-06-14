@@ -255,6 +255,13 @@ def write_acoes(acoes, documento, gestor):
 						  'Data': ''
 						 }		
 			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
+			
+			# Envia email para o dono da acao 
+			remetente = usuarios_fb.loc[usuarios_fb['Nome'] == lista[1], 'Email'].to_list()
+			send_email(remetente[0], 6, lista[2], lista[0], 0)
+			time.sleep(1)
+			#send_email(to, atividade, documento, comentario, gatilho):
+			
 		else:
 			
 			# Caso a ação já esteja no banco de dados, ela é modificada mas seu status não é alterado
@@ -359,10 +366,15 @@ def send_email(to, atividade, documento, comentario, gatilho):
 		body = """Olá, segue mensagem enviada ao suporte.\n\n%s \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = 'Suporte 5-Porques'
 		
-	# Mensagem pro suporte
+	# Acao atrasada
 	elif atividade == 5:
 		body = """Olá, a ação  "%s" esta atrasada. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = 'Ação atrasada'
+		
+	# acao criada
+	elif atividade == 6:
+		body = """Olá, a ação  "%s" foi criada e deve ser finalizada ate %s. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
+		subject = 'Ação criada'
 	
 	# Transforma o remetente em lista
 	list_to = [to]
