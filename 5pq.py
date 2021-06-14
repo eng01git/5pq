@@ -1005,7 +1005,7 @@ if __name__ == '__main__':
 				if finalizar_acao:
 					
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
-					row['Editor'] = nome_editor[1]
+					row['Editor'] = nome_editor[0]
 					row['Data'] = str(date.today())
 					row['Status'] = 'Concluída'
 					gravar_acao_edit(row)
