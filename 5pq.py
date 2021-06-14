@@ -368,22 +368,22 @@ def send_email(to, atividade, documento, comentario, gatilho):
 		
 	# Acao atrasada
 	elif atividade == 5:
-		body = """Olá, a ação  "%s" esta atrasada. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
+		body = """Olá, a ação "%s" esta atrasada. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = 'Ação atrasada'
 		
 	# acao criada
 	elif atividade == 6:
-		body = """Olá, a ação  "%s" foi criada e deve ser finalizada ate %s. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
+		body = """Olá, a ação "%s" foi criada e deve ser finalizada ate %s. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
 		subject = 'Ação criada'
 		
 	# acao concluida
 	elif atividade == 7:
-		body = """Olá, a ação  "%s" foi finalizada por %s hoje. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
+		body = """Olá, a ação "%s" foi finalizada hoje por %s. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
 		subject = 'Ação concluida'
 		
 	# acao cancelada
 	elif atividade == 8:
-		body = """Olá, a ação  "%s" foi cancelada por %s hoje. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
+		body = """Olá, a ação "%s" foi cancelada hoje por %s. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario, documento)
 		subject = 'Ação cancelada'
 	
 	# Transforma o remetente em lista
