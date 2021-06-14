@@ -997,7 +997,7 @@ if __name__ == '__main__':
 		st.subheader('Ações atrasadas')	
 		df_atrasadas = filtrado_ac[filtrado_ac['Status'] == 'Atrasada']
 		for index, row in df_atrasadas.iterrows():
-			text = str(row['Ação']) + ' ' + ' (Prazo: ' + str(row['Prazo'] + ')')
+			text = str(row['Ação']) + ' ' + ' (Prazo: ' + str(row['Prazo']) + ')'
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([8.5,1.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
@@ -1031,7 +1031,7 @@ if __name__ == '__main__':
 		st.subheader('Ações em aberto')	
 		df_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
 		for index, row in df_aberto.iterrows():
-			text = str(row['Ação']) + '     ' + ' (Prazo: ' + str(row['Prazo'] + ')')
+			text = str(row['Ação']) + '     ' + ' (Prazo: ' + str(row['Prazo']) + ')'
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([8.5,1.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
@@ -1065,7 +1065,7 @@ if __name__ == '__main__':
 		st.subheader('Ações concluídas')	
 		df_concluidas = filtrado_ac[filtrado_ac['Status'] == 'Concluída']
 		for index, row in df_concluidas.iterrows():
-			text = str(row['Ação']) + '     ' + ' (Prazo: ' + str(row['Prazo'] + ')')
+			text = str(row['Ação']) + '     ' + ' (Prazo: ' + str(row['Prazo']) + ')'
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([8.5,1.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
@@ -1079,7 +1079,7 @@ if __name__ == '__main__':
 		st.subheader('Ações canceladas')	
 		df_canceladas = filtrado_ac[filtrado_ac['Status'] == 'Cancelada']
 		for index, row in df_canceladas.iterrows():
-			text = str(row['Ação']) + '     ' + ' (Prazo: ' + str(row['Prazo'] + ')')
+			text = str(row['Ação']) + '     ' + ' (Prazo: ' + str(row['Prazo']) + ')'
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([8.5,1.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
