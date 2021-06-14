@@ -355,6 +355,11 @@ def send_email(to, atividade, documento, comentario, gatilho):
 	elif atividade == 4:
 		body = """Ola, segue mensagem enviada ao suporte.\n\n%s \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = 'Suporte 5-Porques'
+		
+	# Mensagem pro suporte
+	elif atividade == 5:
+		body = """Ola, a acao  "%s" esta atrasada. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
+		subject = 'Ação atrasada'
 	
 	# Transforma o remetente em lista
 	list_to = [to]
@@ -1104,11 +1109,13 @@ if __name__ == '__main__':
 				row_string = row.astype(str)
 				batch.set(ref, row_string.to_dict())
 				flag = True
-				time.sleep(1)
+				
 				remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Dono'], 'Email'].to_list()
-				st.write(remetente[0])
+				#st.write(remetente[0])
+				send_email(remetente[0], 5, row['Numero do 5-Porques'], row['Ação'], 0)
 							    
 				#def send_email(to, atividade, documento, comentario, gatilho):
+				time.sleep(1)
 
 				
 		for index, row in fb_acao_2.iterrows():
