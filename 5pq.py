@@ -248,8 +248,8 @@ def write_acoes(acoes, documento, gestor):
 						  'Prazo': lista[2],
 						  'Numero da ação': index,
 						  'Numero do 5-Porques': documento,
-						  'Status': 'Em aberto',
-						  'Gestor': gestor						  
+						  'Gestor': gestor,
+						  'Alerta': 'pendente'
 						 }		
 			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
 		index += 1
