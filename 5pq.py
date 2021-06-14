@@ -1030,7 +1030,7 @@ if __name__ == '__main__':
 				codigo_user = botoes.selectbox('Digite seu ID para alterar Ação ' + str(index), usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
-				novo_dono = botoes.selectbox('Novo dono da Ação ' + str(index), usuarios_fb['Nome'], usuarios_fb['Nome'].index(doc['definição do evento']))
+				novo_dono = botoes.selectbox('Novo dono da Ação ' + str(index), usuarios_fb['Nome'], usuarios_fb['Nome'].index(row['Dono']))
 				alterar_dono = botoes.button('Alterar dono ' + str(index))
 				
 				if finalizar_acao:
@@ -1075,7 +1075,7 @@ if __name__ == '__main__':
 				codigo_user = botoes.selectbox('Digite seu ID para alterar Ação ' + str(index), usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
-				novo_dono = botoes.selectbox('Novo dono da Ação ' + str(index), usuarios_fb['Nome'], usuarios_fb['Nome'].index(doc['definição do evento']))
+				novo_dono = botoes.selectbox('Novo dono da Ação ' + str(index), usuarios_fb['Nome'], usuarios_fb['Nome'].index(row['Dono']))
 				alterar_dono = botoes.button('Alterar dono ' + str(index))
 				
 				if finalizar_acao:
