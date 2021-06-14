@@ -1024,7 +1024,7 @@ if __name__ == '__main__':
 		for index, row in df_atrasadas.iterrows():
 			text = str(row['Ação']) + ' ' + ' (Prazo: ' + str(row['Prazo']) + ')'
 			with st.beta_expander(text):
-				dados, botoes = st.beta_columns([8.5,1.5])
+				dados, botoes = st.beta_columns([7.5,2.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
 
 				codigo_user = botoes.selectbox('Digite seu ID para alterar Ação ' + str(index), usuarios_fb['Codigo'])
@@ -1069,7 +1069,7 @@ if __name__ == '__main__':
 		for index, row in df_aberto.iterrows():
 			text = str(row['Ação']) + '     ' + ' (Prazo: ' + str(row['Prazo']) + ')'
 			with st.beta_expander(text):
-				dados, botoes = st.beta_columns([7,3])
+				dados, botoes = st.beta_columns([7.5,2.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
 				
 				codigo_user = botoes.selectbox('Digite seu ID para alterar Ação ' + str(index), usuarios_fb['Codigo'])
@@ -1114,7 +1114,7 @@ if __name__ == '__main__':
 		for index, row in df_concluidas.iterrows():
 			text = str(row['Ação']) + '     ' + ' (Prazo: ' + str(row['Prazo']) + ')'
 			with st.beta_expander(text):
-				dados, botoes = st.beta_columns([8.5,1.5])
+				dados, botoes = st.beta_columns([7.5,2.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
 
 				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
@@ -1128,7 +1128,7 @@ if __name__ == '__main__':
 		for index, row in df_canceladas.iterrows():
 			text = str(row['Ação']) + '     ' + ' (Prazo: ' + str(row['Prazo']) + ')'
 			with st.beta_expander(text):
-				dados, botoes = st.beta_columns([8.5,1.5])
+				dados, botoes = st.beta_columns([7.5,2.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
 
 				#finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
