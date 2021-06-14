@@ -333,32 +333,32 @@ def send_email(to, atividade, documento, comentario, gatilho):
 	# Verifica o código da atividade e edita a mensagem (criação, retificação, aprovação ou reproavação de 5-Porques
 	# Criação
 	if atividade == 0:
-		body = "Ola, foi gerada um novo 5-Porques, acesse a plataforma para avaliar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py\n\nAtenciosamente, \nAmbev 5-Porques"
+		body = "Olá, foi gerada um novo 5-Porques, acesse a plataforma para avaliar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py\n\nAtenciosamente, \nAmbev 5-Porques"
 		subject = """Gerado 5-Porques %s""" % (documento)
 		
 	# Retificação
 	elif atividade == 1:
-		body = "Ola, o responsavel retificou 5-Porques, acesse a plataforma para reavaliar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py\n\nAtenciosamente, \nAmbev 5-Porques"
+		body = "Olá, o responsável retificou 5-Porques, acesse a plataforma para reavaliar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py\n\nAtenciosamente, \nAmbev 5-Porques"
 		subject = """Retificado 5-Porques %s""" % (documento)
 		
 	# Aprovação
 	elif atividade == 2:
-		body = """Ola, o gestor aprovou 5-Porques.\n\n%s \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
+		body = """Olá, o gestor aprovou 5-Porques.\n\n%s \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = """Aprovado 5-Porques %s""" % (documento)	
 		
 	# Reprovação
 	elif atividade == 3:
-		body = """Ola, o gestor reprovou 5-Porques, acesse a plataforma para retificar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py \n\n Comentario do gestor: \n\n%s  \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
+		body = """Olá, o gestor reprovou 5-Porques, acesse a plataforma para retificar.\nhttps://share.streamlit.io/eng01git/5pq/main/5pq.py \n\n Comentario do gestor: \n\n%s  \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = """Reprovado 5-Porques %s""" % (documento)
 	
 	# Mensagem pro suporte
 	elif atividade == 4:
-		body = """Ola, segue mensagem enviada ao suporte.\n\n%s \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
+		body = """Olá, segue mensagem enviada ao suporte.\n\n%s \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = 'Suporte 5-Porques'
 		
 	# Mensagem pro suporte
 	elif atividade == 5:
-		body = """Ola, a acao  "%s" esta atrasada. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
+		body = """Olá, a ação  "%s" esta atrasada. \n\nAtenciosamente, \nAmbev 5-Porques""" %(comentario)
 		subject = 'Ação atrasada'
 	
 	# Transforma o remetente em lista
