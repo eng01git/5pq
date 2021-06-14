@@ -1114,7 +1114,7 @@ if __name__ == '__main__':
 		for index, row in df_concluidas.iterrows():
 			text = str(row['Ação']) + '     ' + ' (Prazo: ' + str(row['Prazo']) + ')'
 			with st.beta_expander(text):
-				dados, botoes = st.beta_columns([9,1])
+				dados, botoes = st.beta_columns([7.5,2.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
 
 				botoes.write('Reabrir Ação')
@@ -1129,7 +1129,7 @@ if __name__ == '__main__':
 		for index, row in df_canceladas.iterrows():
 			text = str(row['Ação']) + '     ' + ' (Prazo: ' + str(row['Prazo']) + ')'
 			with st.beta_expander(text):
-				dados, botoes = st.beta_columns([9,1])
+				dados, botoes = st.beta_columns([7.5,2.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
 
 				#finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
