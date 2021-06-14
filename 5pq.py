@@ -1087,9 +1087,9 @@ if __name__ == '__main__':
 				#finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
 				
-				#if finalizar_acao:
-				#	row['Status'] = 'Concluída'
-				#	gravar_acao_edit(row)
+				if finalizar_acao:
+					row['Status'] = 'Concluída'
+					gravar_acao_edit(row)
 					
 				if reabrir_acao:
 					row['Status'] = 'Em aberto'
@@ -1105,6 +1105,7 @@ if __name__ == '__main__':
 			if (data_atual > row['Prazo']) & (row['Status'] == 'Em aberto'):
 				chave = str(row['Numero do 5-Porques']) + '_' + str(row['Numero da ação'])
 				ref = db.collection('acoes').document(chave)
+				row['Email'] = 'Enviado'
 				row['Status'] = 'Atrasada'
 				row_string = row.astype(str)
 				batch.set(ref, row_string.to_dict())
