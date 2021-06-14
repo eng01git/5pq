@@ -1006,7 +1006,7 @@ if __name__ == '__main__':
 					
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
 					st.write(nome_editor)
-					st.write(type(nome_editor))
+					st.write(type(nome_editor[:]))
 					row['Editor'] = nome_editor[0]
 					row['Data'] = str(date.today())
 					row['Status'] = 'Concluída'
