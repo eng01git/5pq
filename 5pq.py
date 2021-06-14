@@ -110,7 +110,10 @@ def load_mes():
 	mes_df.drop('index', axis=1, inplace=True)
 	
 	# Lista e ordena as colunas do dataframe
-	lista_colunas = ['Linha', 'Data', 'Hora', 'Tempo', 'Micro/Macro', 'Definição do Evento', 'Nome', 'Equipamento','Ponto Produtivo', 'SubConjunto', 'Componente', 'Modo de Falha - Sintoma', 'Descrição', 'Lote', 'Resultante', 'FluxoProduto', 'FluxoIntervalo', 'Turno', 'Gargalo', 'FiltroExterna', 'documento']
+	lista_colunas = ['Linha', 'Data', 'Hora', 
+			 'Tempo', 'Micro/Macro', 'Definição do Evento', 'Nome', 
+			 'Equipamento','Ponto Produtivo', 'SubConjunto', 'Componente', 'Modo de Falha - Sintoma', 
+			 'Descrição', 'Lote', 'Resultante', 'FluxoProduto', 'FluxoIntervalo', 'Turno', 'Gargalo', 'FiltroExterna', 'documento']
 	mes_df = mes_df.reindex(columns=lista_colunas)
 	
 	# Formata as colunas de data e hora para possibilitar filtros
@@ -288,7 +291,8 @@ def read_acao():
 	acao_df.drop('index', axis=1, inplace=True)
 	
 	# Lista e ordena as colunas do dataframe
-	lista_colunas = ['Ação', 'Dono', 'Prazo','Status', 'Gestor', 'E-mail', 'Numero do 5-Porques',  'Numero da ação', 'Editor', 'Data']
+	lista_colunas = ['Ação', 'Dono', 'Prazo','Status', 'Gestor', 'E-mail', 
+			 'Numero do 5-Porques',  'Numero da ação', 'Editor', 'Data']
 	acao_df = acao_df.reindex(columns=lista_colunas)
 	
 	# Formata a coluna de prazo para possibilitar filtros
@@ -1128,8 +1132,3 @@ if __name__ == '__main__':
 			batch.commit()
 			caching.clear_cache()
 			
-
-		
-
-	
-
