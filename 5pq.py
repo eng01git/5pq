@@ -992,7 +992,7 @@ if __name__ == '__main__':
 			text = str(row['Ação']) + ' ' + ' Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([9,1])
-				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
+				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
 
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
@@ -1019,7 +1019,7 @@ if __name__ == '__main__':
 			text = str(row['Ação']) + '     ' + ' Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([9,1])
-				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
+				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
 
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
@@ -1046,7 +1046,7 @@ if __name__ == '__main__':
 			text = str(row['Ação']) + '     ' + ' Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([9,1])
-				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
+				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
 
 				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
 
@@ -1060,7 +1060,7 @@ if __name__ == '__main__':
 			text = str(row['Ação']) + '     ' + ' Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([9,1])
-				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'Alerta', 'Numero do 5-Porques']])
+				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
 
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
