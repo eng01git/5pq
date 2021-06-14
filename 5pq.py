@@ -286,7 +286,7 @@ def read_acao():
 	acao_df.drop('index', axis=1, inplace=True)
 	
 	# Lista e ordena as colunas do dataframe
-	lista_colunas = ['Ação', 'Dono', 'Prazo','Status', 'Gestor', 'Alerta', 'Numero do 5-Porques',  'Numero da ação']
+	lista_colunas = ['Ação', 'Dono', 'Prazo','Status', 'Gestor', 'E-mail', 'Numero do 5-Porques',  'Numero da ação']
 	acao_df = acao_df.reindex(columns=lista_colunas)
 	
 	# Formata a coluna de prazo para possibilitar filtros
