@@ -242,6 +242,16 @@ def write_acoes(acoes, documento, gestor):
 						  'Alerta': 'pendente'
 						 }		
 			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
+		else:
+			dic_to_firebase[chave] = {'Ação': lista[0],
+						  'Dono': lista[1],
+						  'Prazo': lista[2],
+						  'Numero da ação': index,
+						  'Numero do 5-Porques': documento,
+						  'Status': 'Em aberto',
+						  'Gestor': gestor						  
+						 }		
+			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
 		index += 1
 	
 @st.cache
