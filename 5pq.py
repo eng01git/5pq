@@ -1027,19 +1027,26 @@ if __name__ == '__main__':
 		for index, row in df_aberto.iterrows():
 			text = str(row['Ação']) + '     ' + ' Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
-				dados, botoes = st.beta_columns([9,1])
+				dados, botoes = st.beta_columns([8.5,1.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
-
+				
+				codigo_user = botoes.selectbox('Código do usuário', usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
-				editar_acao = botoes.button('Editar Ação ' + str(index))
-				email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
+				#editar_acao = botoes.button('Editar Ação ' + str(index))
+				#email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
 				
 				if finalizar_acao:
+					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
+					row['Editor'] = nome_editor.to_list()[0]
+					row['Data'] = str(date.today())
 					row['Status'] = 'Concluída'
 					gravar_acao_edit(row)
 					
 				if descartar_acao:
+					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
+					row['Editor'] = nome_editor.to_list()[0]
+					row['Data'] = str(date.today())
 					row['Status'] = 'Cancelada'
 					gravar_acao_edit(row)
 					
@@ -1054,7 +1061,7 @@ if __name__ == '__main__':
 		for index, row in df_concluidas.iterrows():
 			text = str(row['Ação']) + '     ' + ' Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
-				dados, botoes = st.beta_columns([9,1])
+				dados, botoes = st.beta_columns([8.5,1.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
 
 				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
@@ -1068,7 +1075,7 @@ if __name__ == '__main__':
 		for index, row in df_canceladas.iterrows():
 			text = str(row['Ação']) + '     ' + ' Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
-				dados, botoes = st.beta_columns([9,1])
+				dados, botoes = st.beta_columns([8.5,1.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
 
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
