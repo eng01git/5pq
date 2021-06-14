@@ -1004,14 +1004,14 @@ if __name__ == '__main__':
 				
 				if finalizar_acao:
 					
-					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome'][1]
+					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
 					row['Editor'] = nome_editor[1]
 					row['Data'] = str(date.today())
 					row['Status'] = 'Concluída'
 					gravar_acao_edit(row)
 					
 				if descartar_acao:
-					row['Editor'] = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome'][1]
+					row['Editor'] = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
 					row['Data'] = str(date.today())
 					row['Status'] = 'Cancelada'
 					gravar_acao_edit(row)
