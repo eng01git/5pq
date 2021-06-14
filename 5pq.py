@@ -1027,7 +1027,7 @@ if __name__ == '__main__':
 				dados, botoes = st.beta_columns([8.5,1.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
 
-				codigo_user = botoes.selectbox('ID do usuário ' + str(index), usuarios_fb['Codigo'])
+				codigo_user = botoes.selectbox('Digite seu ID para alterar Ação ' + str(index), usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
 				#editar_acao = botoes.button('Editar Ação ' + str(index))
@@ -1069,10 +1069,11 @@ if __name__ == '__main__':
 				dados, botoes = st.beta_columns([7,3])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
 				
-				codigo_user = botoes.selectbox('ID do usuário ' + str(index), usuarios_fb['Codigo'])
-				codigo_user2 = botoes.selectbox('ID do usuário ' + str(index), usuarios_fb['Nome'])
+				codigo_user = botoes.selectbox('Digite seu ID para alterar Ação ' + str(index), usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
+				novo_dono = botoes.selectbox('Alterar dono da Ação ' + str(index), usuarios_fb['Nome'])
+				alterar_dono = botoes.button('Cancelar Ação ' + str(index))
 				
 				if finalizar_acao:
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
@@ -1096,7 +1097,15 @@ if __name__ == '__main__':
 					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Gestor'], 'Email'].to_list()
 					send_email(remetente[0], 8, row['Editor'], row['Ação'], 0)
 					
-							
+				if alterar_dono:
+
+					row['Dono'] = novo_dono
+					gravar_acao_edit(row)
+					
+					# Envia email para o dono da acao informando que a mesma esta cancelada
+					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Dono'], 'Email'].to_list()
+					send_email(remetente[0], 6, row['Prazo'], row['Ação'], 0)							
+						
 		st.subheader('Ações concluídas')	
 		df_concluidas = filtrado_ac[filtrado_ac['Status'] == 'Concluída']
 		for index, row in df_concluidas.iterrows():
