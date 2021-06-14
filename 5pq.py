@@ -176,7 +176,7 @@ def upload_mes(uploaded_file, tipos):
 @st.cache
 def load_usuarios():
 	# Define as colunas do dataframe
-	data = pd.DataFrame(columns=['Nome', 'Email', 'Gestor', 'Codigo'])
+	data_user = pd.DataFrame(columns=['Nome', 'Email', 'Gestor', 'Codigo'])
 	
 	# Define o caminho da coleção do firebase
 	posts_ref = db.collection("Users")	
@@ -185,8 +185,8 @@ def load_usuarios():
 	for doc in posts_ref.stream():
 		dicionario = doc.to_dict()
 		dicionario['document'] = doc.id
-		data = data.append(dicionario, ignore_index=True)
-	return data
+		data_user = data_user.append(dicionario, ignore_index=True)
+	return data_user
 
 # Efetua a leitura das pendencias no banco
 @st.cache
@@ -208,8 +208,8 @@ def load_pendencias():
 @st.cache
 def load_sap_nv3():
 	# Efetua a leitura dos dados do arquivo csv
-	data = pd.read_csv('SAP_nivel3.csv', sep=';')
-	return data
+	data_sapnv3 = pd.read_csv('SAP_nivel3.csv', sep=';')
+	return data_sapnv3
 
 # Efetua a escrita das ações no banco de dados
 def write_acoes(acoes, documento, gestor):
@@ -224,7 +224,6 @@ def write_acoes(acoes, documento, gestor):
 	# Busca todos os documentos presentes na coleção e salva num dataframe
 	for doc in posts_ref.stream():
 		acoes_firebase.append(doc.id)
-
 		
 	index = 0
 	
@@ -271,7 +270,7 @@ def write_acoes(acoes, documento, gestor):
 @st.cache
 def read_acao():
 	# Cria dicionário vazio
-	dicionario = {}
+	dicionario_acao = {}
 	
 	# Define o caminho da coleção do firebase
 	posts_ref = db.collection("acoes")
@@ -280,10 +279,10 @@ def read_acao():
 	for doc in posts_ref.stream():
 		dic_auxiliar = doc.to_dict()
 		dict_key = dic_auxiliar['Numero do 5-Porques'] + '_' + str(dic_auxiliar['Numero da ação'])
-		dicionario[dict_key] = dic_auxiliar
+		dicionario_acao[dict_key] = dic_auxiliar
 	
 	# Ajusta o dicionário para um dataframe
-	acao_df = pd.DataFrame.from_dict(dicionario)
+	acao_df = pd.DataFrame.from_dict(dicionario_acao)
 	acao_df = acao_df.T
 	acao_df.reset_index(inplace=True)
 	acao_df.drop('index', axis=1, inplace=True)
