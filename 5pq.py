@@ -1098,37 +1098,67 @@ if __name__ == '__main__':
 					row['Status'] = 'Em aberto'
 					gravar_acao_edit(row)
 				
-		# Verifica se ha acoes em aberto
+		# leitura da data atual
 		data_atual = date.today()
+		
+		# zera flag para escrita no banco de dados (commit)
 		flag = False
+		
+		# Faz uma copia do dataframe das acoes
 		fb_acao_2 = fb_acao.copy()
+		
+		# Cria objeto batch para multiplas escritas
 		batch = db.batch()
 		
+		# Itera sobre as acoes
 		for index, row in fb_acao_2.iterrows():
+			
+			# Verifica se ha acoes atrasadas
 			if (data_atual > row['Prazo']) & (row['Status'] == 'Em aberto'):
+				
+				# define documento e colecao
 				chave = str(row['Numero do 5-Porques']) + '_' + str(row['Numero da ação'])
 				ref = db.collection('acoes').document(chave)
+				
+				# altera os dados
 				row['E-mail'] = 'Enviado'
 				row['Status'] = 'Atrasada'
 				row_string = row.astype(str)
+				
+				# Seta os valores para futuro commit
 				batch.set(ref, row_string.to_dict())
+				
+				# seta flag para commit
 				flag = True
 				
+				# Envia email para o dono da acao informando que a mesma esta atrasada
 				remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Dono'], 'Email'].to_list()
 				send_email(remetente[0], 5, row['Numero do 5-Porques'], row['Ação'], 0)
 				time.sleep(1)
-
-				
-		for index, row in fb_acao_2.iterrows():
+			
+			# verifica se ha acoes que estao como atrasadas mas ainda possuem prazo valido
 			if (data_atual <= row['Prazo']) & (row['Status'] == 'Atrasada'):
+				
+				# define documento e colecao
 				chave = str(row['Numero do 5-Porques']) + '_' + str(row['Numero da ação'])
 				ref = db.collection('acoes').document(chave)
+				
+				# altera os dados
 				row['Status'] = 'Em aberto'
 				row_string = row.astype(str)
+				
+				# Seta os valores para futuro commit
 				batch.set(ref, row_string.to_dict())
+				
+				# seta flag para commit
 				flag = True
 		
+		# Verifica flag do commit 
 		if flag == True:
+			
+			# escreve os dados no banco
 			batch.commit()
+			
+			# limpa cache
 			caching.clear_cache()
 			
