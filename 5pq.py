@@ -1003,17 +1003,15 @@ if __name__ == '__main__':
 				#email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
 				
 				if finalizar_acao:
-					
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
-					st.write(nome_editor.to_list()[0])
-					st.write(type(nome_editor[:]))
-					row['Editor'] = nome_editor[0]
+					row['Editor'] = nome_editor.to_list()[0]
 					row['Data'] = str(date.today())
 					row['Status'] = 'Concluída'
 					gravar_acao_edit(row)
 					
 				if descartar_acao:
-					row['Editor'] = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
+					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
+					row['Editor'] = nome_editor.to_list()[0]
 					row['Data'] = str(date.today())
 					row['Status'] = 'Cancelada'
 					gravar_acao_edit(row)
