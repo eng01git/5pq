@@ -1030,8 +1030,8 @@ if __name__ == '__main__':
 				codigo_user = botoes.selectbox('Digite seu ID para alterar Ação ' + str(index), usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
-				#editar_acao = botoes.button('Editar Ação ' + str(index))
-				#email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
+				novo_dono = botoes.selectbox('Novo dono da Ação ' + str(index), usuarios_fb['Nome'])
+				alterar_dono = botoes.button('Alterar dono ' + str(index))
 				
 				if finalizar_acao:
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
@@ -1055,11 +1055,14 @@ if __name__ == '__main__':
 					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Gestor'], 'Email'].to_list()
 					send_email(remetente[0], 8, row['Editor'], row['Ação'], 0)
 					
-				#if editar_acao:
-				#	pass
+				if alterar_dono:
+
+					row['Dono'] = novo_dono
+					gravar_acao_edit(row)
 					
-				#if email_dono:
-				#	st.error('Em desenvolvimento')
+					# Envia email para o dono da acao informando que a mesma foi criada 
+					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Dono'], 'Email'].to_list()
+					send_email(remetente[0], 6, row['Prazo'], row['Ação'], 0)
 				
 		st.subheader('Ações em aberto')	
 		df_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
@@ -1093,7 +1096,7 @@ if __name__ == '__main__':
 					row['Status'] = 'Cancelada'
 					gravar_acao_edit(row)
 					
-					# Envia email para o dono da acao informando que a mesma esta cancelada
+					# Envia email para o dono da acao informando que a mesma foi criada
 					remetente = usuarios_fb.loc[usuarios_fb['Nome'] == row['Gestor'], 'Email'].to_list()
 					send_email(remetente[0], 8, row['Editor'], row['Ação'], 0)
 					
