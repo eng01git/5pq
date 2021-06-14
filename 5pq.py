@@ -239,7 +239,7 @@ def write_acoes(acoes, documento, gestor):
 						  'Numero do 5-Porques': documento,
 						  'Status': 'Em aberto',
 						  'Gestor': gestor,
-						  'Alerta': 'pendente'
+						  'E-mail': 'Não enviado'
 						 }		
 			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
 		else:
@@ -249,7 +249,7 @@ def write_acoes(acoes, documento, gestor):
 						  'Numero da ação': index,
 						  'Numero do 5-Porques': documento,
 						  'Gestor': gestor,
-						  'Alerta': 'pendente'
+						  'E-mail': 'Não enviado'
 						 }		
 			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
 		index += 1
