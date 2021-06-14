@@ -247,7 +247,9 @@ def write_acoes(acoes, documento, gestor):
 						  'Numero do 5-Porques': documento,
 						  'Status': 'Em aberto',
 						  'Gestor': gestor,
-						  'E-mail': 'Não enviado'
+						  'E-mail': 'Não enviado',
+						  'Editor': '',
+						  'Data': ''
 						 }		
 			db.collection("acoes").document(chave).set(dic_to_firebase[chave],merge=True)
 		else:
@@ -286,7 +288,7 @@ def read_acao():
 	acao_df.drop('index', axis=1, inplace=True)
 	
 	# Lista e ordena as colunas do dataframe
-	lista_colunas = ['Ação', 'Dono', 'Prazo','Status', 'Gestor', 'E-mail', 'Numero do 5-Porques',  'Numero da ação']
+	lista_colunas = ['Ação', 'Dono', 'Prazo','Status', 'Gestor', 'E-mail', 'Numero do 5-Porques',  'Numero da ação', 'Editor', 'Data']
 	acao_df = acao_df.reindex(columns=lista_colunas)
 	
 	# Formata a coluna de prazo para possibilitar filtros
@@ -994,24 +996,29 @@ if __name__ == '__main__':
 				dados, botoes = st.beta_columns([9,1])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
 
+				codigo_user = botoes.selectbox('Código do usuário', usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
 				editar_acao = botoes.button('Editar Ação ' + str(index))
 				email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
 				
 				if finalizar_acao:
+					row['Editor'] = usuario_fb.loc[usuario_fb['Codigo'] == codigo_user, 'Nome']
+					row['Data'] = str(date.today())
 					row['Status'] = 'Concluída'
 					gravar_acao_edit(row)
 					
 				if descartar_acao:
+					row['Editor'] = usuario_fb.loc[usuario_fb['Codigo'] == codigo_user, 'Nome']
+					row['Data'] = str(date.today())
 					row['Status'] = 'Cancelada'
 					gravar_acao_edit(row)
 					
-				if editar_acao:
-					pass
+				#if editar_acao:
+				#	pass
 					
-				if email_dono:
-					st.error('Em desenvolvimento')
+				#if email_dono:
+				#	st.error('Em desenvolvimento')
 				
 		st.subheader('Ações em aberto')	
 		df_aberto = filtrado_ac[filtrado_ac['Status'] == 'Em aberto']
@@ -1034,11 +1041,11 @@ if __name__ == '__main__':
 					row['Status'] = 'Cancelada'
 					gravar_acao_edit(row)
 					
-				if editar_acao:
-					pass
+				#if editar_acao:
+				#	pass
 					
-				if email_dono:
-					st.error('Em desenvolvimento')
+				#if email_dono:
+				#	st.error('Em desenvolvimento')
 							
 		st.subheader('Ações concluídas')	
 		df_concluidas = filtrado_ac[filtrado_ac['Status'] == 'Concluída']
@@ -1046,7 +1053,7 @@ if __name__ == '__main__':
 			text = str(row['Ação']) + '     ' + ' Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([9,1])
-				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
+				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
 
 				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
 
@@ -1060,7 +1067,7 @@ if __name__ == '__main__':
 			text = str(row['Ação']) + '     ' + ' Prazo: ' + str(row['Prazo'])
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([9,1])
-				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
+				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
 
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
