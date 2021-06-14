@@ -24,6 +24,7 @@ import json
 import smtplib
 import time
 import datetime
+import time
 from datetime import  date
 import base64
 from io import BytesIO
@@ -1103,6 +1104,12 @@ if __name__ == '__main__':
 				row_string = row.astype(str)
 				batch.set(ref, row_string.to_dict())
 				flag = True
+				time.sleep(1)
+				remetente = usuarios_fb.loc[usuarios_fb['Nome' == row['Dono']], 'Email'].to_list()[0]
+				st.write(remetente)
+							    
+				#def send_email(to, atividade, documento, comentario, gatilho):
+
 				
 		for index, row in fb_acao_2.iterrows():
 			if (data_atual <= row['Prazo']) & (row['Status'] == 'Atrasada'):
