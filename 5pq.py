@@ -999,13 +999,13 @@ if __name__ == '__main__':
 				codigo_user = botoes.selectbox('Código do usuário', usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
-				editar_acao = botoes.button('Editar Ação ' + str(index))
-				email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
+				#editar_acao = botoes.button('Editar Ação ' + str(index))
+				#email_dono = botoes.button('Enviar e-mail para dono ' + str(index))
 				
 				if finalizar_acao:
 					
 					nome_editor = usuarios_fb.loc[usuarios_fb['Codigo'] == codigo_user, 'Nome']
-					st.write(nome_editor[:])
+					st.write(nome_editor[:, 'Nome'])
 					st.write(type(nome_editor[:]))
 					row['Editor'] = nome_editor[0]
 					row['Data'] = str(date.today())
