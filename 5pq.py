@@ -1084,7 +1084,7 @@ if __name__ == '__main__':
 				dados, botoes = st.beta_columns([8.5,1.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
 
-				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
+				#finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
 				
 				#if finalizar_acao:
