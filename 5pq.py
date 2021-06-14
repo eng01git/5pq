@@ -996,7 +996,7 @@ if __name__ == '__main__':
 				dados, botoes = st.beta_columns([8.5,1.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
 
-				codigo_user = botoes.selectbox('Código do usuário ' + str(index), usuarios_fb['Codigo'])
+				codigo_user = botoes.selectbox('ID do usuário ' + str(index), usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
 				#editar_acao = botoes.button('Editar Ação ' + str(index))
@@ -1030,7 +1030,7 @@ if __name__ == '__main__':
 				dados, botoes = st.beta_columns([8.5,1.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques']])
 				
-				codigo_user = botoes.selectbox('Código do usuário ' + str(index), usuarios_fb['Codigo'])
+				codigo_user = botoes.selectbox('ID do usuário ' + str(index), usuarios_fb['Codigo'])
 				finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
 				descartar_acao = botoes.button('Cancelar Ação ' + str(index))
 				#editar_acao = botoes.button('Editar Ação ' + str(index))
