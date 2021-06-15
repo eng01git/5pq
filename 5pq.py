@@ -1007,12 +1007,14 @@ if __name__ == '__main__':
 		# Inicia o filtro com todas as linhas
 		if linhas_ac == 'todos':
 			equipamentos_ac = 'todos'
+			lista_equipamentos_ac = 'todos'
 			pass
 		elif linhas_ac is not None and (str(linhas_ac) != 'nan'):
 			filtrado_ac = filtrado_ac[filtrado_ac['Numero do 5-Porques'].isin(linhas_ac)]
 			lista_equipamentos_ac = list(sap_nv3[sap_nv3['Linha'] == linhas_ac]['equipamento'])
 			lista_equipamentos_ac.append('todos') 
-			equipamentos_ac = col2_ac.selectbox("Selecione o dono", lista_equipamentos_ac, lista_equipamentos_ac.index('todos'))
+		
+		equipamentos_ac = col2_ac.selectbox("Selecione o dono", lista_equipamentos_ac, lista_equipamentos_ac.index('todos'))
 		
 		# Inicia o filtro com todos
 		if equipamentos_ac == 'todos':
