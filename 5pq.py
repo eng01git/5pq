@@ -1007,7 +1007,7 @@ if __name__ == '__main__':
 		# Inicia o filtro com todas as linhas
 		if linhas_ac == 'todos':
 			equipamentos_ac = 'todos'
-			lista_equipamentos_ac = 'todos'
+			lista_equipamentos_ac = ['todos']
 			pass
 		elif linhas_ac is not None and (str(linhas_ac) != 'nan'):
 			filtrado_ac = filtrado_ac[filtrado_ac['Numero do 5-Porques'].str.contains(linhas_ac)]
