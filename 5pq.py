@@ -1014,7 +1014,7 @@ if __name__ == '__main__':
 			lista_equipamentos_ac = list(sap_nv3[sap_nv3['Linha'] == linhas_ac]['equipamento'])
 			lista_equipamentos_ac.append('todos') 
 		
-		equipamentos_ac = col2_ac.selectbox("Selecione o dono", lista_equipamentos_ac, lista_equipamentos_ac.index('todos'))
+		equipamentos_ac = col2_ac.selectbox("Selecione o equipamento", lista_equipamentos_ac, lista_equipamentos_ac.index('todos'))
 		
 		# Inicia o filtro com todos
 		if equipamentos_ac == 'todos':
