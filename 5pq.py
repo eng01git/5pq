@@ -989,15 +989,39 @@ if __name__ == '__main__':
 				
 		# Filtro para datas
 		st.text('Filtro das ações')
-		#col1_ac, col2_ac, col3_ac, col4_ac = st.beta_columns(4)
-		col3_ac, col4_ac = st.beta_columns(2)
+		col1_ac, col2_ac, col3_ac, col4_ac = st.beta_columns(4)
+		#col3_ac, col4_ac = st.beta_columns(2)
 
-		#inicio_filtro_ac = col1_ac.date_input("Início")
+		#inicio_filtro_ac = col1_ac.date_input("Início") data = data[data['Definição do Evento'].isin(tipos)]
 		#fim_filtro_ac = col2_ac.date_input("Fim")
 		#filtrado_ac = (fn_acao[(fn_acao['Prazo'] >= inicio_filtro_ac) & (fn_acao['Prazo'] <= fim_filtro_ac)]) 
 		filtrado_ac = fb_acao.copy()
+		
+		# Gera lista das linhas
+		list_linhas_ac = list(linhas)
+		list_linhas_ac.append('todos') 
+		linhas_ac = col1_ac.selectbox("Selecione a linha", list_linhas_ac, list_linhas_ac.index('todos'))
+		
+		equipamentos_ac = ''
+		lista_equipamentos_ac = []
+		# Inicia o filtro com todas as linhas
+		if linhas_ac == 'todos':
+			equipamentos_ac = 'todos'
+			pass
+		elif linhas_ac is not None and (str(linhas_ac) != 'nan'):
+			filtrado_ac = filtrado_ac[filtrado_ac['Numero do 5-Porques'].isin(linhas_ac)]
+			lista_equipamentos_ac = list(sap_nv3[sap_nv3['Linha'] == linhas_ac]['equipamento'])
+			lista_equipamentos_ac.append('todos') 
+			equipamentos_ac = col2_ac.selectbox("Selecione o dono", lista_equipamentos_ac, lista_equipamentos_ac.index('todos'))
+		
+		# Inicia o filtro com todos
+		if equipamentos_ac == 'todos':
+			pass
+		elif equipamentos_ac is not None and (str(equipamentos_ac) != 'nan'):
+			equipamentos_ac = equipamentos_ac.replace(" ", "")
+			filtrado_ac = filtrado_ac[filtrado_ac['Numero do 5-Porques'].isin(equipamentos_ac)]
 
-		# Gera lista dos responsáveis
+		# Gera lista dos donos
 		list_dono_ac = list(filtrado_ac['Dono'].drop_duplicates())
 		list_dono_ac.append('todos') 
 		dono_ac = col3_ac.selectbox("Selecione o dono", list_dono_ac, list_dono_ac.index('todos'))
@@ -1116,8 +1140,7 @@ if __name__ == '__main__':
 			with st.beta_expander(text):
 				dados, botoes = st.beta_columns([7.5,2.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
-
-				#botoes.write('Reabrir Ação')
+				
 				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
 
 				if reabrir_acao:
@@ -1132,14 +1155,8 @@ if __name__ == '__main__':
 				dados, botoes = st.beta_columns([7.5,2.5])
 				dados.table(row[['Ação', 'Dono', 'Prazo', 'Gestor', 'E-mail', 'Numero do 5-Porques', 'Editor', 'Data']])
 
-				#finalizar_acao = botoes.button('Finalizar Ação ' + str(index))
-				#botoes.write('Reabrir Ação')
 				reabrir_acao = botoes.button('Reabrir Ação ' + str(index))
-				
-				#if finalizar_acao:
-				#	row['Status'] = 'Concluída'
-				#	gravar_acao_edit(row)
-					
+
 				if reabrir_acao:
 					row['Status'] = 'Em aberto'
 					gravar_acao_edit(row)
