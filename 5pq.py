@@ -1010,7 +1010,7 @@ if __name__ == '__main__':
 			lista_equipamentos_ac = 'todos'
 			pass
 		elif linhas_ac is not None and (str(linhas_ac) != 'nan'):
-			filtrado_ac = filtrado_ac[filtrado_ac['Numero do 5-Porques'].isin(linhas_ac)]
+			filtrado_ac = filtrado_ac[filtrado_ac['Numero do 5-Porques'].str.contains(linhas_ac)]
 			lista_equipamentos_ac = list(sap_nv3[sap_nv3['Linha'] == linhas_ac]['equipamento'])
 			lista_equipamentos_ac.append('todos') 
 		
@@ -1021,7 +1021,7 @@ if __name__ == '__main__':
 			pass
 		elif equipamentos_ac is not None and (str(equipamentos_ac) != 'nan'):
 			equipamentos_ac = equipamentos_ac.replace(" ", "")
-			filtrado_ac = filtrado_ac[filtrado_ac['Numero do 5-Porques'].isin(equipamentos_ac)]
+			filtrado_ac = filtrado_ac[filtrado_ac['Numero do 5-Porques'].str.contains(equipamentos_ac)]
 
 		# Gera lista dos donos
 		list_dono_ac = list(filtrado_ac['Dono'].drop_duplicates())
