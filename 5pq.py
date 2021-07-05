@@ -813,6 +813,7 @@ if __name__ == '__main__':
 		st.text('Selecione a data')
 		col1, col2, col3 = st.beta_columns(3)
 		user_gest, user_resp = st.beta_columns(2)
+		st.write(dados)
 		inicio_filtro = col1.date_input("Início (ano/mês/dia)")
 		fim_filtro = col2.date_input("Fim (ano/mês/dia)")
 		filtrado = (dados[(dados['data'] >= inicio_filtro) & (dados['data'] <= fim_filtro)]) 
