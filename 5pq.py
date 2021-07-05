@@ -872,7 +872,7 @@ if __name__ == '__main__':
 		col_1, col_2 = st.beta_columns(2)
 
 		#seleciona a data que mostra os 50 primeiros itens do MES (carrega com data e já mostra valores)
-		data_row = mes.shape[0] - 50
+		data_row = mes.shape[0] - 100
 		data_default = mes.iloc[data_row, 1]
 		
 		#filtra os dados com base na data
