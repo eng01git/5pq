@@ -813,8 +813,8 @@ if __name__ == '__main__':
 		st.text('Selecione a data')
 		col1, col2, col3 = st.beta_columns(3)
 		user_gest, user_resp = st.beta_columns(2)
-		inicio_filtro = col1.date_input("Início")
-		fim_filtro = col2.date_input("Fim")
+		inicio_filtro = col1.date_input("Início (ano/mês/dia)")
+		fim_filtro = col2.date_input("Fim (ano/mês/dia)")
 		filtrado = (dados[(dados['data'] >= inicio_filtro) & (dados['data'] <= fim_filtro)]) 
 
 		# Gera lista dos responsáveis
@@ -876,8 +876,8 @@ if __name__ == '__main__':
 		data_default = mes.iloc[data_row, 1]
 		
 		#filtra os dados com base na data
-		inicio_filt = col_1.date_input("Data inicial", value=data_default)
-		fim_filt = col_2.date_input("Data final")
+		inicio_filt = col_1.date_input("Data inicial (ano/mês/dia)", value=data_default)
+		fim_filt = col_2.date_input("Data final (ano/mês/dia)")
 		filtrado_5pq = (dados[(dados['data'] >= inicio_filt) & (dados['data'] <= fim_filt)]) 
 		filtrado_mes = (mes[(mes['Data'] >= inicio_filt) & (mes['Data'] <= fim_filt)]) 
 
