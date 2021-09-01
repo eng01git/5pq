@@ -730,7 +730,8 @@ if __name__ == '__main__':
 	
 	# Separa os gestores e não-gestores
 	gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() == 'sim']['Nome'])
-	nao_gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() != 'sim']['Nome'])
+	#nao_gestores = list(usuarios_fb[usuarios_fb['Gestor'].str.lower() != 'sim']['Nome'])
+	nao_gestores = list(usuarios_fb['Nome'])
 	
 	# Separa as colunas dos dataframes
 	colunas = dados.columns
